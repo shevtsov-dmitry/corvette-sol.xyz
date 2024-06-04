@@ -4,5 +4,5 @@
 
 .nav-btn {
 	/* @apply bg-[bg-custom-nav-bar-btn-bg] text-[bg-custom-nav-bar-btn-bg] font-bold; */
-	@apply font-nav-bar bg-[#73242E] text-[#FFFF00] font-bold text-[2.5em] px-8 pt-2 rounded-lg h-16;
+	@apply font-nav-bar bg-[#73242E] text-[#FFFF00] font-bold text-[2.5em] px-8 pt-2 rounded-lg h-16 whitespace-nowrap;
 }

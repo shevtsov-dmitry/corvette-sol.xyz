@@ -2,16 +2,16 @@ import Lottie from "lottie-react";
 
 export function NavBar() {
   return (
-    <div className="fixed flex gap-1 flex-col w-dvw h-fit">
-      <header className="justify-center items-center">
-        <div id="nav-bar" className="w-[80%] flex justify-center items-end">
+    <div className="relative flex gap-4 flex-col w-dvw h-fit justify-center items-center">
+      <header className="flex justify-around">
+        <div id="nav-bar" className="w-fit flex justify-center items-end ">
           <div className="nav-btn-holder">
             <button className="nav-btn">ROADMAP</button>
             <button className="nav-btn">ABOUT US</button>
           </div>
           <div
             id="wheel-holder"
-            className="max-w-24 max-h-24 mx-12 mt-[1%] mb-[-10px]"
+            className="relative w-[7%] mx-12 mt-[1%] mb-[-1.3%]"
           >
             <Lottie
               path={"lotties/low-nonstop-wheel.json"}
@@ -25,7 +25,7 @@ export function NavBar() {
           </div>
         </div>
       </header>
-      <img src="images/nav-bar-hr.png" width={"80%"} />
+      <img src="images/nav-bar-hr.png" width={"70%"} />
     </div>
   );
 }
