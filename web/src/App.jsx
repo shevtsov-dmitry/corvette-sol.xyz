@@ -1,5 +1,5 @@
-import { NavBar } from "./components/NavBar";
-import { WelcomePage } from "./components/WelcomePage";
+import { NavBar } from "./components/NavBar/NavBar";
+import { WelcomePage } from "./components/WelcomePage/WelcomePage";
 
 function App() {
   return (

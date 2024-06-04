@@ -1,6 +1,6 @@
 import Lottie from "lottie-react";
-import lottieFlash from "../assets/lottie-flash-exclusevely-on.json";
-import lottieGrayWelcome from "../assets/lottie-gray-corvete-welcome.json";
+import lottieFlash from "../../assets/lottie-exclusevely-on-flash.json";
+import lottieGrayWelcome from "../../assets/lottie-gray-corvete-welcome.json";
 
 <Lottie
   // animationData={"./assets/first.mp4.lottie.json"}

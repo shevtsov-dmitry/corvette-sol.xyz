@@ -1,10 +1,10 @@
 import Lottie from "lottie-react";
-import spinningWheelNormal from "../assets/.json";
+import spinningWheelNormal from "../../assets/lottie-low-nonstop-whell.json";
 
 export function NavBar() {
   return (
-    <header className="fixed my-[1%] w-dvw h-[10%] bg-cyan-300">
-      <div id="nav-bar" className="flex">
+    <header className="flex justify-center items-center fixed my-[1%] w-dvw h-fit bg-cyan-300">
+      <div id="nav-bar" className="w-[80%] flex bg-red-400">
         <div className="flex gap-3">
           <button className="">ROADMAP</button>
           <button className="">ABOUT US</button>
