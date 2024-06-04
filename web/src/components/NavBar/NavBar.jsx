@@ -1,10 +1,9 @@
 import Lottie from "lottie-react";
-import lowNonstopWheel from "../../assets/lottie-low-nonstop-whell.json";
 
 export function NavBar() {
   return (
-    <>
-      <header className="flex justify-center items-center fixed w-dvw h-fit">
+    <div className="fixed flex gap-1 flex-col w-dvw h-fit">
+      <header className="justify-center items-center">
         <div id="nav-bar" className="w-[80%] flex justify-center items-end">
           <div className="nav-btn-holder">
             <button className="nav-btn">ROADMAP</button>
@@ -15,7 +14,7 @@ export function NavBar() {
             className="max-w-24 max-h-24 mx-12 mt-[1%] mb-[-10px]"
           >
             <Lottie
-              animationData={lowNonstopWheel}
+              path={"lotties/low-nonstop-wheel.json"}
               loop={true}
               autoplay={true}
             />
@@ -26,7 +25,7 @@ export function NavBar() {
           </div>
         </div>
       </header>
-      <img src="../../assets/mainunderline.png" />
-    </>
+      <img src="images/nav-bar-hr.png" width={"80%"} />
+    </div>
   );
 }
