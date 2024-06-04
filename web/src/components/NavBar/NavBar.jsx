@@ -1,26 +1,32 @@
 import Lottie from "lottie-react";
-import spinningWheelNormal from "../../assets/lottie-low-nonstop-whell.json";
+import lowNonstopWheel from "../../assets/lottie-low-nonstop-whell.json";
 
 export function NavBar() {
   return (
-    <header className="flex justify-center items-center fixed my-[1%] w-dvw h-fit bg-cyan-300">
-      <div id="nav-bar" className="w-[80%] flex bg-red-400">
-        <div className="flex gap-3">
-          <button className="">ROADMAP</button>
-          <button className="">ABOUT US</button>
+    <>
+      <header className="flex justify-center items-center fixed w-dvw h-fit">
+        <div id="nav-bar" className="w-[80%] flex justify-center items-end">
+          <div className="nav-btn-holder">
+            <button className="nav-btn">ROADMAP</button>
+            <button className="nav-btn">ABOUT US</button>
+          </div>
+          <div
+            id="wheel-holder"
+            className="max-w-24 max-h-24 mx-12 mt-[1%] mb-[-10px]"
+          >
+            <Lottie
+              animationData={lowNonstopWheel}
+              loop={true}
+              autoplay={true}
+            />
+          </div>
+          <div className="nav-btn-holder">
+            <button className="nav-btn">GARAGE</button>
+            <button className="nav-btn">OUR MERCH</button>
+          </div>
         </div>
-        <div id="wheel-holder" className="max-w-20 max-h-20">
-          <Lottie
-            animationData={spinningWheelNormal}
-            loop={true}
-            autoplay={true}
-          />
-        </div>
-        <div className="flex gap-3">
-          <button className="">GARAGE</button>
-          <button className="">OUR MERCH</button>
-        </div>
-      </div>
-    </header>
+      </header>
+      <img src="../../assets/mainunderline.png" />
+    </>
   );
 }

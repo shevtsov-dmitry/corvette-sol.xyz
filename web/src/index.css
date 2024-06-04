@@ -1,3 +1,12 @@
+@import './components/NavBar/NavBar.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+	font-family: 'NavBarFont';
+	src: url('../public/fonts/nav-bar-font.ttf') format('truetype');
+	font-weight: bold;
+	font-style: bold;
+}

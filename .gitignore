@@ -1,4 +1,9 @@
 .idea
 .vscode
 node_modules
+*.iml
 
+web/build
+web/target
+server/target
+server/build

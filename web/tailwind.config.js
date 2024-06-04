@@ -1,13 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  content: ["./src/**/*.{js,jsx,ts,tsx,css}"],
   theme: {
     extend: {
-      colors: {
-        "custom-main-dark-gray": "#2E2E2E",
-        "custom-nav-bar-btn-bg": "#73242E",
-        "custom-nav-bar-btn-text": "##FFFF00",
+      fontFamily: {
+        "nav-bar": ["NavBarFont", "sans-serif"],
       },
+      colors: {},
     },
   },
   plugins: ["prettier-plugin-tailwindcss"],
