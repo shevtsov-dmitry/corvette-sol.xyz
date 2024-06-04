@@ -1,7 +1,7 @@
 export function Footer() {
-    return <div className={"absolute bottom-0 w-dvw flex justify-center mb-[1%]"}>
+    return <div className={"absolute bottom-0 w-dvw flex justify-center mb-[1%] h-[6.5%]"}>
         <div id={"footer-panel"} className={"w-[67%] flex justify-between"}>
-            <div id="left-icons" className={"flex gap-3"}>
+            <div id="left-icons" className={"flex gap-4"}>
                 <img className={"footer-icon"} src={"images/twitter.png"}/>
                 <img className={"footer-icon"} src={"images/telegram.png"}/>
             </div>
