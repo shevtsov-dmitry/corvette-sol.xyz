@@ -1,15 +1,11 @@
-import Lottie from "lottie-react";
-// import lottieFlash from "../../assets/lottie-exclusevely-on-flash.json";
-// import lottieGrayWelcome from "../../assets/lottie-gray-corvete-welcome.json";
-
-// <Lottie
-//   // animationData={lottieGrayWelcome}
-//   path={"lotties/lottie-exclusevely-on-flash.json"}
-//   size={30}
-//   loop={false}
-//   autoplay={true}
-// />;
+import {NavBar} from "./NavBar/NavBar.jsx";
+import {Footer} from "./Footer/Footer.jsx";
 
 export function WelcomePage() {
-  return <div className="w-96 h-96"></div>;
+  return (
+    <div>
+      <NavBar />
+      <Footer />
+    </div>
+  );
 }
