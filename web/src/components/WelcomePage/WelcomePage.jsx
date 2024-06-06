@@ -4,15 +4,15 @@ import Lottie from "lottie-react";
 
 export function WelcomePage() {
   return (
-    <div>
+    <div className="min-w-dvw min-h-dvh">
       <NavBar />
       <img
-        className={"fixed w-full mt-[-3%] h-full object-contain"}
+        className={"absolute w-full mt-[-3%] h-full object-contain"}
         src={"images/welcomePage/trail.png"}
       />
       <div
         className={
-          "fixed flex w-dvw h-dvh justify-center mt-[-5%] items-center"
+          "absolute flex w-dvw h-dvh justify-center mt-[-5%] items-center"
         }
       >
         <img
@@ -21,13 +21,13 @@ export function WelcomePage() {
         />
       </div>
       <Lottie
-        className={"fixed w-[22%] left-[21%] mt-[1%]"}
+        className={"absolute w-[22%] left-[21%] mt-[1%]"}
         path={"lotties/gray-corvete-welcome.json"}
         loop={false}
         autoplay={true}
       />
       <Lottie
-        className={"fixed w-[48%] right-[5%] bottom-[-3%]"}
+        className={"absolute w-[48%] right-[5%] bottom-[-3%]"}
         path={"lotties/exclusevely-on-flash.json"}
         loop={false}
         autoplay={true}
