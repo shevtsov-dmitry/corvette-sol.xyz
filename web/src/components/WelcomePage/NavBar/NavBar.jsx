@@ -6,7 +6,7 @@ export function NavBar() {
       <header className="flex justify-around">
         <div id="nav-bar" className="w-fit flex justify-center items-end ">
           <div className="nav-btn-holder">
-            <futton className="nav-btn">ROADMAP</futton>
+            <button className="nav-btn">ROADMAP</button>
             <button className="nav-btn">ABOUT US</button>
           </div>
           <div
