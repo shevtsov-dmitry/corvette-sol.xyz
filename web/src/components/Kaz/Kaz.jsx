@@ -17,7 +17,7 @@ export function Kaz() {
                         width="520px"
                         className="shadow-black z-20 my-8"
                     />
-                    <div id="reels-holder" className="w-[29.5rem] absolute mt-[15em] z-50 flex justify-around">
+                    <div id="reels-holder" className="w-[29.5rem] absolute mt-[15em] z-10 flex justify-around">
                         <div className="reel" ref={reel1Ref}></div>
                         <div className="reel" ref={reel2Ref}></div>
                         <div className="reel" ref={reel3Ref}></div>
@@ -31,31 +31,36 @@ export function Kaz() {
 
     function spinOne(reel, offset = 0) {
         // Minimum of 2 + the reel offset rounds
-        const num_icons = 9, icon_width = 128, time_per_icon = 100;
-        const delta = (offset + 2) * num_icons + Math.round(Math.random() * num_icons);
-        // Return promise so we can wait for all reels to finish
+        const icons_amount =  9,
+            icon_width = 128,
+            spin_time = 1,
+            step_between_icons = 40;
+        // const delta = (offset + 2) * icons_amount + Math.round(Math.random() * icons_amount);
+        const delta = 30;
         return new Promise((resolve, reject) => {
             const style = getComputedStyle(reel), // Current background position
                 backgroundPositionY = parseFloat(style["background-position-y"]), // Target background position
                 targetBackgroundPositionY = backgroundPositionY + delta * icon_width, // Normalized background position, for reset
-                normTargetBackgroundPositionY = targetBackgroundPositionY % (num_icons * icon_width);
-
-            // Delay animation with timeout, for some reason a delay in the animation property causes stutter
+                normTargetBackgroundPositionY = targetBackgroundPositionY % (icons_amount * icon_width);
+            // let startup_idx = Math.round(Math.random() * icons_amount ) * icon_width
+            // console.log(startup_idx)
+            // reel.style.backgroundPositionY = `${startup_idx}px`
+             // Delay animation with timeout, for some reason a delay in the animation property causes stutter
             setTimeout(() => {
                 // Set transition properties ==> https://cubic-bezier.com/#.41,-0.01,.63,1.09
-                reel.style.transition = `background-position-y ${(8 + delta) * time_per_icon}ms cubic-bezier(.41,-0.01,.63,1.09)`;
-                // Set background position
-                reel.style.backgroundPositionY = `${backgroundPositionY + delta * icon_width}px`;
+                reel.style.transition = `background-position-y ${(2 + delta) * spin_time}ms cubic-bezier(.41,-0.01,.63,1.09)`;
+                console.log(backgroundPositionY + delta * icon_width - step_between_icons)
+                reel.style.backgroundPositionY = `${backgroundPositionY + delta * icon_width - step_between_icons}px`;
             }, offset * 150);
 
             // After animation
-            setTimeout(() => {
-                // Reset position, so that it doesn't get higher without limit
-                reel.style.transition = `none`;
-                reel.style.backgroundPositionY = `${normTargetBackgroundPositionY}px`;
-                // Resolve this promise
-                resolve(delta % num_icons);
-            }, (8 + delta) * time_per_icon + offset * 150);
+            // setTimeout(() => {
+            //     // Reset position, so that it doesn't get higher without limit
+            //     reel.style.transition = `none`;
+            //     reel.style.backgroundPositionY = `${normTargetBackgroundPositionY}px`;
+            //     // Resolve this promise
+            //     resolve(delta % icons_amount);
+            // }, (8 + delta) * spin_time + offset * 150);
         });
     }
 
