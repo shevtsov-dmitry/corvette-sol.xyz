@@ -11,11 +11,6 @@
 }
 
 .reel {
-	@apply relative w-[7rem] h-[16rem] overflow-hidden;
-	background-image: url("images/kaz/reel-debug.png");
-	/* width: var(--icon_fidth); */
-	/* height: 3 * var(--icon_height); */
-	/*background-position: 0 0;*/
-	background-repeat: repeat-y;
-	background-position: center;
+	@apply relative mt-4 w-[7rem] h-[16rem] overflow-hidden bg-repeat-y bg-center;
+	background-image: url("images/kaz/reel.png");
 }
