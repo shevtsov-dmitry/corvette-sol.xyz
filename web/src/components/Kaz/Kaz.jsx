@@ -5,6 +5,39 @@ export function Kaz() {
     const reel2Ref = useRef();
     const reel3Ref = useRef();
 
+    useEffect(() => {
+        if (!reel1Ref.current) {
+            return
+        }
+        const reelPositions = createRandomReelPositionsArray();
+        reel1Ref.current.style.backgroundPositionY = `${reelPositions[0]}px`;
+        reel2Ref.current.style.backgroundPositionY = `${reelPositions[1]}px`;
+        reel3Ref.current.style.backgroundPositionY = `${reelPositions[2]}px`;
+    }, []);
+
+    return (<div className="max-w-dvw h-dvh flex justify-center items-center">
+        <div id="centered-holder" className="flex flex-col items-center">
+            <img src="images/kaz/try-your-luck.png" width="45%"/>
+            <div
+                id="slot-machine-holder"
+                className="w-fit h-fit flex flex-col items-center"
+            >
+                <img
+                    src="images/kaz/slot-full-beta.png"
+                    width="520px"
+                    className="shadow-black z-20 my-8"
+                />
+                <div id="reels-holder" className="w-[29.5rem] absolute mt-[15em] z-10 flex justify-around ">
+                    <div className="reel" ref={reel1Ref}></div>
+                    <div className="reel" ref={reel2Ref}></div>
+                    <div className="reel" ref={reel3Ref}></div>
+                </div>
+            </div>
+            <button className="spin-btn" onClick={spinAll}>SPIN!</button>
+            <img src="images/kaz/get-3-wins-in-a-row.png" width="50%"/>
+        </div>
+    </div>);
+
     function createRandomReelPositionsArray() {
         function randFirstElPos() {
             const background_image_init_step = 50,
@@ -30,48 +63,11 @@ export function Kaz() {
         return reel_positions;
     }
 
-    useEffect(() => {
-        if (!reel1Ref.current) {
-            return
-        }
-        // const idx2= (Math.floor(Math.random() * icons_amount) + 1)
-
-        const reelPositions = createRandomReelPositionsArray();
-
-        reel1Ref.current.style.backgroundPositionY = `${reelPositions[0]}px`;
-        reel2Ref.current.style.backgroundPositionY = `${reelPositions[1]}px`;
-        reel3Ref.current.style.backgroundPositionY = `${reelPositions[2]}px`;
-    }, []);
-
-
-    return (<div className="min-w-dvw min-h-dvh flex justify-center items-center">
-        <div id="centered-holder" className="flex flex-col items-center">
-            <img src="images/kaz/try-your-luck.png" width="45%"/>
-            <div
-                id="slot-machine-holder"
-                className="w-dvw h-fit flex flex-col items-center"
-            >
-                <img
-                    src="images/kaz/slot-full-beta.png"
-                    width="520px"
-                    className="shadow-black z-20 my-8"
-                />
-                <div id="reels-holder" className="w-[29.5rem] absolute mt-[15em] z-10 flex justify-around ">
-                    <div className="reel" ref={reel1Ref}></div>
-                    <div className="reel" ref={reel2Ref}></div>
-                    <div className="reel" ref={reel3Ref}></div>
-                </div>
-            </div>
-            <button className="spin-btn" onClick={spinAll}>SPIN!</button>
-            <img src="images/kaz/get-3-wins-in-a-row.png" width="50%"/>
-        </div>
-    </div>);
-
     function spinOne(reel, offset = 0) {
         // Minimum of 2 + the reel offset rounds
         const icons_amount = 9,
             icon_width = 128,
-            spin_speed_multiplier=  1,
+            spin_speed_multiplier=  100,
             step_between_icons = 40
         ;
         // const delta = (offset + 2) * icons_amount + Math.round(Math.random() * icons_amount);
