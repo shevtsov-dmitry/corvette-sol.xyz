@@ -1,14 +1,17 @@
 import { useEffect, useRef, useState } from 'react'
 
 export function Kaz() {
+    const [debug_idx, set_debug_idx] = useState(0)
     const [is_allowed_to_spin, set_is_allowed_to_spin] = useState(true)
-    const [spins_amount, set_spins_amount] = useState(0)
+    const [spin_amount, set_spins_amount] = useState(0)
 
     const chance_to_win_in_percent = 100,
         icons_amount = 9,
         icon_width = 128,
         background_image_init_step = 50,
-        step_between_icons = 40
+        step_between_icons = 40,
+        scroll_distance = 3306,
+        time_difference_between_reel_stops = 300
 
     const reel_1_ref = useRef()
     const reel_2_ref = useRef()
@@ -55,7 +58,8 @@ export function Kaz() {
     const spin_speed_multiplier = 30
 
     function spinOne(reel, idx = 0) {
-        set_spins_amount(spins_amount + 1)
+        set_debug_idx(debug_idx + 1)
+        set_spins_amount(spin_amount + 1)
         const style = getComputedStyle(reel)
         const background_position_y = parseFloat(style['background-position-y'])
         const cur_reel_scroll_distance =
@@ -67,19 +71,24 @@ export function Kaz() {
         setTimeout(() => {
             reel.style.transition = `background-position-y ${(2 + delta) * spin_speed_multiplier}ms cubic-bezier(.41,-0.01,.63,1.09)`
             reel.style.backgroundPositionY = `${cur_reel_scroll_distance}px`
-        }, idx * 150)
+        }, idx * time_difference_between_reel_stops)
     }
 
     function executeGuaranteedSpin(reel, idx = 0) {
         set_is_allowed_to_spin(false)
         setTimeout(() => {
             reel.style.transition = `background-position-y ${(2 + delta) * spin_speed_multiplier}ms cubic-bezier(.41,-0.01,.63,1.09)`
-            // const formula = -1449.5 * spins_amount - 38.5 * spins_amount + 46 - 1150
+            console.log(
+                getComputedStyle(reel_3_ref.current)['background-position-y']
+            )
             const formula =
-                1449.5 * spins_amount + 38.5 * spins_amount - 7820 + 3910
+                1449.5 * spin_amount -
+                38.5 * spin_amount +
+                scroll_distance * spin_amount -
+                125
 
-            reel.style.backgroundPositionY = `${-formula}px`
-        }, idx * 150)
+            reel.style.backgroundPositionY = `${formula}px`
+        }, idx * time_difference_between_reel_stops)
     }
 
     function spinAll() {
@@ -90,8 +99,8 @@ export function Kaz() {
             return
         }
         const win_condition =
-            Math.random() <= chance_to_win_in_percent / 100 && spins_amount >= 1
-        if (win_condition) {
+            Math.random() <= chance_to_win_in_percent / 100 && spin_amount >= 1
+        if (debug_idx > 1) {
             reels.forEach((reel, index) => executeGuaranteedSpin(reel, index))
         } else {
             const reels_references = [
