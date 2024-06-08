@@ -8,7 +8,7 @@ export function WelcomePage() {
             <NavBar />
             <Lottie
                 className={'absolute w-[22%] left-[21%] top-[12%] mt-[2%]'}
-                path={'lotties/gray-corvete-welcome.json'}
+                path={'lotties/welcomePage/gray-corvete-welcome.json'}
                 loop={false}
                 autoplay={true}
             />
@@ -24,7 +24,7 @@ export function WelcomePage() {
             />
             <Lottie
                 className={'absolute w-[48%] right-[5%] bottom-0'}
-                path={'lotties/exclusevely-on-flash.json'}
+                path={'lotties/welcomePage/exclusevely-on-flash.json'}
                 loop={false}
                 autoplay={true}
             />
