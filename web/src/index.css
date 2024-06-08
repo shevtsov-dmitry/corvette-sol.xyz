@@ -1,4 +1,5 @@
 @import 'components/WelcomePage/NavBar/NavBar.css';
+@import 'components/WelcomePage/Footer/Footer.css';
 @import 'components/Kaz/Kaz.css';
 
 @tailwind base;

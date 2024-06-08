@@ -6,19 +6,19 @@ export function WelcomePage() {
     return (
         <div className="max-w-dvw h-dvh">
             <NavBar/>
+            <Lottie
+                className={"absolute w-[22%] left-[21%] top-[12%] mt-[2%]"}
+                path={"lotties/gray-corvete-welcome.json"}
+                loop={false}
+                autoplay={true}
+            />
             <img
-                className={"absolute w-full mt-[10%] object-contain"}
+                className={"absolute w-full mt-[12%] object-contain"}
                 src={"images/welcomePage/trail.png"}
             />
             <img
                 className={" w-full h-full object-contain scale-[44%] mt-[-6em]"}
                 src={"images/welcomePage/vehicle.png"}
-            />
-            <Lottie
-                className={"absolute w-[22%] left-[21%] top-[12%] mt-[1%]"}
-                path={"lotties/gray-corvete-welcome.json"}
-                loop={false}
-                autoplay={true}
             />
             <Lottie
                 className={"absolute w-[48%] right-[5%] bottom-0"}
