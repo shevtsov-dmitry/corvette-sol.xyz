@@ -11,6 +11,6 @@
 }
 
 .reel {
-	@apply relative mt-4 w-[7rem] h-[16rem] overflow-hidden bg-repeat-y bg-center;
+	@apply relative mt-4 w-[8rem] h-[16rem] overflow-hidden bg-repeat-y bg-center;
 	background-image: url("images/kaz/reel.png");
 }

@@ -5,13 +5,20 @@ export function Kaz() {
     const [is_allowed_to_spin, set_is_allowed_to_spin] = useState(true)
     const [spin_amount, set_spins_amount] = useState(0)
 
-    const chance_to_win_in_percent = 100,
+    const chance_to_win_in_percent = 20,
         icons_amount = 9,
         icon_width = 128,
-        background_image_init_step = 50,
+        spin_speed_multiplier = 100,
+        time_difference_between_reel_stops = 300,
+        full_round = 1488,
+        // spin_speed_multiplier = 30,
+        // time_difference_between_reel_stops = 100,
+        image_init_step = 50,
         step_between_icons = 40,
-        scroll_distance = 3306,
-        time_difference_between_reel_stops = 300
+        // whole_scroll_distance = 3306,
+        delta = 30
+
+    const spin_animation = `background-position-y ${(2 + delta) * spin_speed_multiplier}ms cubic-bezier(.41,-0.01,.63,1.09)`
 
     const reel_1_ref = useRef()
     const reel_2_ref = useRef()
@@ -32,7 +39,7 @@ export function Kaz() {
     function createRandomReelPositionsArray() {
         function setSlotsImagePosition(image_idx) {
             return (
-                background_image_init_step -
+                image_init_step -
                 icon_width * image_idx -
                 step_between_icons * image_idx +
                 image_idx * 2.3
@@ -54,9 +61,6 @@ export function Kaz() {
         return reel_position
     }
 
-    const delta = 30
-    const spin_speed_multiplier = 30
-
     function spinOne(reel, idx = 0) {
         set_debug_idx(debug_idx + 1)
         set_spins_amount(spin_amount + 1)
@@ -69,7 +73,7 @@ export function Kaz() {
             2.8
 
         setTimeout(() => {
-            reel.style.transition = `background-position-y ${(2 + delta) * spin_speed_multiplier}ms cubic-bezier(.41,-0.01,.63,1.09)`
+            reel.style.transition = spin_animation
             reel.style.backgroundPositionY = `${cur_reel_scroll_distance}px`
         }, idx * time_difference_between_reel_stops)
     }
@@ -77,17 +81,10 @@ export function Kaz() {
     function executeGuaranteedSpin(reel, idx = 0) {
         set_is_allowed_to_spin(false)
         setTimeout(() => {
-            reel.style.transition = `background-position-y ${(2 + delta) * spin_speed_multiplier}ms cubic-bezier(.41,-0.01,.63,1.09)`
-            console.log(
-                getComputedStyle(reel_3_ref.current)['background-position-y']
-            )
-            const formula =
-                1449.5 * spin_amount -
-                38.5 * spin_amount +
-                scroll_distance * spin_amount -
-                125
-
-            reel.style.backgroundPositionY = `${formula}px`
+            reel.style.transition = spin_animation
+            const final_position_with_price =
+                image_init_step + full_round * 3 * spin_amount
+            reel.style.backgroundPositionY = `${final_position_with_price}px`
         }, idx * time_difference_between_reel_stops)
     }
 
@@ -99,8 +96,8 @@ export function Kaz() {
             return
         }
         const win_condition =
-            Math.random() <= chance_to_win_in_percent / 100 && spin_amount >= 1
-        if (debug_idx > 1) {
+            Math.random() <= chance_to_win_in_percent / 100 && spin_amount >= 2
+        if (win_condition) {
             reels.forEach((reel, index) => executeGuaranteedSpin(reel, index))
         } else {
             const reels_references = [
