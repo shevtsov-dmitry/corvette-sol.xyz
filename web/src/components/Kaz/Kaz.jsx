@@ -5,6 +5,7 @@ export function Kaz() {
     const [is_allowed_to_spin, set_is_allowed_to_spin] = useState(true)
     // const [scroll_distance, set_scroll_distance] = useState(0)
     const [first_reel_dist, set_first_reel_dist] = useState(0)
+    const [spins_amount, set_spins_amount] = useState(0)
 
     const chance_to_win_in_percent = 20,
         icons_amount = 9,
@@ -15,7 +16,7 @@ export function Kaz() {
         step_between_icons = 40,
         one_step_size_px = (icon_width - step_between_icons) * 2 - 10.6,
         spinned_distances = [],
-        scroll_distance = 3802
+        scroll_distance = 3803
 
     const reel_1_ref = useRef()
     const reel_2_ref = useRef()
@@ -57,7 +58,7 @@ export function Kaz() {
                         id="reels-holder"
                         className="w-[29.5rem] absolute mt-[15em] z-10 flex justify-around "
                     >
-                        <div className="reel" ref={reel_1_ref}></div>
+                        <div className="reel " ref={reel_1_ref}></div>
                         <div className="reel" ref={reel_2_ref}></div>
                         <div className="reel" ref={reel_3_ref}></div>
                     </div>
@@ -85,6 +86,7 @@ export function Kaz() {
                 }
             }
         }
+
         set_reel_idxs(local_reel_idx)
         set_reel_positions(local_reel_position)
         console.log(
@@ -107,6 +109,7 @@ export function Kaz() {
     }
 
     function spinOne(reel, idx = 0) {
+        set_spins_amount(spins_amount + 1)
         // const delta = (offset + 2) * icons_amount + Math.round(Math.random() * icons_amount);
         const style = getComputedStyle(reel)
         const background_position_y = parseFloat(style['background-position-y'])
@@ -118,6 +121,7 @@ export function Kaz() {
         // ! DEBUG
         if (idx === 0) {
             set_first_reel_dist(cur_reel_scroll_distance)
+            console.log('1 reel:', cur_reel_scroll_distance)
         }
         spinned_distances[idx] = cur_reel_scroll_distance
         // set_scroll_distance(cur_reel_scroll_distance)
@@ -136,17 +140,23 @@ export function Kaz() {
         // const scroll_distance =
         //     backgroundPositionY + delta * icon_width - step_between_icons + 2.8
 
+        console.log(
+            'in guaranteed: ',
+            'idx',
+            reel_idxs[0],
+            'pos',
+            reel_positions[0]
+        )
+
         setTimeout(() => {
+            console.log('1 reel:', first_reel_dist + scroll_distance)
             // Set transition properties ==> https://cubic-bezier.com/#.41,-0.01,.63,1.09
             reel.style.transition = `background-position-y ${(2 + delta) * spin_speed_multiplier}ms cubic-bezier(.41,-0.01,.63,1.09)`
-            // console.log('in init: ', 'idx', reel_idxs[0], 'pos', reel_positions[0])
-            // const formula = first_reel_dist + 128 * 30
-            // const formula = first_reel_dist + 1024 * 2
-            const steps_to_go = 8 - reel_idxs[0]
-            const formula = first_reel_dist - one_step_size_px * steps_to_go
-            console.log(formula)
+            const formula =
+                -1449.5 * spins_amount - 38.5 * spins_amount + 50 - 1150
             reel.style.backgroundPositionY = `${formula}px` // fix graduating shift down.
-        }, 2 * 150)
+            console.log(formula)
+        }, 1 * 150)
     }
 
     function spinAll() {
@@ -158,7 +168,7 @@ export function Kaz() {
         }
 
         const win_condition = Math.random() <= chance_to_win_in_percent / 100
-        if (debug_idx > 0) {
+        if (debug_idx > 5) {
             executeGuaranteedSpin()
         } else {
             set_debug_idx(debug_idx + 1)
