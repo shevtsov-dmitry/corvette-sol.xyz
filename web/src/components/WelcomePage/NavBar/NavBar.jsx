@@ -2,11 +2,11 @@ import Lottie from 'lottie-react'
 
 export function NavBar() {
     return (
-        <div className="relative flex gap-4 flex-col h-fit justify-center items-center">
+        <div className="fixed z-50 flex h-fit w-dvw flex-col items-center justify-center gap-4">
             <header className="flex justify-around">
                 <div
                     id="nav-bar"
-                    className="w-fit flex justify-center items-end "
+                    className="flex w-fit items-end justify-center"
                 >
                     <div className="nav-btn-holder">
                         <button className="nav-btn">ROADMAP</button>
@@ -14,7 +14,7 @@ export function NavBar() {
                     </div>
                     <div
                         id="wheel-holder"
-                        className="relative w-[7%] mx-12 mt-[1%] mb-[-1.3%]"
+                        className="relative mx-12 mb-[-1.3%] mt-[1%] w-[7%]"
                     >
                         <Lottie
                             path={'lotties/welcomePage/low-nonstop-wheel.json'}

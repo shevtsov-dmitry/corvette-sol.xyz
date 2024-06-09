@@ -1,14 +1,16 @@
 import { useEffect, useRef, useState } from 'react'
 
+import Lottie from 'lottie-react'
+
 export function Kaz() {
     const [debug_idx, set_debug_idx] = useState(0)
     const [is_allowed_to_spin, set_is_allowed_to_spin] = useState(true)
     const [spin_amount, set_spins_amount] = useState(0)
 
-    const chance_to_win_in_percent = 20,
+    const chance_to_win_in_percent = 100,
         icons_amount = 9,
         icon_width = 128,
-        spin_speed_multiplier = 100,
+        spin_speed_multiplier = 75,
         time_difference_between_reel_stops = 300,
         full_round = 1488,
         // spin_speed_multiplier = 30,
@@ -82,8 +84,15 @@ export function Kaz() {
         set_is_allowed_to_spin(false)
         setTimeout(() => {
             reel.style.transition = spin_animation
-            const final_position_with_price =
-                image_init_step + full_round * 3 * spin_amount
+
+            let final_position_with_price
+            if (spin_amount < 7) {
+                final_position_with_price =
+                    image_init_step + full_round * 3 * spin_amount + full_round
+            } else {
+                final_position_with_price =
+                    image_init_step + full_round * 3 * spin_amount - full_round
+            }
             reel.style.backgroundPositionY = `${final_position_with_price}px`
         }, idx * time_difference_between_reel_stops)
     }
@@ -110,23 +119,30 @@ export function Kaz() {
     }
 
     return (
-        <div className="max-w-dvw h-dvh flex justify-center items-center">
-            <div id="centered-holder" className="flex flex-col items-center">
-                <img src="images/kaz/try-your-luck.png" width="75%" />
+        <div className="max-w-dvw flex h-dvh items-center justify-center">
+            <div
+                id="centered-holder"
+                className="flex h-fit w-fit flex-col items-center"
+            >
+                <img
+                    src="images/kaz/get-3-wins-in-a-row.png"
+                    width="35%"
+                    className="absolute"
+                />
                 <div
                     id="slot-machine-holder"
-                    className="w-fit h-fit flex flex-col items-center"
+                    className="flex h-fit w-fit flex-col items-center"
                 >
                     <img
                         src="images/kaz/slot-full-beta.png"
                         width="520px"
-                        className="shadow-black z-20 my-8"
+                        className="z-10 my-8 shadow-black"
                     />
                     <div
                         id="reels-holder"
-                        className="w-[29.5rem] absolute mt-[15em] z-10 flex justify-around "
+                        className="absolute mt-[15em] flex w-[29.5rem] justify-around"
                     >
-                        <div className="reel " ref={reel_1_ref}></div>
+                        <div className="reel" ref={reel_1_ref}></div>
                         <div className="reel" ref={reel_2_ref}></div>
                         <div className="reel" ref={reel_3_ref}></div>
                     </div>
@@ -134,7 +150,17 @@ export function Kaz() {
                 <button className="spin-btn" onClick={spinAll}>
                     SPIN!
                 </button>
-                <img src="images/kaz/get-3-wins-in-a-row.png" width="100%" />
+                {/*<Lottie*/}
+                {/*    className={'relative'}*/}
+                {/*    path={'lotties/kaz/confetti-casino.json'}*/}
+                {/*    loop={false}*/}
+                {/*    autoplay={true}*/}
+                {/*/>*/}
+                <img
+                    src="images/kaz/win-big.png"
+                    width="30%"
+                    className="absolute right-0 top-0"
+                />
             </div>
         </div>
     )

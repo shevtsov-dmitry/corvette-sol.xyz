@@ -11,18 +11,17 @@ export function WelcomePage() {
                 autoplay={true}
             />
             <img
-                className={'absolute mt-[20%] w-full object-contain'}
+                className={'absolute mt-[12%] w-full object-contain'}
                 src={'images/welcomePage/trail.png'}
             />
             <img
-                className={'mt-[-6em] h-full w-full scale-[40%] object-contain'}
+                className={'mt-[-6em] h-full w-full scale-[44%] object-contain'}
                 src={'images/welcomePage/vehicle.png'}
             />
             <Lottie
-                className={'absolute bottom-0 right-[5%]'}
-                path={'lotties/welcomePage/exclusevely-on-flash.json'}
+                className={'absolute bottom-0 right-[5%] w-[48%]'}
+                path={'lotties/exclusevely-on-flash.json'}
                 loop={false}
-                width={'52%'}
                 autoplay={true}
             />
             <Footer />
