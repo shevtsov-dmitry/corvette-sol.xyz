@@ -12,29 +12,31 @@ import "./index.css";
 function App() {
     const location = useLocation();
 
-    return (<main className="max-w-dvw h-full bg-[#2E2E2E] overflow-hidden">
+    return (<main className="max-w-dvw h-full bg-[#2E2E2E] ">
             {/* lighter gamma: #414141 */}
             <NavBar/>
-            <TransitionGroup>
-                <CSSTransition
-                    key={location.key}
-                    timeout={300}
-                    classNames="fade"
-                >
-                    <Routes>
-                        <Route path="/" element={
-                            <div className={"max-w-dvw h-full"}>
-                                <WelcomePage/>
-                                <Kaz/>
-                            </div>}
-                        />
-                        <Route path="/roadmap" element={<Roadmap/>}/>
-                        <Route path="/about-us" element={<AboutUs/>}/>
-                        <Route path="/garage" element={<Garage/>}/>
-                        <Route path="/merch" element={<Merch/>}/>
-                    </Routes>
-                </CSSTransition>
-            </TransitionGroup>
+            <div className="relative overflow-hidden">
+                <TransitionGroup>
+                    <CSSTransition
+                        key={location.key}
+                        timeout={300}
+                        classNames="fade"
+                    >
+                        <Routes>
+                            <Route path="/" element={
+                                <div className={"max-w-dvw h-full"}>
+                                    <WelcomePage/>
+                                    <Kaz/>
+                                </div>}
+                            />
+                            <Route path="/roadmap" element={<Roadmap/>}/>
+                            <Route path="/about-us" element={<AboutUs/>}/>
+                            <Route path="/garage" element={<Garage/>}/>
+                            <Route path="/merch" element={<Merch/>}/>
+                        </Routes>
+                    </CSSTransition>
+                </TransitionGroup>
+            </div>
         </main>
 
     )

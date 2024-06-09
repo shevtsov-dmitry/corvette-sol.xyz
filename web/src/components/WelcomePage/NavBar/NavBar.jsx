@@ -32,7 +32,6 @@ export function NavBar() {
                         </Link>
                     </div>
                     <div className="nav-btn-holder">
-
                         <Link to="/garage">
                             <button className="nav-btn">GARAGE</button>
                         </Link>
