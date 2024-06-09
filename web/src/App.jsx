@@ -8,6 +8,7 @@ import Garage from "./components/Garage/Garage.jsx";
 import Merch from "./components/Merch/Merch.jsx";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
 import "./index.css";
+import CarCustomization from "./components/CarCustomization/CarCustomization.jsx";
 
 function App() {
     const location = useLocation();
@@ -19,13 +20,19 @@ function App() {
                 <TransitionGroup>
                     <CSSTransition
                         key={location.key}
-                        timeout={300}
+                        timeout={{
+                            appear: 300,
+                            enter: 300,
+                            exit: 0,
+                        }}
                         classNames="fade"
+                        // unmountOnExit
                     >
                         <Routes>
                             <Route path="/" element={
                                 <div className={"max-w-dvw h-full"}>
                                     <WelcomePage/>
+                                    <CarCustomization/>
                                     <Kaz/>
                                 </div>}
                             />

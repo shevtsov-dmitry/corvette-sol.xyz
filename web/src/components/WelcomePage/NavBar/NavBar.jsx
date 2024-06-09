@@ -1,7 +1,5 @@
 import Lottie from 'lottie-react'
-import {Link, Route, Routes} from "react-router-dom";
-import {Roadmap} from "../../Roadmap/Roadmap.jsx";
-import AboutUs from "../../AboutUs/AboutUs.jsx";
+import {Link} from "react-router-dom";
 
 export function NavBar() {
     return (

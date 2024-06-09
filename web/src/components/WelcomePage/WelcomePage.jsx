@@ -5,13 +5,13 @@ export function WelcomePage() {
     return (
         <div className="max-w-dvw mt-24 h-dvh">
             <Lottie
-                className={'absolute left-[21%] top-[12%] mt-[2%] w-[22%]'}
+                className={'absolute left-[21%] top-[4%] mt-[2%] w-[22%]'}
                 path={'lotties/welcomePage/gray-corvete-welcome.json'}
                 loop={false}
                 autoplay={true}
             />
             <img
-                className={'absolute mt-[20%] w-full object-contain'}
+                className={'absolute mt-[17%] w-full object-contain'}
                 src={'images/welcomePage/trail.png'}
             />
             <img
@@ -19,10 +19,9 @@ export function WelcomePage() {
                 src={'images/welcomePage/vehicle.png'}
             />
             <Lottie
-                className={'absolute bottom-0 right-[5%]'}
+                className={'absolute right-[5%] top-[10%] w-[50%]'}
                 path={'lotties/welcomePage/exclusevely-on-flash.json'}
                 loop={false}
-                width={'52%'}
                 autoplay={true}
             />
             <Footer />

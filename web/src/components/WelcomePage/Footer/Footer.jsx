@@ -1,7 +1,7 @@
 export function Footer() {
     return (
         <div
-            className={"fixed bottom-0 w-full flex justify-center mb-[1%] h-[6.5%] "}
+            className={"z-50 fixed bottom-0 w-full flex justify-center mb-[1%] h-[6.5%] "}
         >
             <div id={"footer-panel"} className={"w-[67%] flex justify-between"}>
                 <div id="left-icons" className={"flex gap-4"}>

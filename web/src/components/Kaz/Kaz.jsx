@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import Lottie from 'lottie-react'
 
 export function Kaz() {
+    const spin_btn_ref = useRef(null)
     const [debug_idx, set_debug_idx] = useState(0)
     const [is_allowed_to_spin, set_is_allowed_to_spin] = useState(true)
     const [spin_amount, set_spins_amount] = useState(0)
@@ -98,6 +99,16 @@ export function Kaz() {
     }
 
     function spinAll() {
+        // debug
+        if (spin_btn_ref.current){
+            const btn_style = spin_btn_ref.current.style
+            btn_style.backgroundColor = "#03fc17"
+            setTimeout(()=> {
+                btn_style.backgroundColor = ""
+            }, 100)
+        }
+        // debug
+
         if (!is_allowed_to_spin) {
             return
         }
@@ -147,7 +158,7 @@ export function Kaz() {
                         <div className="reel" ref={reel_3_ref}></div>
                     </div>
                 </div>
-                <button className="spin-btn" onClick={spinAll}>
+                <button className="spin-btn" onClick={spinAll} ref={spin_btn_ref}>
                     SPIN!
                 </button>
                 {/*<Lottie*/}
@@ -159,7 +170,7 @@ export function Kaz() {
                 <img
                     src="images/kaz/win-big.png"
                     width="30%"
-                    className="absolute right-12 mt-[400px]"
+                    className="absolute right-20 mt-[400px]"
                 />
             </div>
         </div>
