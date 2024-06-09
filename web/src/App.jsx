@@ -1,7 +1,6 @@
 import { Kaz } from './components/Kaz/Kaz.jsx'
 import { WelcomePage } from './components/WelcomePage/WelcomePage.jsx'
 import { NavBar } from './components/WelcomePage/NavBar/NavBar.jsx'
-import { Roadmap } from './components/Roadmap/Roadmap.jsx'
 
 function App() {
     return (
@@ -9,7 +8,6 @@ function App() {
             {/* lighter gamma: #414141 */}
             <NavBar />
             <WelcomePage />
-            <Roadmap />
             <Kaz />
         </main>
     )

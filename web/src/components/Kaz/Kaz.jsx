@@ -126,8 +126,8 @@ export function Kaz() {
             >
                 <img
                     src="images/kaz/get-3-wins-in-a-row.png"
-                    width="35%"
-                    className="absolute"
+                    width="30%"
+                    className="absolute left-12"
                 />
                 <div
                     id="slot-machine-holder"
@@ -159,7 +159,7 @@ export function Kaz() {
                 <img
                     src="images/kaz/win-big.png"
                     width="30%"
-                    className="absolute right-0 top-0"
+                    className="absolute right-12 mt-[400px]"
                 />
             </div>
         </div>
