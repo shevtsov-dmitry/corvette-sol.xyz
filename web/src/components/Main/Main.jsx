@@ -10,6 +10,7 @@ export default function Main() {
     const [curSectionNum, setCurSectionNum] = useState(0)
     const [isAllowedToScrollAgain, setIsAllowedToScrollAgain] = useState(true)
 
+    const timeNotAllowedToScrollMs = 400
     const sections = [
         { num: 0, component: <WelcomePage /> },
         { num: 1, component: <CarCustomization /> },
@@ -30,8 +31,11 @@ export default function Main() {
             }
         })
         setIsAllowedToScrollAgain(false)
-        setTimeout(() => setIsAllowedToScrollAgain(true), 200)
-    }, 200)
+        setTimeout(
+            () => setIsAllowedToScrollAgain(true),
+            timeNotAllowedToScrollMs
+        )
+    }, timeNotAllowedToScrollMs)
 
     let touchStartY = 0
     const handleTouchStart = (event) => {

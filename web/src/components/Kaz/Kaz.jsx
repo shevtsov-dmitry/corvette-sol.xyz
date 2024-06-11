@@ -1,12 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 
-import Lottie from 'lottie-react'
-
 export function Kaz() {
-    const spin_btn_ref = useRef(null)
-    const [debug_idx, set_debug_idx] = useState(0)
-    const [is_allowed_to_spin, set_is_allowed_to_spin] = useState(true)
-    const [spin_amount, set_spins_amount] = useState(0)
+    const spinBtnRef = useRef(null)
+    const [debugIdx, setDebugIdx] = useState(0)
+    const [isAllowedToSpin, setIsAllowedToSpin] = useState(true)
+    const [spinAmount, setSpinsAmount] = useState(0)
 
     const chance_to_win_in_percent = 100,
         icons_amount = 9,
@@ -65,11 +63,10 @@ export function Kaz() {
     }
 
     function spinOne(reel, idx = 0) {
-        // win-in-slots-sound
         const sound = document.getElementById('run-slots-sound')
         sound.play()
-        set_debug_idx(debug_idx + 1)
-        set_spins_amount(spin_amount + 1)
+        setDebugIdx(debugIdx + 1)
+        setSpinsAmount(spinAmount + 1)
         const style = getComputedStyle(reel)
         const background_position_y = parseFloat(style['background-position-y'])
         const cur_reel_scroll_distance =
@@ -87,31 +84,31 @@ export function Kaz() {
     function executeGuaranteedSpin(reel, idx = 0) {
         const sound = document.getElementById('win-in-slots-sound')
         sound.play()
-        set_is_allowed_to_spin(false)
+        setIsAllowedToSpin(false)
         setTimeout(() => {
             reel.style.transition = spin_animation
 
             let final_position_with_price
-            if (spin_amount < 7) {
+            if (spinAmount < 7) {
                 final_position_with_price =
-                    image_init_step + full_round * 3 * spin_amount + full_round
+                    image_init_step + full_round * 3 * spinAmount + full_round
             } else {
                 final_position_with_price =
-                    image_init_step + full_round * 3 * spin_amount - full_round
+                    image_init_step + full_round * 3 * spinAmount - full_round
             }
             reel.style.backgroundPositionY = `${final_position_with_price}px`
         }, idx * time_difference_between_reel_stops)
     }
 
     function spinAll() {
-        if (!is_allowed_to_spin) {
+        if (!isAllowedToSpin) {
             return
         }
         if (!reel_1_ref.current || !reel_2_ref.current || !reel_3_ref.current) {
             return
         }
         const win_condition =
-            Math.random() <= chance_to_win_in_percent / 100 && spin_amount >= 2
+            Math.random() <= chance_to_win_in_percent / 100 && spinAmount >= 2
         if (win_condition) {
             reels.forEach((reel, index) => executeGuaranteedSpin(reel, index))
         } else {
@@ -141,23 +138,20 @@ export function Kaz() {
                 >
                     <img
                         src="images/kaz/slot-full-beta.png"
-                        width="520px"
-                        className="z-10 my-8 shadow-black"
+                        width="580px"
+                        className="z-30 mt-6 shadow-black"
                     />
                     <div
                         id="reels-holder"
-                        className="absolute mt-[15em] flex w-[29.5rem] justify-around"
+                        className="absolute mt-[15em] flex w-[29.8rem] justify-around"
                     >
                         <div className="reel" ref={reel_1_ref}></div>
                         <div className="reel" ref={reel_2_ref}></div>
                         <div className="reel" ref={reel_3_ref}></div>
                     </div>
+                    <div id="slots-bg"></div>
                 </div>
-                <button
-                    className="spin-btn"
-                    onClick={spinAll}
-                    ref={spin_btn_ref}
-                >
+                <button className="spin-btn" onClick={spinAll} ref={spinBtnRef}>
                     SPIN!
                 </button>
                 {/*<Lottie*/}
