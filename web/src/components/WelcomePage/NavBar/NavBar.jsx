@@ -14,7 +14,7 @@ export function NavBar() {
                             <button className="nav-btn">ROADMAP</button>
                         </Link>
                         <Link to="/about-us">
-                            <button className="nav-btn">ABOUT US</button>
+                            <button className="nav-btn pr-2">TOKENOMICA</button>
                         </Link>
                     </div>
                     <div

@@ -1,7 +1,9 @@
 import { Footer } from './Footer/Footer.jsx'
 import Lottie from 'lottie-react'
+import {useEffect, useState} from "react";
 
 export function WelcomePage() {
+
     return (
         <div className="max-w-dvw mt-24 h-dvh">
             <Lottie

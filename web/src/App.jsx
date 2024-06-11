@@ -1,14 +1,12 @@
-import {Kaz} from './components/Kaz/Kaz.jsx'
-import {WelcomePage} from './components/WelcomePage/WelcomePage.jsx'
 import {NavBar} from './components/WelcomePage/NavBar/NavBar.jsx'
 import {Route, Routes, useLocation} from "react-router-dom";
 import {Roadmap} from "./components/Roadmap/Roadmap.jsx";
-import AboutUs from "./components/AboutUs/AboutUs.jsx";
+import Tokenomica from "./components/Tokenomica/Tokenomica.jsx";
 import Garage from "./components/Garage/Garage.jsx";
 import Merch from "./components/Merch/Merch.jsx";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
 import "./index.css";
-import CarCustomization from "./components/CarCustomization/CarCustomization.jsx";
+import Main from "./components/Main/Main.jsx";
 
 function App() {
     const location = useLocation();
@@ -26,18 +24,11 @@ function App() {
                             exit: 0,
                         }}
                         classNames="fade"
-                        // unmountOnExit
                     >
                         <Routes>
-                            <Route path="/" element={
-                                <div className={"max-w-dvw h-full"}>
-                                    <WelcomePage/>
-                                    <CarCustomization/>
-                                    <Kaz/>
-                                </div>}
-                            />
+                            <Route path="/" element={<Main currentSectionNum="0"/> }/>
                             <Route path="/roadmap" element={<Roadmap/>}/>
-                            <Route path="/about-us" element={<AboutUs/>}/>
+                            <Route path="/about-us" element={<Tokenomica/>}/>
                             <Route path="/garage" element={<Garage/>}/>
                             <Route path="/merch" element={<Merch/>}/>
                         </Routes>
