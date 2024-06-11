@@ -1,6 +1,6 @@
 import Lottie from "lottie-react";
 
-export function Roadmap() {
+export default function Roadmap() {
     return <div className="max-w-dvw h-dvh flex flex-col items-center justify-center">
         <img src={"images/roadmap/road.png"} className="mt-10 z-0 w-full"/>
         <div id="road-signs-and-text-holder" className="z-20 absolute w-dvw flex justify-end items-end">

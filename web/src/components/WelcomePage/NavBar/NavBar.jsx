@@ -1,7 +1,7 @@
 import Lottie from 'lottie-react'
 import {Link} from "react-router-dom";
 
-export function NavBar() {
+export default function NavBar() {
     return (
         <div className="fixed z-50 flex h-fit w-dvw flex-col items-center justify-center gap-4">
             <header className="flex justify-around">
@@ -13,7 +13,7 @@ export function NavBar() {
                         <Link to="/roadmap">
                             <button className="nav-btn">ROADMAP</button>
                         </Link>
-                        <Link to="/about-us">
+                        <Link to="/tokenomica">
                             <button className="nav-btn pr-2">TOKENOMICA</button>
                         </Link>
                     </div>

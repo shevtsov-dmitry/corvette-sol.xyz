@@ -24,3 +24,24 @@
 	transform: scale(1);
 	transition: opacity 300ms, transform 300ms;
 }
+
+.swipe-enter {
+	 opacity: 0;
+	 transform: translateY(100%);
+ }
+.swipe-enter-active {
+	opacity: 1;
+	transform: translateY(0%);
+}
+.swipe-exit {
+	opacity: 1;
+	transform: translateY(0%);
+}
+.swipe-exit-active {
+	opacity: 0;
+	transform: translateY(100%);
+}
+.swipe-enter-active,
+.swipe-exit-active {
+	transition: opacity 300ms, transform 300ms;
+}
