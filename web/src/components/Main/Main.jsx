@@ -40,31 +40,29 @@ export default function Main() {
 
     const throttledHandleScroll = throttle(handleScroll, 200);
 
-    // let touchStartY = 0;
-    // const handleTouchStart = (event) => {
-    //     touchStartY = event.touches[0].clientY;
-    // };
-    // const handleTouchEnd = (event) => {
-    //     const touchEndY = event.changedTouches[0].clientY;
-    //     if (touchStartY - touchEndY > 50 && curSectionNum < sections.length - 1) {
-    //         setCurSectionNum(curSectionNum + 1);
-    //     } else if (touchEndY - touchStartY > 50 && curSectionNum > 0) {
-    //         setCurSectionNum(curSectionNum - 1);
-    //     }
-    // };
+    let touchStartY = 0;
+    const handleTouchStart = (event) => {
+        touchStartY = event.touches[0].clientY;
+    };
+    const handleTouchEnd = (event) => {
+        const touchEndY = event.changedTouches[0].clientY;
+        if (touchStartY - touchEndY > 50 && curSectionNum < sections.length - 1) {
+            setCurSectionNum(curSectionNum + 1);
+        } else if (touchEndY - touchStartY > 50 && curSectionNum > 0) {
+            setCurSectionNum(curSectionNum - 1);
+        }
+    };
 
     useEffect(() => {
         //     window.addEventListener('wheel', handleScroll, {passive: false});
         window.addEventListener('wheel', throttledHandleScroll, {passive: false});
-        // window.addEventListener('wheel', throttledHandleScroll);
-        // window.addEventListener('touchstart', handleTouchStart, {passive: false});
-        // window.addEventListener('touchend', handleTouchEnd, {passive: false});
+        window.addEventListener('touchstart', handleTouchStart, {passive: false});
+        window.addEventListener('touchend', handleTouchEnd, {passive: false});
         return () => {
 
             window.removeEventListener('wheel', throttledHandleScroll);
-
-            // window.removeEventListener('touchstart', handleTouchStart);
-            // window.removeEventListener('touchend', handleTouchEnd);
+            window.removeEventListener('touchstart', handleTouchStart);
+            window.removeEventListener('touchend', handleTouchEnd);
         };
 
     }, [throttledHandleScroll]);
