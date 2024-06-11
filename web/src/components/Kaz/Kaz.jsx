@@ -65,6 +65,9 @@ export function Kaz() {
     }
 
     function spinOne(reel, idx = 0) {
+        // win-in-slots-sound
+        const sound = document.getElementById('run-slots-sound')
+        sound.play()
         set_debug_idx(debug_idx + 1)
         set_spins_amount(spin_amount + 1)
         const style = getComputedStyle(reel)
@@ -82,6 +85,8 @@ export function Kaz() {
     }
 
     function executeGuaranteedSpin(reel, idx = 0) {
+        const sound = document.getElementById('win-in-slots-sound')
+        sound.play()
         set_is_allowed_to_spin(false)
         setTimeout(() => {
             reel.style.transition = spin_animation
@@ -99,16 +104,6 @@ export function Kaz() {
     }
 
     function spinAll() {
-        // debug
-        if (spin_btn_ref.current){
-            const btn_style = spin_btn_ref.current.style
-            btn_style.backgroundColor = "#03fc17"
-            setTimeout(()=> {
-                btn_style.backgroundColor = ""
-            }, 100)
-        }
-        // debug
-
         if (!is_allowed_to_spin) {
             return
         }
@@ -158,7 +153,11 @@ export function Kaz() {
                         <div className="reel" ref={reel_3_ref}></div>
                     </div>
                 </div>
-                <button className="spin-btn" onClick={spinAll} ref={spin_btn_ref}>
+                <button
+                    className="spin-btn"
+                    onClick={spinAll}
+                    ref={spin_btn_ref}
+                >
                     SPIN!
                 </button>
                 {/*<Lottie*/}
@@ -173,6 +172,16 @@ export function Kaz() {
                     className="absolute right-20 mt-[400px]"
                 />
             </div>
+            <audio
+                id="run-slots-sound"
+                src="sounds/play.mp3"
+                preload="auto"
+            ></audio>
+            <audio
+                id="win-in-slots-sound"
+                src="sounds/play-win.mp3"
+                preload="auto"
+            ></audio>
         </div>
     )
 }

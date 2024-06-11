@@ -2,11 +2,10 @@ import { Footer } from './Footer/Footer.jsx'
 import Lottie from 'lottie-react'
 
 export function WelcomePage() {
-
     return (
         <div className="max-w-dvw mt-24 h-dvh">
             <Lottie
-                className={'absolute left-[21%] top-[15%]  w-[22%]'}
+                className={'absolute left-[21%] top-[15%] w-[22%]'}
                 path={'lotties/welcomePage/gray-corvete-welcome.json'}
                 loop={false}
                 autoplay={true}
@@ -20,12 +19,11 @@ export function WelcomePage() {
                 src={'images/welcomePage/vehicle.png'}
             />
             <Lottie
-                className={'absolute right-[3%] bottom-[0%] w-[50%]'}
+                className={'absolute bottom-[0%] right-[3%] w-[50%]'}
                 path={'lotties/welcomePage/exclusevely-on-flash.json'}
                 loop={false}
                 autoplay={true}
             />
-            <Footer />
         </div>
     )
 }

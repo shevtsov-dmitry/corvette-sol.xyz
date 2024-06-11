@@ -4,6 +4,7 @@ import CarCustomization from '../CarCustomization/CarCustomization.jsx'
 import { Kaz } from '../Kaz/Kaz.jsx'
 import { throttle } from 'lodash/function.js'
 import { CSSTransition, SwitchTransition } from 'react-transition-group'
+import { Footer } from '../WelcomePage/Footer/Footer.jsx'
 
 export default function Main() {
     const [curSectionNum, setCurSectionNum] = useState(0)
@@ -118,6 +119,7 @@ export default function Main() {
                     <div />
                 )}
             </div>
+            <Footer />
         </>
     )
 }
