@@ -36,7 +36,8 @@ export function Kaz() {
 
     const spinBtnRef = useRef(null)
     const congratsBlockRef = useRef(null)
-    const loadingCircle = useRef(null)
+    const loadingCircleRef = useRef(null)
+    const openWinMessageAgainRef = useRef(null)
 
     useEffect(() => {
         if (!reel_1_ref.current || !reel_2_ref.current || !reel_3_ref.current) {
@@ -118,6 +119,9 @@ export function Kaz() {
     }
 
     useEffect(() => {
+        if (!isWinConfettiEnabled) {
+            return
+        }
         setTimeout(() => {
             setIsWinConfettiEnabled(false)
             setIsCongratulationShown(true)
@@ -150,37 +154,6 @@ export function Kaz() {
         }
     }
 
-    // function SlotMachine() {
-    //     return (
-    //         <>
-    //             <img
-    //                 src="images/kaz/get-3-wins-in-a-row.png"
-    //                 width="30%"
-    //                 className="absolute left-12"
-    //             />
-    //             <div
-    //                 id="slot-machine-holder"
-    //                 className="flex h-fit w-fit flex-col items-center"
-    //             >
-    //                 <img
-    //                     src="images/kaz/slot-full-beta.png"
-    //                     width="580px"
-    //                     className="z-30 mt-6 shadow-black"
-    //                 />
-    //                 <div
-    //                     id="reels-holder"
-    //                     className="absolute mt-[15em] flex w-[29.8rem] justify-around"
-    //                 >
-    //                     <div className="reel" ref={reel_1_ref} />
-    //                     <div className="reel" ref={reel_2_ref} />
-    //                     <div className="reel" ref={reel_3_ref} />
-    //                 </div>
-    //                 <div id="slots-bg"></div>
-    //             </div>
-    //         </>
-    //     )
-    // }
-
     function SaveWalletStatus(props) {
         const map = {
             ok: <p className={'absolute ml-2 text-5xl text-green-500'}>✓</p>,
@@ -203,10 +176,11 @@ export function Kaz() {
     }
 
     function showSaveWalletTransactionStatus() {
+        // TODO forbid to save when the wallet has been already saved
         setSaveWalletStatus('loading')
         setTimeout(() => {
             const fiftyFifty = ['ok', 'bad']
-            setSaveWalletStatus(fiftyFifty[parseInt(Math.random() * 2)])
+            setSaveWalletStatus(fiftyFifty[Math.floor(Math.random() * 2)])
         }, 1000)
         setTimeout(() => {
             setSaveWalletStatus('none')
@@ -225,6 +199,8 @@ export function Kaz() {
                         id="congrats-message-close-sign"
                         className="absolute mr-[-22px] select-none pb-3 font-mono text-6xl font-bold hover:cursor-pointer"
                         onClick={() => {
+                            openWinMessageAgainRef.current.style.display =
+                                'block'
                             congratsBlockRef.current.style.display = 'none'
                         }}
                     >
@@ -273,7 +249,7 @@ export function Kaz() {
                             </p>
                         </button>
                         <div
-                            ref={loadingCircle}
+                            ref={loadingCircleRef}
                             className="relative h-fit w-fit"
                         >
                             <SaveWalletStatus type={saveWalletStatus} />
@@ -323,7 +299,7 @@ export function Kaz() {
                         className="absolute flex h-full w-full items-center justify-center"
                     >
                         <Lottie
-                            className={'z-50 mt-[-20em] scale-150 bg-pink-400'}
+                            className={'z-50 mt-[-20em] scale-150'}
                             path={'lotties/kaz/confetti.json'}
                             loop={false}
                             autoplay={true}
@@ -332,31 +308,32 @@ export function Kaz() {
                 ) : (
                     <div />
                 )}
-                {/*{isCongratulationShown ? (*/}
-                <div className="absolute flex h-full w-full items-center justify-center">
-                    <CongratsMessage />
-                </div>
-                {/*) : (  <div />*/}
-                {/*)}*/}
+                {isCongratulationShown ? (
+                    <div className="absolute flex h-full w-full items-center justify-center">
+                        <CongratsMessage />
+                    </div>
+                ) : (
+                    <div />
+                )}
                 <img
                     src="images/kaz/win-big.png"
                     width="30%"
                     className="absolute right-20 mt-[400px]"
                 />
-                {isWin && !isCongratulationShown ? (
-                    <div className="m-0 flex w-full items-center justify-center p-0">
-                        <p
-                            className="absolute select-none text-white opacity-50 transition-all hover:cursor-pointer hover:opacity-100"
-                            onClick={() => {
-                                congratsBlockRef.current.style.display = 'flex'
-                            }}
-                        >
-                            Open win message again.
-                        </p>
-                    </div>
-                ) : (
-                    <div />
-                )}
+                <div className="m-0 flex w-full items-center justify-center p-0">
+                    <p
+                        className="absolute select-none text-white opacity-50 transition-all hover:cursor-pointer hover:opacity-100"
+                        style={{ display: 'none' }}
+                        onClick={() => {
+                            congratsBlockRef.current.style.display = 'flex'
+                            openWinMessageAgainRef.current.style.display =
+                                'none'
+                        }}
+                        ref={openWinMessageAgainRef}
+                    >
+                        Open win message again.
+                    </p>
+                </div>
             </div>
             <audio
                 id="run-slots-sound"
