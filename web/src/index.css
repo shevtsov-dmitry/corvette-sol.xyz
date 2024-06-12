@@ -2,6 +2,7 @@
 @import 'components/WelcomePage/Footer/Footer.css';
 @import 'components/Roadmap/Roadmap.css';
 @import 'components/Kaz/Kaz.css';
+@import "components/CarCustomization/CarCustomization.css";
 
 @tailwind base;
 @tailwind components;
