@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Lottie from 'lottie-react'
 import placeholder from 'lodash/fp/placeholder.js'
+import { CSSTransition } from 'react-transition-group'
 
 export function Kaz() {
     const [debugIdx, setDebugIdx] = useState(0)
@@ -20,11 +21,8 @@ export function Kaz() {
         time_difference_between_reel_stops = 300,
         overall_one_spin_time = 3500,
         full_round = 1488,
-        // spin_speed_multiplier = 30,
-        // time_difference_between_reel_stops = 100,
         image_init_step = 50,
         step_between_icons = 40,
-        // whole_scroll_distance = 3306,
         delta = 30
 
     const spin_animation = `background-position-y ${(2 + delta) * spin_speed_multiplier}ms cubic-bezier(.41,-0.01,.63,1.09)`
@@ -353,13 +351,13 @@ export function Kaz() {
 
             <audio
                 id="run-slots-sound"
-                src="sounds/play.mp3"
+                src="sounds/run-slots-machine.mp3"
                 preload="auto"
             ></audio>
 
             <audio
                 id="win-in-slots-sound"
-                src="sounds/play-win.mp3"
+                src="sounds/win-in-slots.mp3"
                 preload="auto"
             ></audio>
         </div>
