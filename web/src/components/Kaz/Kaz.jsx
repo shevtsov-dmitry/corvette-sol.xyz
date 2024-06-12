@@ -11,6 +11,7 @@ export function Kaz() {
         icon_width = 128,
         spin_speed_multiplier = 75,
         time_difference_between_reel_stops = 300,
+        overall_one_spin_time = 3400,
         full_round = 1488,
         // spin_speed_multiplier = 30,
         // time_difference_between_reel_stops = 100,
@@ -104,6 +105,11 @@ export function Kaz() {
         if (!isAllowedToSpin) {
             return
         }
+        setTimeout(() => {
+            setIsAllowedToSpin(true)
+        }, overall_one_spin_time)
+        setIsAllowedToSpin(false)
+
         if (!reel_1_ref.current || !reel_2_ref.current || !reel_3_ref.current) {
             return
         }
@@ -145,9 +151,9 @@ export function Kaz() {
                         id="reels-holder"
                         className="absolute mt-[15em] flex w-[29.8rem] justify-around"
                     >
-                        <div className="reel" ref={reel_1_ref}></div>
-                        <div className="reel" ref={reel_2_ref}></div>
-                        <div className="reel" ref={reel_3_ref}></div>
+                        <div className="reel" ref={reel_1_ref} />
+                        <div className="reel" ref={reel_2_ref} />
+                        <div className="reel" ref={reel_3_ref} />
                     </div>
                     <div id="slots-bg"></div>
                 </div>

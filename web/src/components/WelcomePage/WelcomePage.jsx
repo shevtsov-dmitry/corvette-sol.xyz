@@ -10,10 +10,12 @@ export function WelcomePage() {
                 loop={false}
                 autoplay={true}
             />
-            <img
-                className={'absolute mt-[17%] w-full object-contain'}
-                src={'images/welcomePage/trail.png'}
-            />
+            <div className={'absolute flex h-full w-full'}>
+                <img
+                    className={'object-contain'}
+                    src={'images/welcomePage/trail.png'}
+                />
+            </div>
             <img
                 className={'mt-[-6em] h-full w-full scale-[40%] object-contain'}
                 src={'images/welcomePage/vehicle.png'}
