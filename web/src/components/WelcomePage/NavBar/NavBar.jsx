@@ -37,7 +37,7 @@ export default function NavBar() {
                         className="relative mx-12 mb-[-1.3%] mt-[1%] w-[7%]"
                         onClick={() => setCurPageName('main')}
                     >
-                        {curPageName === 'main' ? (
+                        <Link to={'/'}>
                             <Lottie
                                 className={'min-w-24'}
                                 path={
@@ -46,18 +46,7 @@ export default function NavBar() {
                                 loop={true}
                                 autoplay={true}
                             />
-                        ) : (
-                            <Link to={'/'}>
-                                <Lottie
-                                    className={'min-w-24'}
-                                    path={
-                                        'lotties/welcomePage/low-nonstop-wheel.json'
-                                    }
-                                    loop={true}
-                                    autoplay={true}
-                                />
-                            </Link>
-                        )}
+                        </Link>
                     </div>
                     <div className="nav-btn-holder">
                         {curPageName === 'garage' ? (

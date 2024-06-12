@@ -1,17 +1,23 @@
 import { useEffect, useRef, useState } from 'react'
+import Lottie from 'lottie-react'
+import placeholder from 'lodash/fp/placeholder.js'
 
 export function Kaz() {
-    const spinBtnRef = useRef(null)
     const [debugIdx, setDebugIdx] = useState(0)
-    const [isAllowedToSpin, setIsAllowedToSpin] = useState(true)
     const [spinAmount, setSpinsAmount] = useState(0)
+
+    const [isAllowedToSpin, setIsAllowedToSpin] = useState(true)
+    const [isWin, setIsWin] = useState(false)
+    const [isWinConfettiEnabled, setIsWinConfettiEnabled] = useState(false)
+    const [isCongratulationShown, setIsCongratulationShown] = useState(false)
 
     const chance_to_win_in_percent = 100,
         icons_amount = 9,
         icon_width = 128,
         spin_speed_multiplier = 75,
         time_difference_between_reel_stops = 300,
-        overall_one_spin_time = 3400,
+        // overall_one_spin_time = 3400,
+        overall_one_spin_time = 1,
         full_round = 1488,
         // spin_speed_multiplier = 30,
         // time_difference_between_reel_stops = 100,
@@ -25,8 +31,10 @@ export function Kaz() {
     const reel_1_ref = useRef()
     const reel_2_ref = useRef()
     const reel_3_ref = useRef()
-
     const reels = [reel_1_ref.current, reel_2_ref.current, reel_3_ref.current]
+
+    const spinBtnRef = useRef(null)
+    const congratsBlockRef = useRef(null)
 
     useEffect(() => {
         if (!reel_1_ref.current || !reel_2_ref.current || !reel_3_ref.current) {
@@ -83,12 +91,15 @@ export function Kaz() {
     }
 
     function executeGuaranteedSpin(reel, idx = 0) {
+        if (isWin) {
+            return
+        }
+        setIsWin(true)
         const sound = document.getElementById('win-in-slots-sound')
         sound.play()
         setIsAllowedToSpin(false)
         setTimeout(() => {
             reel.style.transition = spin_animation
-
             let final_position_with_price
             if (spinAmount < 7) {
                 final_position_with_price =
@@ -99,7 +110,17 @@ export function Kaz() {
             }
             reel.style.backgroundPositionY = `${final_position_with_price}px`
         }, idx * time_difference_between_reel_stops)
+        setTimeout(() => {
+            setIsWinConfettiEnabled(true)
+        }, 3300)
     }
+
+    useEffect(() => {
+        setTimeout(() => {
+            setIsWinConfettiEnabled(false)
+            setIsCongratulationShown(true)
+        }, 1500)
+    }, [isWinConfettiEnabled])
 
     function spinAll() {
         if (!isAllowedToSpin) {
@@ -160,12 +181,72 @@ export function Kaz() {
                 <button className="spin-btn" onClick={spinAll} ref={spinBtnRef}>
                     SPIN!
                 </button>
-                {/*<Lottie*/}
-                {/*    className={'relative'}*/}
-                {/*    path={'lotties/kaz/confetti-casino.json'}*/}
-                {/*    loop={false}*/}
-                {/*    autoplay={true}*/}
-                {/*/>*/}
+                {isWinConfettiEnabled ? (
+                    <div
+                        id="confetti-holder"
+                        className="absolute flex h-full w-full items-center justify-center"
+                    >
+                        <Lottie
+                            className={'z-50 mt-[-20em] scale-150 bg-pink-400'}
+                            path={'lotties/kaz/confetti.json'}
+                            loop={false}
+                            autoplay={true}
+                        />
+                    </div>
+                ) : (
+                    <div />
+                )}
+                {/*{isCongratulationShown ? (*/}
+                {/*{true ? (*/}
+                <div className="absolute flex h-full w-full items-center justify-center">
+                    <div className="z-50 mt-[-10%] flex h-fit w-1/2 flex-col justify-between gap-10 rounded-2xl bg-[#692931] px-9 pb-5 pt-12 text-white">
+                        <h2 className="text-center font-nav-bar text-6xl text-[#FFFF00]">
+                            CONGRATULATIONS!
+                        </h2>
+                        <div className="mt-[-18px] flex w-full items-center justify-center">
+                            <p
+                                className={
+                                    // 'w-5/6 text-justify text-4xl font-bold'
+                                    'w-5/6 text-center text-4xl font-bold'
+                                }
+                            >
+                                Lorem ipsum dolor sit amet, consectetur
+                                adipiscing elit. Aliquam sit amet pretium dolor.
+                                Nam cursus urna erat, vitae mollis nibh laoreet
+                                eu. Ut fermentum dolor sed scelerisque gravida.
+                                In leo ex, maximus placerat dictum sit amet,
+                                bibendum in mi. Duis mollis eu diam non
+                                fringilla.
+                            </p>
+                        </div>
+                        <div
+                            id="congratulation-message-holder"
+                            ref={congratsBlockRef}
+                            className="flex h-fit w-full items-center justify-center"
+                        >
+                            <div className="flex h-12 w-[90%] gap-3">
+                                <input
+                                    className="flex-grow-[12] rounded-md pl-3 text-black"
+                                    placeholder="enter your wallet here"
+                                />
+                                <button
+                                    className="flex-grow rounded-md bg-[#5D161E]"
+                                    style={{
+                                        boxShadow:
+                                            'rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px',
+                                    }}
+                                >
+                                    <p className="pr-1 pt-2 font-nav-bar text-3xl font-bold text-[#FFFF00]">
+                                        SUBMIT
+                                    </p>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {/*) : (*/}
+                {/*    <div />*/}
+                {/*)}*/}
                 <img
                     src="images/kaz/win-big.png"
                     width="30%"
