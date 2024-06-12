@@ -10,15 +10,15 @@ export function Kaz() {
     const [isAllowedToSpin, setIsAllowedToSpin] = useState(true)
     const [isWin, setIsWin] = useState(false)
     const [isWinConfettiEnabled, setIsWinConfettiEnabled] = useState(false)
-    const [isCongratulationShown, setIsCongratulationShown] = useState(false)
+    const [isCongratulationVisible, setIsCongratulationVisible] =
+        useState(false)
 
     const chance_to_win_in_percent = 100,
         icons_amount = 9,
         icon_width = 128,
         spin_speed_multiplier = 75,
         time_difference_between_reel_stops = 300,
-        // overall_one_spin_time = 3400,
-        overall_one_spin_time = 1,
+        overall_one_spin_time = 3500,
         full_round = 1488,
         // spin_speed_multiplier = 30,
         // time_difference_between_reel_stops = 100,
@@ -94,13 +94,12 @@ export function Kaz() {
     }
 
     function executeGuaranteedSpin(reel, idx = 0) {
-        if (isWin) {
-            return
-        }
         setIsWin(true)
+        setIsAllowedToSpin(false)
+
         const sound = document.getElementById('win-in-slots-sound')
         sound.play()
-        setIsAllowedToSpin(false)
+
         setTimeout(() => {
             reel.style.transition = spin_animation
             let final_position_with_price
@@ -113,6 +112,7 @@ export function Kaz() {
             }
             reel.style.backgroundPositionY = `${final_position_with_price}px`
         }, idx * time_difference_between_reel_stops)
+
         setTimeout(() => {
             setIsWinConfettiEnabled(true)
         }, 3300)
@@ -124,18 +124,21 @@ export function Kaz() {
         }
         setTimeout(() => {
             setIsWinConfettiEnabled(false)
-            setIsCongratulationShown(true)
+            setIsCongratulationVisible(true)
         }, 1500)
     }, [isWinConfettiEnabled])
 
     function spinAll() {
-        if (!isAllowedToSpin) {
+        if (!isAllowedToSpin || isWin) {
             return
         }
         setTimeout(() => {
+            spinBtnRef.current.style.scale = '100%'
             setIsAllowedToSpin(true)
         }, overall_one_spin_time)
         setIsAllowedToSpin(false)
+
+        spinBtnRef.current.style.scale = '75%'
 
         if (!reel_1_ref.current || !reel_2_ref.current || !reel_3_ref.current) {
             return
@@ -193,6 +196,12 @@ export function Kaz() {
                 id="congratulation-message-holder"
                 ref={congratsBlockRef}
                 className="z-50 mt-[-10%] flex h-fit w-1/2 flex-col justify-between gap-10 rounded-2xl bg-[#692931] px-9 pb-5 text-white"
+                style={{
+                    // boxShadow:
+                    //     'rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px',
+                    boxShadow:
+                        'rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset',
+                }}
             >
                 <div className="flex w-full justify-end">
                     <div
@@ -271,6 +280,7 @@ export function Kaz() {
                     width="30%"
                     className="absolute left-12"
                 />
+
                 <div
                     id="slot-machine-holder"
                     className="flex h-fit w-fit flex-col items-center"
@@ -290,9 +300,11 @@ export function Kaz() {
                     </div>
                     <div id="slots-bg"></div>
                 </div>
+
                 <button className="spin-btn" onClick={spinAll} ref={spinBtnRef}>
                     SPIN!
                 </button>
+
                 {isWinConfettiEnabled ? (
                     <div
                         id="confetti-holder"
@@ -308,18 +320,21 @@ export function Kaz() {
                 ) : (
                     <div />
                 )}
-                {isCongratulationShown ? (
-                    <div className="absolute flex h-full w-full items-center justify-center">
+
+                {isWin && isCongratulationVisible ? (
+                    <div className="absolute flex h-dvh h-full w-full items-center justify-center">
                         <CongratsMessage />
                     </div>
                 ) : (
                     <div />
                 )}
+
                 <img
                     src="images/kaz/win-big.png"
                     width="30%"
                     className="absolute right-20 mt-[400px]"
                 />
+
                 <div className="m-0 flex w-full items-center justify-center p-0">
                     <p
                         className="absolute select-none text-white opacity-50 transition-all hover:cursor-pointer hover:opacity-100"
@@ -335,11 +350,13 @@ export function Kaz() {
                     </p>
                 </div>
             </div>
+
             <audio
                 id="run-slots-sound"
                 src="sounds/play.mp3"
                 preload="auto"
             ></audio>
+
             <audio
                 id="win-in-slots-sound"
                 src="sounds/play-win.mp3"
