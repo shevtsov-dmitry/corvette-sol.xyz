@@ -5,6 +5,7 @@ import placeholder from 'lodash/fp/placeholder.js'
 export function Kaz() {
     const [debugIdx, setDebugIdx] = useState(0)
     const [spinAmount, setSpinsAmount] = useState(0)
+    const [saveWalletStatus, setSaveWalletStatus] = useState('none')
 
     const [isAllowedToSpin, setIsAllowedToSpin] = useState(true)
     const [isWin, setIsWin] = useState(false)
@@ -35,6 +36,7 @@ export function Kaz() {
 
     const spinBtnRef = useRef(null)
     const congratsBlockRef = useRef(null)
+    const loadingCircle = useRef(null)
 
     useEffect(() => {
         if (!reel_1_ref.current || !reel_2_ref.current || !reel_3_ref.current) {
@@ -148,6 +150,140 @@ export function Kaz() {
         }
     }
 
+    // function SlotMachine() {
+    //     return (
+    //         <>
+    //             <img
+    //                 src="images/kaz/get-3-wins-in-a-row.png"
+    //                 width="30%"
+    //                 className="absolute left-12"
+    //             />
+    //             <div
+    //                 id="slot-machine-holder"
+    //                 className="flex h-fit w-fit flex-col items-center"
+    //             >
+    //                 <img
+    //                     src="images/kaz/slot-full-beta.png"
+    //                     width="580px"
+    //                     className="z-30 mt-6 shadow-black"
+    //                 />
+    //                 <div
+    //                     id="reels-holder"
+    //                     className="absolute mt-[15em] flex w-[29.8rem] justify-around"
+    //                 >
+    //                     <div className="reel" ref={reel_1_ref} />
+    //                     <div className="reel" ref={reel_2_ref} />
+    //                     <div className="reel" ref={reel_3_ref} />
+    //                 </div>
+    //                 <div id="slots-bg"></div>
+    //             </div>
+    //         </>
+    //     )
+    // }
+
+    function SaveWalletStatus(props) {
+        const map = {
+            ok: <p className={'absolute ml-2 text-5xl text-green-500'}>✓</p>,
+            bad: (
+                <p className={'absolute ml-2 pt-[7px] text-2xl text-green-500'}>
+                    ❌
+                </p>
+            ),
+            loading: (
+                <Lottie
+                    className={'absolute z-50 w-12 p-0'}
+                    path={'lotties/kaz/loading-circle.json'}
+                    loop={true}
+                    autoplay={true}
+                />
+            ),
+            none: <div />,
+        }
+        return map[props.type]
+    }
+
+    function showSaveWalletTransactionStatus() {
+        setSaveWalletStatus('loading')
+        setTimeout(() => {
+            const fiftyFifty = ['ok', 'bad']
+            setSaveWalletStatus(fiftyFifty[parseInt(Math.random() * 2)])
+        }, 1000)
+        setTimeout(() => {
+            setSaveWalletStatus('none')
+        }, 5000)
+    }
+
+    function CongratsMessage() {
+        return (
+            <div
+                id="congratulation-message-holder"
+                ref={congratsBlockRef}
+                className="z-50 mt-[-10%] flex h-fit w-1/2 flex-col justify-between gap-10 rounded-2xl bg-[#692931] px-9 pb-5 text-white"
+            >
+                <div className="flex w-full justify-end">
+                    <div
+                        id="congrats-message-close-sign"
+                        className="absolute mr-[-22px] select-none pb-3 font-mono text-6xl font-bold hover:cursor-pointer"
+                        onClick={() => {
+                            congratsBlockRef.current.style.display = 'none'
+                        }}
+                    >
+                        x
+                    </div>
+                </div>
+                <h2 className="text-center font-nav-bar text-6xl text-[#FFFF00]">
+                    CONGRATULATIONS!
+                </h2>
+                <div className="mt-[-18px] flex w-full items-center justify-center">
+                    <p
+                        className={
+                            'w-5/6 text-justify text-4xl font-bold'
+                            // 'w-5/6 text-center text-4xl font-bold'
+                        }
+                    >
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Aliquam sit amet pretium dolor. Nam cursus urna erat,
+                        vitae mollis nibh laoreet eu. Ut fermentum dolor sed
+                        scelerisque gravida. In leo ex, maximus placerat dictum
+                        sit amet, bibendum in mi. Duis mollis eu diam non
+                        fringilla.
+                    </p>
+                </div>
+                <div className="flex h-fit w-full items-center justify-center">
+                    <div className="mr-[-1.5%] flex h-12 w-[90%] gap-3">
+                        <input
+                            className="flex-grow-[12] rounded-md pl-3 text-[1.2em] text-black"
+                            placeholder="enter your wallet here"
+                        />
+                        <button
+                            className="flex-grow rounded-md bg-[#5D161E] transition-colors hover:bg-red-500"
+                            style={{
+                                boxShadow:
+                                    'rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px',
+                            }}
+                            onClick={() => {
+                                /* show lottie*/
+                            }}
+                        >
+                            <p
+                                className="pr-1 pt-2 font-nav-bar text-3xl font-bold text-[#FFFF00]"
+                                onClick={showSaveWalletTransactionStatus}
+                            >
+                                SUBMIT
+                            </p>
+                        </button>
+                        <div
+                            ref={loadingCircle}
+                            className="relative h-fit w-fit"
+                        >
+                            <SaveWalletStatus type={saveWalletStatus} />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
     return (
         <div className="max-w-dvw flex h-dvh items-center justify-center">
             <div
@@ -197,61 +333,30 @@ export function Kaz() {
                     <div />
                 )}
                 {/*{isCongratulationShown ? (*/}
-                {/*{true ? (*/}
                 <div className="absolute flex h-full w-full items-center justify-center">
-                    <div className="z-50 mt-[-10%] flex h-fit w-1/2 flex-col justify-between gap-10 rounded-2xl bg-[#692931] px-9 pb-5 pt-12 text-white">
-                        <h2 className="text-center font-nav-bar text-6xl text-[#FFFF00]">
-                            CONGRATULATIONS!
-                        </h2>
-                        <div className="mt-[-18px] flex w-full items-center justify-center">
-                            <p
-                                className={
-                                    // 'w-5/6 text-justify text-4xl font-bold'
-                                    'w-5/6 text-center text-4xl font-bold'
-                                }
-                            >
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit. Aliquam sit amet pretium dolor.
-                                Nam cursus urna erat, vitae mollis nibh laoreet
-                                eu. Ut fermentum dolor sed scelerisque gravida.
-                                In leo ex, maximus placerat dictum sit amet,
-                                bibendum in mi. Duis mollis eu diam non
-                                fringilla.
-                            </p>
-                        </div>
-                        <div
-                            id="congratulation-message-holder"
-                            ref={congratsBlockRef}
-                            className="flex h-fit w-full items-center justify-center"
-                        >
-                            <div className="flex h-12 w-[90%] gap-3">
-                                <input
-                                    className="flex-grow-[12] rounded-md pl-3 text-black"
-                                    placeholder="enter your wallet here"
-                                />
-                                <button
-                                    className="flex-grow rounded-md bg-[#5D161E]"
-                                    style={{
-                                        boxShadow:
-                                            'rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px',
-                                    }}
-                                >
-                                    <p className="pr-1 pt-2 font-nav-bar text-3xl font-bold text-[#FFFF00]">
-                                        SUBMIT
-                                    </p>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                    <CongratsMessage />
                 </div>
-                {/*) : (*/}
-                {/*    <div />*/}
+                {/*) : (  <div />*/}
                 {/*)}*/}
                 <img
                     src="images/kaz/win-big.png"
                     width="30%"
                     className="absolute right-20 mt-[400px]"
                 />
+                {isWin && !isCongratulationShown ? (
+                    <div className="m-0 flex w-full items-center justify-center p-0">
+                        <p
+                            className="absolute select-none text-white opacity-50 transition-all hover:cursor-pointer hover:opacity-100"
+                            onClick={() => {
+                                congratsBlockRef.current.style.display = 'flex'
+                            }}
+                        >
+                            Open win message again.
+                        </p>
+                    </div>
+                ) : (
+                    <div />
+                )}
             </div>
             <audio
                 id="run-slots-sound"
