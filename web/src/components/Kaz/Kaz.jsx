@@ -173,7 +173,11 @@ export function Kaz() {
             ),
             none: <div />,
         }
-        return map[props.type]
+        return (
+            <div className={'absolute mb-[4.5rem] ml-[60px]'}>
+                {map[props.type]}
+            </div>
+        )
     }
 
     function showSaveWalletTransactionStatus() {
@@ -193,7 +197,7 @@ export function Kaz() {
             <div
                 id="congratulation-message-holder"
                 ref={congratsBlockRef}
-                className="z-50 mt-[-10%] flex h-fit w-1/2 flex-col justify-between gap-10 rounded-2xl bg-[#692931] px-9 pb-5 text-white"
+                className="z-50 mt-[-10%] flex h-fit w-[45%] flex-col justify-between gap-10 rounded-2xl bg-[#692931] pb-5 text-white"
                 style={{
                     // boxShadow:
                     //     'rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px',
@@ -204,7 +208,7 @@ export function Kaz() {
                 <div className="flex w-full justify-end">
                     <div
                         id="congrats-message-close-sign"
-                        className="absolute mr-[-22px] select-none pb-3 font-mono text-6xl font-bold hover:cursor-pointer"
+                        className="absolute mr-3 select-none pb-3 font-mono text-6xl font-bold hover:cursor-pointer"
                         onClick={() => {
                             openWinMessageAgainRef.current.style.display =
                                 'block'
@@ -220,8 +224,8 @@ export function Kaz() {
                 <div className="mt-[-18px] flex w-full items-center justify-center">
                     <p
                         className={
-                            'w-5/6 text-justify text-4xl font-bold'
-                            // 'w-5/6 text-center text-4xl font-bold'
+                            // 'w-5/6 text-justify text-4xl font-bold'
+                            'w-5/6 text-center text-4xl font-bold'
                         }
                     >
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -233,11 +237,18 @@ export function Kaz() {
                     </p>
                 </div>
                 <div className="flex h-fit w-full items-center justify-center">
-                    <div className="mr-[-1.5%] flex h-12 w-[90%] gap-3">
+                    <div className="mr-[-1.5%] flex h-12 w-[90%] gap-2">
                         <input
                             className="flex-grow-[12] rounded-md pl-3 text-[1.2em] text-black"
                             placeholder="enter your wallet here"
                         />
+                        <div
+                            className={
+                                'relative flex h-5 flex-grow-[0] items-end bg-blue-100'
+                            }
+                        >
+                            <SaveWalletStatus type={saveWalletStatus} />
+                        </div>
                         <button
                             className="flex-grow rounded-md bg-[#5D161E] transition-colors hover:bg-red-500"
                             style={{
@@ -258,9 +269,7 @@ export function Kaz() {
                         <div
                             ref={loadingCircleRef}
                             className="relative h-fit w-fit"
-                        >
-                            <SaveWalletStatus type={saveWalletStatus} />
-                        </div>
+                        ></div>
                     </div>
                 </div>
             </div>
@@ -320,7 +329,7 @@ export function Kaz() {
                 )}
 
                 {isWin && isCongratulationVisible ? (
-                    <div className="absolute flex h-dvh h-full w-full items-center justify-center">
+                    <div className="absolute mt-[-2%] flex h-full w-full items-center justify-center">
                         <CongratsMessage />
                     </div>
                 ) : (

@@ -36,21 +36,22 @@ export default function Tokenomica() {
                     labels: {
                         color: 'white', // Change the color here
                         font: {
-                            size: 14, // Optional: change the font size
+                            family: 'sans-serif',
+                            size: 15, // Optional: change the font size
                         },
                     },
                 },
-                datalabels: {
-                    color: 'white', // Label text color
-                    formatter: (value, context) => {
-                        const label =
-                            context.chart.data.labels[context.dataIndex]
-                        return `${label}: ${value}%`
-                    },
-                    font: {
-                        size: 14, // Optional: change the font size
-                    },
-                },
+                // datalabels: {
+                //     color: 'white', // Label text color
+                //     formatter: (value, context) => {
+                //         const label =
+                //             context.chart.data.labels[context.dataIndex]
+                //         return `${label}: ${value}%`
+                //     },
+                //     font: {
+                //         size: 14, // Optional: change the font size
+                //     },
+                // },
             },
         }
 
