@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
 import Lottie from 'lottie-react'
-import placeholder from 'lodash/fp/placeholder.js'
-import { CSSTransition } from 'react-transition-group'
 
 export function Kaz() {
     const [debugIdx, setDebugIdx] = useState(0)

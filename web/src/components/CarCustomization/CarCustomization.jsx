@@ -1,34 +1,60 @@
 import React, { useEffect, useRef, useState } from 'react'
 
 export default function CarCustomization() {
+    // TODO make env
+    const HOST = 'http://localhost:8080'
+
     const [midElIdx, setMidElIdx] = useState(0)
     const [isScrollRight, setIsScrollRight] = useState(true)
-
     const [images, setImages] = useState([])
+    const [colorsForModels, setColorsForModels] = useState([])
+    const [customizationProps, setCustomizationProps] = useState({
+        show: 'model',
+        model: 1,
+        color: 'blue',
+        rims: 1,
+    })
 
     const customizationSliderRef = useRef(null)
 
-    const HOST = 'http://localhost:8080'
+    async function fetchColorsForModels() {
+        const res = await fetch(HOST + '/cars/get/colors-for-models')
+        if (!res.ok) {
+            console.error("can't get colors for models hashmap from server")
+            return
+        }
+        const json = await res.json()
+        setColorsForModels(json)
+    }
 
-    async function fetchServerImages(type) {
-        const res = await fetch(`${HOST}/cars/get/${type}`)
-        const jsons = await res.json()
-        setImages(
-            jsons.map((json) => (
-                // <img key={json.index} src={json.image} className={''} />
-                <img
-                    key={json.index}
-                    src={`data:image/jpeg;base64,${json.image}`}
-                    className={''}
-                />
-            ))
-        )
+    async function fetchServerImages() {
+        try {
+            const m = customizationProps
+            const res = await fetch(
+                `${HOST}/cars/get/assets?show=${m['show']}&model=${m['model']}&color=${m['color']}&rims=${m['rims']}`
+            )
+            const base64Images = await res.json()
+            setImages(
+                base64Images.map((image) => (
+                    // <img key={json.index} src={json.image} className={''} />
+                    <img
+                        key={Math.random()}
+                        src={`data:image/jpeg;base64,${image}`}
+                        className={''}
+                    />
+                ))
+            )
+        } catch (e) {
+            console.log("can't get car images from server", e)
+        }
     }
 
     useEffect(() => {
-        fetchServerImages('models')
+        fetchServerImages()
+        fetchColorsForModels()
     }, [])
 
+    // TODO count distance with formula curScreenSize / 3
     const scrollDistancePx = 384
 
     function switchToPrev() {
@@ -83,12 +109,16 @@ export default function CarCustomization() {
         )
     }
 
-    function CustomizationMenuBtn({ title, customPartType }) {
+    function CustomizationMenuBtn({ title }) {
         return (
             <button
                 className={'customization-menu-btn'}
                 onClick={() => {
-                    fetchServerImages(customPartType)
+                    setCustomizationProps({
+                        ...customizationProps,
+                        show: title.toLowerCase(),
+                    })
+                    fetchServerImages()
                 }}
             >
                 {title}
@@ -144,18 +174,9 @@ export default function CarCustomization() {
                     }
                 >
                     <div className="flex w-fit justify-around gap-4">
-                        <CustomizationMenuBtn
-                            title={'COLOR'}
-                            customPartType={'colors'}
-                        />
-                        <CustomizationMenuBtn
-                            title={'MODEL'}
-                            customPartType={'models'}
-                        />
-                        <CustomizationMenuBtn
-                            title={'RIMS'}
-                            customPartType={'rims'}
-                        />
+                        <CustomizationMenuBtn title={'MODEL'} />
+                        <CustomizationMenuBtn title={'COLOR'} />
+                        <CustomizationMenuBtn title={'RIMS'} />
                         <button
                             className={
                                 'customization-menu-btn bg-green-900 hover:bg-green-700'

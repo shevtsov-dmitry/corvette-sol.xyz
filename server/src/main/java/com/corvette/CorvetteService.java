@@ -4,14 +4,12 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class CorvetteService {
@@ -38,8 +36,7 @@ public class CorvetteService {
                 }
             }
             return matchedImages;
-        } catch (
-                Exception e) {
+        } catch (Exception e) {
             return Collections.emptyList();
         }
     }
@@ -51,15 +48,41 @@ public class CorvetteService {
             }
             case "color" -> {
                 String[] splitted = fileName.split("-");
-                String[] requested = new String[]{splitted[0], splitted[2]};
+                String[] requested = new String[]{metadata.modelIdx(),metadata.rimsIdx()};
                 return Arrays.equals(splitted, requested);
             }
             case "rims" -> {
-                return fileName.startsWith(metadata.color() + "-" + metadata.color());
+                return fileName.startsWith(metadata.modelIdx() + "-" + metadata.color());
             }
             default -> {
                 return false;
             }
+        }
+    }
+
+    public byte[] getFinalCar(CarAssetMetadata carAssetMetadata) {
+        return new byte[0];
+    }
+
+    public Map<Integer, Set<String>> defineColorsAvailableForModels() {
+        Map<Integer, Set<String>> colors = new HashMap<>();
+        try {
+            try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(Paths.get(IMAGES_STORAGE_PATH))) {
+                for (Path filePath : directoryStream) {
+                    String fileName = filePath.getFileName().toString();
+                    fileName = fileName.substring(0, fileName.lastIndexOf("."));
+                    String[] splitted = fileName.split("-");
+                    int k = Integer.parseInt(splitted[0]);
+                    String color = splitted[1];
+                    Set<String> temp = colors.getOrDefault(k, new HashSet<>());
+                    temp.add(color);
+                    colors.put(k, temp);
+                }
+            }
+            return colors;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new HashMap<>();
         }
     }
 

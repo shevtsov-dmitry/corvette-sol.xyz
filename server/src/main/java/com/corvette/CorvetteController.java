@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/cars")
@@ -19,13 +20,28 @@ public class CorvetteController {
         this.service = service;
     }
 
-    @GetMapping("/get/car-assets")
+    @GetMapping("/get/assets")
     public ResponseEntity<List<byte[]>> getCarAssets(@RequestParam String show, @RequestParam String model, @RequestParam String color, @RequestParam String rims) {
         var matchedImages = service.retrieveAssets(show,new CarAssetMetadata(model, color, rims));
         if (matchedImages.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(matchedImages);
+    }
+
+
+    @GetMapping("/get/final-car")
+    public ResponseEntity<byte[]> getFinalCar(@RequestParam String model, @RequestParam String color, @RequestParam String rims) {
+        var image = service.getFinalCar(new CarAssetMetadata(model, color, rims));
+        if (image.length == 0) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(image);
+    }
+
+    @GetMapping("/get/colors-for-models")
+    public Map<Integer, Set<String>> getColorsForModels() {
+        return service.defineColorsAvailableForModels();
     }
 
 
