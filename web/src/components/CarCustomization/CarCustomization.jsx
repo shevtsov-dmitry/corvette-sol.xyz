@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
 
 export default function CarCustomization() {
-    const [midElIdx, setMidElIdx] = useState(1)
+    const [midElIdx, setMidElIdx] = useState(0)
+    const [isScrollRight, setIsScrollRight] = useState(true)
+
     const [images, setImages] = useState([])
 
     const customizationSliderRef = useRef(null)
@@ -33,6 +35,8 @@ export default function CarCustomization() {
         setMidElIdx((prevIndex) =>
             prevIndex === 0 ? images.length - 1 : prevIndex - 1
         )
+        setIsScrollRight(false)
+
         if (customizationSliderRef.current) {
             customizationSliderRef.current.scrollLeft -= scrollDistancePx
         }
@@ -42,6 +46,7 @@ export default function CarCustomization() {
         setMidElIdx((prevIndex) =>
             prevIndex === images.length - 1 ? 0 : prevIndex + 1
         )
+        setIsScrollRight(true)
 
         if (customizationSliderRef.current) {
             customizationSliderRef.current.scrollLeft += scrollDistancePx
@@ -52,21 +57,18 @@ export default function CarCustomization() {
         const isLeft = index === midElIdx - 1
         const isMiddle = index === midElIdx
         const isRight = index === midElIdx + 1
-        // const sizeClass = isMiddle ? 'w-1/2 h-[15rem]' : 'w-1/4 h-4/6'
-        // const sizeClass = isMiddle ? 'w-1/3 scale-125 h-[20rem]' : 'w-1/3 h-4/6'
 
         return isMiddle ? (
             <div
-                className={`flex h-[15rem] w-1/2 flex-shrink-0 items-center justify-center`}
+                className={`flex h-[20em] w-1/2 flex-shrink-0 items-center justify-center`}
             >
-                <div className={'scale-middle-up flex w-1/2 justify-center'}>
+                <div className={'animate-scale-up flex w-1/2 justify-center'}>
                     {image}
                 </div>
             </div>
         ) : (
             <div
-                // className={`${sizeClass} flex flex-shrink-0 items-center justify-center transition-all ease-in-out`}
-                className={`flex h-[15rem] w-1/4 flex-shrink-0 cursor-pointer items-center justify-center`}
+                className={`${isRight && !isScrollRight ? 'animate-scale-down-right' : ''} ${isLeft && isScrollRight ? 'animate-scale-down-left' : ''} flex h-[15rem] w-1/4 flex-shrink-0 cursor-pointer items-center justify-center`}
                 onClick={(event) => {
                     if (isRight) {
                         switchToNext()
@@ -118,6 +120,10 @@ export default function CarCustomization() {
                             'no-scrollbar flex h-fit w-fit select-none overflow-x-scroll scroll-smooth'
                         }
                     >
+                        <div
+                            id={'left-empty-space'}
+                            className={`w-1/4 flex-shrink-0`}
+                        />
                         {images.map((image, index) => (
                             <PreviewBlock
                                 key={index}
@@ -125,7 +131,10 @@ export default function CarCustomization() {
                                 image={image}
                             />
                         ))}
-                        <div className={'empty-space h-4/6 w-1/4'}></div>
+                        <div
+                            id={'right-empty-space'}
+                            className={`w-1/4 flex-shrink-0`}
+                        />
                     </div>
                 </div>
                 <div className="flex w-fit justify-around gap-4">

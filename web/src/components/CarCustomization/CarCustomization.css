@@ -10,24 +10,43 @@
     0% {
         @apply w-1/2;
     }
+    50% {
+        @apply w-5/6;
+    }
     100% {
         @apply h-fit w-full;
     }
 }
 
-.scale-middle-up {
-    animation: scaleUp 700ms forwards;
+.animate-scale-up {
+    animation: scaleUp 400ms forwards;
 }
 
-@keyframes scaleDown {
+@keyframes scaleDownLeft {
     0% {
-        @apply h-fit w-full;
+        @apply h-[20em] w-1/2;
     }
     100% {
-        @apply w-1/2;
+        @apply w-1/4;
     }
 }
 
-.scale-middle-down {
-    animation: scaleUp 700ms forwards;
+.animate-scale-down-left {
+    animation: scaleDownLeft 400ms forwards;
+}
+
+@keyframes scaleDownRight {
+    0% {
+        @apply h-[20em] w-1/2 ml-[-25%];
+    }
+    60% {
+        @apply ml-0
+    }
+    100% {
+        @apply w-1/4;
+    }
+}
+
+.animate-scale-down-right {
+    animation: scaleDownRight 400ms forwards;
 }
