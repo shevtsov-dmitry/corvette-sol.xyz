@@ -99,7 +99,7 @@ export default function CarCustomization() {
     return (
         <div
             className={
-                'flex h-dvh w-dvw flex-col items-center justify-center gap-3'
+                'flex h-dvh w-dvw flex-col items-center justify-center gap-12'
             }
         >
             <img
@@ -137,31 +137,33 @@ export default function CarCustomization() {
                         />
                     </div>
                 </div>
-                <div className="flex w-fit justify-around gap-4">
-                    <CustomizationMenuBtn
-                        title={'COLOR'}
-                        customPartType={'colors'}
-                    />
-                    <CustomizationMenuBtn
-                        title={'MODEL'}
-                        customPartType={'models'}
-                    />
-                    <CustomizationMenuBtn
-                        title={'BACKGROUND'}
-                        customPartType={'backgrounds'}
-                    />
-                    <CustomizationMenuBtn
-                        title={'RIMS'}
-                        customPartType={'rims'}
-                    />
-                    <button
-                        className={
-                            'customization-menu-btn bg-green-900 hover:bg-green-700'
-                        }
-                        onClick={() => {}}
-                    >
-                        SAVE
-                    </button>
+                <div
+                    id={'buttons-holder'}
+                    className={
+                        'mt-[2%] flex w-screen items-center justify-center'
+                    }
+                >
+                    <div className="flex w-fit justify-around gap-4">
+                        <CustomizationMenuBtn
+                            title={'COLOR'}
+                            customPartType={'colors'}
+                        />
+                        <CustomizationMenuBtn
+                            title={'MODEL'}
+                            customPartType={'models'}
+                        />
+                        <CustomizationMenuBtn
+                            title={'RIMS'}
+                            customPartType={'rims'}
+                        />
+                        <button
+                            className={
+                                'customization-menu-btn bg-green-900 hover:bg-green-700'
+                            }
+                        >
+                            SAVE
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
