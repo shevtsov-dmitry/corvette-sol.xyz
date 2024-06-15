@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
 
 export default function CarCustomization() {
-    const [currentIndex, setCurrentIndex] = useState(0)
+    const [midElIdx, setMidElIdx] = useState(1)
     const [images, setImages] = useState([])
+
+    const customizationSliderRef = useRef(null)
 
     const HOST = 'http://localhost:8080'
 
@@ -25,62 +27,56 @@ export default function CarCustomization() {
         fetchServerImages('models')
     }, [])
 
+    const scrollDistancePx = 384
+
     function switchToPrev() {
-        setCurrentIndex((prevIndex) =>
+        setMidElIdx((prevIndex) =>
             prevIndex === 0 ? images.length - 1 : prevIndex - 1
         )
+        if (customizationSliderRef.current) {
+            customizationSliderRef.current.scrollLeft -= scrollDistancePx
+        }
     }
 
     function switchToNext() {
-        setCurrentIndex((prevIndex) =>
+        setMidElIdx((prevIndex) =>
             prevIndex === images.length - 1 ? 0 : prevIndex + 1
         )
+
+        if (customizationSliderRef.current) {
+            customizationSliderRef.current.scrollLeft += scrollDistancePx
+        }
     }
 
-    function PreviewBlock({ index, position }) {
-        const isMiddle = position === 'mid'
-        const sizeClass = isMiddle ? 'w-1/2 h-5/6' : 'w-1/4 h-4/6'
+    function PreviewBlock({ index, image }) {
+        const isLeft = index === midElIdx - 1
+        const isMiddle = index === midElIdx
+        const isRight = index === midElIdx + 1
+        // const sizeClass = isMiddle ? 'w-1/2 h-[15rem]' : 'w-1/4 h-4/6'
+        // const sizeClass = isMiddle ? 'w-1/3 scale-125 h-[20rem]' : 'w-1/3 h-4/6'
 
-        return (
+        return isMiddle ? (
             <div
-                className={`${sizeClass} flex flex-shrink-0 items-center justify-center bg-neutral-600`}
+                className={`flex h-[15rem] w-1/2 flex-shrink-0 items-center justify-center`}
+            >
+                <div className={'scale-middle-up flex w-1/2 justify-center'}>
+                    {image}
+                </div>
+            </div>
+        ) : (
+            <div
+                // className={`${sizeClass} flex flex-shrink-0 items-center justify-center transition-all ease-in-out`}
+                className={`flex h-[15rem] w-1/4 flex-shrink-0 cursor-pointer items-center justify-center`}
                 onClick={(event) => {
-                    if (position === 'right') {
+                    if (isRight) {
                         switchToNext()
                     }
-                    if (position === 'left') {
+                    if (isLeft) {
                         switchToPrev()
                     }
                 }}
-                style={
-                    position !== 'mid'
-                        ? {
-                              cursor: 'pointer',
-                          }
-                        : {}
-                }
             >
-                {images[index]}
-            </div>
-        )
-    }
-
-    function SliderSection() {
-        const visibleBlocks = [
-            (currentIndex - 1 + images.length) % images.length,
-            currentIndex,
-            (currentIndex + 1) % images.length,
-        ]
-
-        return (
-            <div
-                className={
-                    'flex h-[30em] w-full select-none items-center justify-center gap-3'
-                }
-            >
-                <PreviewBlock position={'left'} index={visibleBlocks[0]} />
-                <PreviewBlock position={'mid'} index={visibleBlocks[1]} />
-                <PreviewBlock position={'right'} index={visibleBlocks[2]} />
+                {image}
             </div>
         )
     }
@@ -112,9 +108,26 @@ export default function CarCustomization() {
             />
             <div
                 id="customization-menu-holder"
-                className="flex h-fit w-3/4 flex-col items-center"
+                // className="flex h-fit w-fit flex-col items-start"
+                className="h-fit w-fit flex-col items-start"
             >
-                <SliderSection />
+                <div className="mx-[10%] flex w-[80%]">
+                    <div
+                        ref={customizationSliderRef}
+                        className={
+                            'no-scrollbar flex h-fit w-fit select-none overflow-x-scroll scroll-smooth'
+                        }
+                    >
+                        {images.map((image, index) => (
+                            <PreviewBlock
+                                key={index}
+                                index={index}
+                                image={image}
+                            />
+                        ))}
+                        <div className={'empty-space h-4/6 w-1/4'}></div>
+                    </div>
+                </div>
                 <div className="flex w-fit justify-around gap-4">
                     <CustomizationMenuBtn
                         title={'COLOR'}
