@@ -30,7 +30,7 @@ public class CorvetteController {
     }
 
 
-    @GetMapping("/get/final-car")
+    @GetMapping("/get/constructed-car")
     public ResponseEntity<byte[]> getFinalCar(@RequestParam String model, @RequestParam String color, @RequestParam String rims) {
         var image = service.getFinalCar(new CarAssetMetadata(model, color, rims));
         if (image.length == 0) {
@@ -38,11 +38,5 @@ public class CorvetteController {
         }
         return ResponseEntity.ok(image);
     }
-
-    @GetMapping("/get/colors-for-models")
-    public Map<Integer, Set<String>> getColorsForModels() {
-        return service.defineColorsAvailableForModels();
-    }
-
 
 }

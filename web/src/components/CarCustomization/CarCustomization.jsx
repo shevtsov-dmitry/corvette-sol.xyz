@@ -5,15 +5,17 @@ export default function CarCustomization() {
     const [images, setImages] = useState([])
     const [switchedCarsAmount, setSwitchedCarsAmount] = useState(0)
     const [curCustomizationBtn, setCurCustomizationBtn] = useState('model')
-    const [isForbidAnimation, setIsForbidAnimation] = useState(true)
     const [customizationProps, setCustomizationProps] = useState({
         show: 'model',
         model: 1,
         color: 'blue',
         rims: 1,
     })
+    const [constructedCarImg, setConstructedCarImg] = useState('')
 
     const [isScrollRight, setIsScrollRight] = useState(true)
+    const [isForbidAnimation, setIsForbidAnimation] = useState(true)
+    const [isSaved, setIsSaved] = useState(false)
 
     const customizationSliderRef = useRef(null)
 
@@ -31,8 +33,18 @@ export default function CarCustomization() {
     }
 
     useEffect(() => {
+        fetchImages()
+    }, [])
+
+    useEffect(() => {
         setIsForbidAnimation(switchedCarsAmount === 0)
     }, [switchedCarsAmount])
+
+    useEffect(() => {
+        fetchImages()
+        // setIsForbidAnimation(true)
+        // setTimeout(() => setIsForbidAnimation(false), 500)
+    }, [curCustomizationBtn])
 
     async function fetchImages() {
         try {
@@ -53,7 +65,6 @@ export default function CarCustomization() {
             resData.forEach((item) => {
                 filenames.push(atob(item['filename']))
             })
-            console.log(filenames)
 
             setImages(
                 resData.map((imageAndFileName) => (
@@ -67,14 +78,6 @@ export default function CarCustomization() {
             console.error("can't get car images from server", e)
         }
     }
-
-    useEffect(() => {
-        fetchImages()
-    }, [])
-
-    useEffect(() => {
-        fetchImages()
-    }, [curCustomizationBtn])
 
     function switchToPrev() {
         setMidElIdx((prevIndex) =>
@@ -141,6 +144,9 @@ export default function CarCustomization() {
             <button
                 className={'customization-menu-btn'}
                 onClick={() => {
+                    if (title === curCustomizationBtn) {
+                        return
+                    }
                     setCustomizationProps({
                         show: title.toLowerCase(),
                         model: parseFilenameProps('model'),
@@ -224,12 +230,29 @@ export default function CarCustomization() {
                             className={
                                 'customization-menu-btn bg-green-900 hover:bg-green-700'
                             }
+                            onClick={async () => {
+                                const m = customizationProps
+                                const res = await fetch(
+                                    `${HOST}/cars/get/constructed-car?model=${m['model']}&color=${m['color']}&rims=${m['rims']}`
+                                )
+                                const imageBytes = await res.blob()
+                                const imageUrl = URL.createObjectURL(imageBytes)
+                                setIsSaved(true)
+                                setConstructedCarImg(imageUrl)
+                            }}
                         >
                             SAVE
                         </button>
                     </div>
                 </div>
             </div>
+            {isSaved ? (
+                <div className={'absolute h-screen w-screen bg-red-300'}>
+                    <img src={constructedCarImg} />
+                </div>
+            ) : (
+                <div />
+            )}
         </div>
     )
 }

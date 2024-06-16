@@ -4,7 +4,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -16,6 +15,7 @@ public class CorvetteService {
     private final ResourceLoader resourceLoader;
     // TODO make env
     private final String IMAGES_STORAGE_PATH = "/home/shd/Pictures/corvette/";
+    private final Path dirPath = Paths.get(IMAGES_STORAGE_PATH);
 
     public CorvetteService(ResourceLoader resourceLoader) {
         this.resourceLoader = resourceLoader;
@@ -23,18 +23,13 @@ public class CorvetteService {
 
     public List<Map<String, byte[]>> retrieveAssets(String show, CarAssetMetadata metadata) {
         List<Map<String, byte[]>> matchedImages = new ArrayList<>();
-        Path dirPath = Paths.get(IMAGES_STORAGE_PATH);
         try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(dirPath)) {
             for (Path filePath : directoryStream) {
-                String fileName = filePath.getFileName().toString();
-                fileName = fileName.substring(0, fileName.lastIndexOf("."));
-                if (!isFilenameMatching(fileName, show, metadata)) {
-                    continue;
-                }
+                String curFilename = getCurFilename(filePath);
+                if (!isFilenameMatching(curFilename, show, metadata)) continue;
                 Resource resource = resourceLoader.getResource("file:" + filePath);
                 matchedImages.add(new HashMap<>(
-                        Map.of("filename", fileName.getBytes(), "image", resource.getContentAsByteArray())));
-
+                        Map.of("filename", curFilename.getBytes(), "image", resource.getContentAsByteArray())));
             }
             return matchedImages;
         } catch (Exception e) {
@@ -63,30 +58,25 @@ public class CorvetteService {
         }
     }
 
-    public byte[] getFinalCar(CarAssetMetadata carAssetMetadata) {
+    public byte[] getFinalCar(CarAssetMetadata metadata) {
+        try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(dirPath)) {
+            for (Path filePath : directoryStream) {
+                String curFilename = getCurFilename(filePath);
+                if (curFilename.equals(metadata.requestedFilename())){
+                    Resource resource = resourceLoader.getResource("file:" + filePath);
+                    return resource.getContentAsByteArray();
+                }
+            }
+        } catch (Exception e) {
+            return new byte[0];
+        }
         return new byte[0];
     }
 
-    public Map<Integer, Set<String>> defineColorsAvailableForModels() {
-        Map<Integer, Set<String>> colors = new HashMap<>();
-        try {
-            try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(Paths.get(IMAGES_STORAGE_PATH))) {
-                for (Path filePath : directoryStream) {
-                    String fileName = filePath.getFileName().toString();
-                    fileName = fileName.substring(0, fileName.lastIndexOf("."));
-                    String[] splitted = fileName.split("-");
-                    int k = Integer.parseInt(splitted[0]);
-                    String color = splitted[1];
-                    Set<String> temp = colors.getOrDefault(k, new HashSet<>());
-                    temp.add(color);
-                    colors.put(k, temp);
-                }
-            }
-            return colors;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new HashMap<>();
-        }
+    private static String getCurFilename(Path filePath) {
+        String fileName = filePath.getFileName().toString();
+        fileName = fileName.substring(0, fileName.lastIndexOf("."));
+        return fileName;
     }
 
 }
