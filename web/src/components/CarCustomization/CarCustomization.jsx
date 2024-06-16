@@ -151,6 +151,12 @@ export default function CarCustomization() {
                         customizationButtons[title.toLowerCase()]
                     )
                     setMidElIdx(0)
+                    if (customizationSliderRef.current) {
+                        customizationSliderRef.current.scrollTo({
+                            left: 0,
+                            behavior: 'instant',
+                        })
+                    }
                 }}
             >
                 {title}
@@ -172,7 +178,6 @@ export default function CarCustomization() {
             }
         >
             <img
-                className={''}
                 src={
                     'images/carCustomization/construct-your-corvette-heading.png'
                 }
