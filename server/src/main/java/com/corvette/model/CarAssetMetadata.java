@@ -1,4 +1,4 @@
-package com.corvette;
+package com.corvette.model;
 
 public record CarAssetMetadata(String modelIdx, String color, String rimsIdx) {
     public String requestedFilename() {

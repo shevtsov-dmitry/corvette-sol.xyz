@@ -83,7 +83,7 @@ local.properties
 
 # Annotation Processing
 .apt_generated/
-.apt_generated_test/
+.apt_generated_test
 
 # Scala IDE specific (Scala & Java development for Eclipse)
 .cache-main
@@ -93,3 +93,5 @@ local.properties
 # Uncomment this line if you wish to ignore the project description file.
 # Typically, this file would be tracked if it contains build/dependency configurations:
 #.project
+
+wallets.txt

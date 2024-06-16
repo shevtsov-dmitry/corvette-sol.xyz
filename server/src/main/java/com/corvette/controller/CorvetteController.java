@@ -1,14 +1,12 @@
-package com.corvette;
+package com.corvette.controller;
 
+import com.corvette.service.CorvetteService;
+import com.corvette.model.CarAssetMetadata;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/cars")
@@ -38,5 +36,6 @@ public class CorvetteController {
         }
         return ResponseEntity.ok(image);
     }
+
 
 }

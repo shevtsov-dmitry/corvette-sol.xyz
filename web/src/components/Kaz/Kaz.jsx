@@ -4,15 +4,19 @@ import { useDispatch } from 'react-redux'
 import { setIsNavBarDimmed } from '../../store/navBarSlice.js'
 
 export function Kaz() {
+    // TODO make env
+    const HOST = 'http://localhost:8080'
+
     const [debugIdx, setDebugIdx] = useState(0)
     const [spinAmount, setSpinsAmount] = useState(0)
-    const [saveWalletStatus, setSaveWalletStatus] = useState('none')
+    const [walletCheckStatus, setWalletCheckStatus] = useState('none')
+    const [userWallet, setUserWallet] = useState('')
 
     const [isAllowedToSpin, setIsAllowedToSpin] = useState(true)
-    const [isWin, setIsWin] = useState(false)
+    const [isWin, setIsWin] = useState(true) // false
     const [isWinConfettiEnabled, setIsWinConfettiEnabled] = useState(false)
-    const [isCongratulationVisible, setIsCongratulationVisible] =
-        useState(false)
+    const [isCongratulationVisible, setIsCongratulationVisible] = useState(true) // false
+    const [isAllowedToSubmitWallet, setIsAllowedToSubmitWallet] = useState(true)
 
     const chance_to_win_in_percent = 100,
         icons_amount = 9,
@@ -35,6 +39,7 @@ export function Kaz() {
     const spinBtnRef = useRef(null)
     const loadingCircleRef = useRef(null)
     const openWinMessageAgainRef = useRef(null)
+    const walletInputRef = useRef()
 
     const dispatch = useDispatch()
 
@@ -48,7 +53,6 @@ export function Kaz() {
         reel_3_ref.current.style.backgroundPositionY = `${reel_positions[2]}px`
     }, [])
 
-
     useEffect(() => {
         if (!isWinConfettiEnabled) {
             return
@@ -60,7 +64,7 @@ export function Kaz() {
     }, [isWinConfettiEnabled])
 
     useEffect(() => {
-        if(isWin && isCongratulationVisible){
+        if (isWin && isCongratulationVisible) {
             dispatch(setIsNavBarDimmed(true))
         } else {
             dispatch(setIsNavBarDimmed(false))
@@ -136,7 +140,6 @@ export function Kaz() {
         }, 3300)
     }
 
-
     function spinAll() {
         if (!isAllowedToSpin || isWin) {
             return
@@ -166,7 +169,6 @@ export function Kaz() {
         }
     }
 
-
     function SaveWalletStatus(props) {
         const map = {
             ok: <p className={'absolute ml-2 text-5xl text-green-500'}>✓</p>,
@@ -192,16 +194,20 @@ export function Kaz() {
         )
     }
 
-    function showSaveWalletTransactionStatus() {
-        // TODO forbid to save when the wallet has been already saved
-        setSaveWalletStatus('loading')
-        setTimeout(() => {
-            const fiftyFifty = ['ok', 'bad']
-            setSaveWalletStatus(fiftyFifty[Math.floor(Math.random() * 2)])
-        }, 1000)
-        setTimeout(() => {
-            setSaveWalletStatus('none')
-        }, 5000)
+    async function saveUserWallet() {
+        const res = await fetch(HOST + '/wallets/check/' + userWallet)
+        setWalletCheckStatus('loading')
+        showSaveWalletTransactionStatus(res.status === 200)
+
+        function showSaveWalletTransactionStatus(responseRes) {
+            setTimeout(() => {
+                if (responseRes) {
+                    setWalletCheckStatus('ok')
+                } else {
+                    setWalletCheckStatus('bad')
+                }
+            }, 1000)
+        }
     }
 
     function CongratsMessage() {
@@ -210,8 +216,6 @@ export function Kaz() {
                 id="congratulation-message-holder"
                 className="max-laptop:scale-75 max-laptop:mt-25% max-laptop:mt-0 z-40 mt-[-10%] flex h-fit w-[45%] flex-col justify-between gap-10 rounded-2xl bg-[#692931] pb-5 text-white"
                 style={{
-                    // boxShadow:
-                    //     'rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px',
                     boxShadow:
                         'rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset',
                 }}
@@ -251,6 +255,7 @@ export function Kaz() {
                 <div className="flex h-fit w-full items-center justify-center">
                     <div className="mr-[-1.5%] flex h-12 w-[90%] gap-2">
                         <input
+                            ref={walletInputRef}
                             className="flex-grow-[12] rounded-md pl-3 text-[1.2em] text-black"
                             placeholder="enter your wallet here"
                         />
@@ -259,7 +264,7 @@ export function Kaz() {
                                 'relative flex h-5 flex-grow-[0] items-end bg-blue-100'
                             }
                         >
-                            <SaveWalletStatus type={saveWalletStatus} />
+                            <SaveWalletStatus type={walletCheckStatus} />
                         </div>
                         <button
                             className="flex-grow rounded-md bg-[#5D161E] transition-colors hover:bg-red-500"
@@ -267,12 +272,9 @@ export function Kaz() {
                                 boxShadow:
                                     'rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px',
                             }}
-                            onClick={() => {}}
+                            onClick={saveUserWallet}
                         >
-                            <p
-                                className="pr-1 pt-2 font-nav-bar text-3xl font-bold text-[#FFFF00]"
-                                onClick={showSaveWalletTransactionStatus}
-                            >
+                            <p className="pr-1 pt-2 font-nav-bar text-3xl font-bold text-[#FFFF00]">
                                 SUBMIT
                             </p>
                         </button>
@@ -288,11 +290,16 @@ export function Kaz() {
 
     return (
         <div className="max-w-dvw flex h-dvh items-center justify-center">
-            {isWin && isCongratulationVisible ?
-                <div id="black-dimmed-transparent-bg" className={"absolute z-40 t-0 l-0 bg-black opacity-70 w-screen h-screen"}/>
-                :
-                <div/>
-            }
+            {isWin && isCongratulationVisible ? (
+                <div
+                    id="black-dimmed-transparent-bg"
+                    className={
+                        't-0 l-0 absolute z-40 h-screen w-screen bg-black opacity-70'
+                    }
+                />
+            ) : (
+                <div />
+            )}
             <div
                 id="centered-holder"
                 className="flex h-fit w-fit flex-col items-center"
@@ -342,8 +349,6 @@ export function Kaz() {
                 ) : (
                     <div />
                 )}
-
-
 
                 {isWin && isCongratulationVisible ? (
                     <div className="absolute mt-[-2%] flex h-full w-screen items-center justify-center">

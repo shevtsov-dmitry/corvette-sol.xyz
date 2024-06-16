@@ -1,5 +1,6 @@
-package com.corvette;
+package com.corvette.service;
 
+import com.corvette.model.CarAssetMetadata;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
