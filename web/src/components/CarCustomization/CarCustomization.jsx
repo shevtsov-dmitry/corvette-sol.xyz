@@ -15,7 +15,7 @@ export default function CarCustomization() {
 
     const [isScrollRight, setIsScrollRight] = useState(true)
     const [isForbidAnimation, setIsForbidAnimation] = useState(true)
-    const [isSaved, setIsSaved] = useState(false)
+    const [isSaveFormActive, setIsSaveFormActive] = useState(false)
 
     const customizationSliderRef = useRef(null)
 
@@ -139,42 +139,143 @@ export default function CarCustomization() {
         )
     }
 
-    function CustomizationMenuBtn({ title }) {
+    function SaveForm() {
         return (
-            <button
-                className={'customization-menu-btn'}
-                onClick={() => {
-                    if (title === curCustomizationBtn) {
-                        return
-                    }
-                    setCustomizationProps({
-                        show: title.toLowerCase(),
-                        model: parseFilenameProps('model'),
-                        color: parseFilenameProps('color'),
-                        rims: parseFilenameProps('rims'),
-                    })
-                    setCurCustomizationBtn(
-                        customizationButtons[title.toLowerCase()]
-                    )
-                    setMidElIdx(0)
-                    if (customizationSliderRef.current) {
-                        customizationSliderRef.current.scrollTo({
-                            left: 0,
-                            behavior: 'instant',
-                        })
-                    }
-                }}
+            <div
+                className={
+                    'absolute flex h-screen w-screen items-center justify-center'
+                }
             >
-                {title}
-            </button>
+                <div
+                    id={'save-black-dim-bg'}
+                    className={'absolute h-full w-full bg-black opacity-70'}
+                />
+                <div
+                    className={
+                        'z-10 flex flex-col justify-center gap-2 rounded-2xl bg-[#682831] p-10 text-white'
+                    }
+                >
+                    <div className={'relative w-full'}>
+                        <div
+                            id={'close-sign-save-form'}
+                            className={
+                                'absolute right-0 mr-[-25px] mt-[-33px] text-3xl font-bold text-white hover:cursor-pointer'
+                            }
+                            onClick={() => setIsSaveFormActive(false)}
+                        >
+                            X
+                        </div>
+                    </div>
+                    <div
+                        className={'h-fit w-fit rounded-2xl bg-white'}
+                        style={{
+                            boxShadow:
+                                'rgba(0, 0, 0, 0.45) 1px 1px 40px 0px inset',
+                        }}
+                    >
+                        <img src={constructedCarImg} className={'p-2'} />
+                    </div>
+                    <p className={'text-center text-2xl'}>
+                        Nice! You've just constructed your own lovely{' '}
+                        <span className={'text-amber-600'}>$corvette</span> car.
+                    </p>
+                    <p className={'text-center'}>
+                        Now you can download this image or share it with your
+                        friends on social media.
+                    </p>
+                    <div
+                        className={
+                            'mt-2 flex w-full items-center justify-center gap-8'
+                        }
+                    >
+                        <button className={'save-car-form-btn'}>
+                            download
+                        </button>
+                        <button className={'save-car-form-btn'}>share</button>
+                    </div>
+                </div>
+            </div>
         )
     }
 
-    function parseFilenameProps(name) {
-        const filenameSplit = images[midElIdx].key.split('-')
-        if (name === 'model') return filenameSplit[0]
-        if (name === 'color') return filenameSplit[1]
-        if (name === 'rims') return filenameSplit[2]
+    function CustomizationButtons() {
+        return (
+            <div
+                id={'buttons-holder'}
+                className={'mt-[2%] flex w-screen items-center justify-center'}
+            >
+                <div className="flex w-fit justify-around gap-4">
+                    <CustomizationMenuBtn title={'MODEL'} />
+                    <CustomizationMenuBtn title={'COLOR'} />
+                    <CustomizationMenuBtn title={'RIMS'} />
+                    <SaveBtn />
+                </div>
+            </div>
+        )
+
+        function CustomizationMenuBtn({ title }) {
+            return (
+                <button
+                    className={'customization-menu-btn'}
+                    onClick={() => {
+                        if (title === curCustomizationBtn) {
+                            return
+                        }
+                        setCustomizationProps({
+                            show: title.toLowerCase(),
+                            model: parseFilenameProps('model'),
+                            color: parseFilenameProps('color'),
+                            rims: parseFilenameProps('rims'),
+                        })
+                        setCurCustomizationBtn(
+                            customizationButtons[title.toLowerCase()]
+                        )
+                        setMidElIdx(0)
+                        if (customizationSliderRef.current) {
+                            customizationSliderRef.current.scrollTo({
+                                left: 0,
+                                behavior: 'instant',
+                            })
+                        }
+                    }}
+                >
+                    {title}
+                </button>
+            )
+        }
+
+        function SaveBtn() {
+            return (
+                <button
+                    className={
+                        'customization-menu-btn bg-green-900 hover:bg-green-700'
+                    }
+                    onClick={async () => {
+                        const m = {
+                            model: parseFilenameProps('model'),
+                            color: parseFilenameProps('color'),
+                            rims: parseFilenameProps('rims'),
+                        }
+                        const res = await fetch(
+                            `${HOST}/cars/get/constructed-car?model=${m['model']}&color=${m['color']}&rims=${m['rims']}`
+                        )
+                        const imageBytes = await res.blob()
+                        const imageUrl = URL.createObjectURL(imageBytes)
+                        setIsSaveFormActive(true)
+                        setConstructedCarImg(imageUrl)
+                    }}
+                >
+                    SAVE
+                </button>
+            )
+        }
+
+        function parseFilenameProps(name) {
+            const filenameSplit = images[midElIdx].key.split('-')
+            if (name === 'model') return filenameSplit[0]
+            if (name === 'color') return filenameSplit[1]
+            if (name === 'rims') return filenameSplit[2]
+        }
     }
 
     return (
@@ -216,43 +317,9 @@ export default function CarCustomization() {
                         />
                     </div>
                 </div>
-                <div
-                    id={'buttons-holder'}
-                    className={
-                        'mt-[2%] flex w-screen items-center justify-center'
-                    }
-                >
-                    <div className="flex w-fit justify-around gap-4">
-                        <CustomizationMenuBtn title={'MODEL'} />
-                        <CustomizationMenuBtn title={'COLOR'} />
-                        <CustomizationMenuBtn title={'RIMS'} />
-                        <button
-                            className={
-                                'customization-menu-btn bg-green-900 hover:bg-green-700'
-                            }
-                            onClick={async () => {
-                                const m = customizationProps
-                                const res = await fetch(
-                                    `${HOST}/cars/get/constructed-car?model=${m['model']}&color=${m['color']}&rims=${m['rims']}`
-                                )
-                                const imageBytes = await res.blob()
-                                const imageUrl = URL.createObjectURL(imageBytes)
-                                setIsSaved(true)
-                                setConstructedCarImg(imageUrl)
-                            }}
-                        >
-                            SAVE
-                        </button>
-                    </div>
-                </div>
+                <CustomizationButtons />
             </div>
-            {isSaved ? (
-                <div className={'absolute h-screen w-screen bg-red-300'}>
-                    <img src={constructedCarImg} />
-                </div>
-            ) : (
-                <div />
-            )}
+            {isSaveFormActive ? <SaveForm /> : <div />}
         </div>
     )
 }

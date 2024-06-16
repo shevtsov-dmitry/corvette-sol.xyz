@@ -6,6 +6,11 @@
     transition: 0.15s;
 }
 
+.save-car-form-btn {
+    @apply bg-red-800 text-[#FFFF00] text-2xl pb-1 pt-2 rounded font-nav-bar font-bold w-[12rem];
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
 @keyframes scaleUp {
     0% {
         @apply w-1/2;
