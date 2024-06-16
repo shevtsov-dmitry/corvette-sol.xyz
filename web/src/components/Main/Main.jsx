@@ -113,7 +113,7 @@ export default function Main() {
                     <img
                         id={'down-arrow'}
                         className={
-                            'contrast-50 transition-all hover:cursor-pointer hover:contrast-125'
+                            'contrast-50 transition-all hover:cursor-pointer hover:contrast-125 max-laptop:w-24'
                         }
                         src={'images/welcomePage/down-arrow.png'}
                         alt={'swipe down'}

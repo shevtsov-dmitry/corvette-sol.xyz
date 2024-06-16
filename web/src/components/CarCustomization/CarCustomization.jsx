@@ -281,7 +281,7 @@ export default function CarCustomization() {
     return (
         <div
             className={
-                'flex h-dvh w-dvw flex-col items-center justify-center gap-12'
+                'flex h-dvh w-dvw flex-col items-center justify-center gap-12 max-laptop:scale-75'
             }
         >
             <img

@@ -6,6 +6,9 @@ module.exports = {
       fontFamily: {
         "nav-bar": ["NavBarFont", "sans-serif"],
       },
+      screens: {
+        "laptop": "1700px",
+      },
       colors: {},
     },
   },

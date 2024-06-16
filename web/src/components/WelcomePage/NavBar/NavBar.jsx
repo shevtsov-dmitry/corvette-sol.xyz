@@ -14,7 +14,8 @@ export default function NavBar() {
     }
 
     return (
-        <div className="fixed z-50 flex h-fit w-dvw flex-col items-center justify-center gap-4">
+        // <div className="fixed z-50 flex h-fit w-dvw flex-col items-center justify-center gap-4 max-[1700px]:bg-red-500">
+        <div className="fixed z-50 flex h-fit w-dvw flex-col items-center justify-center gap-4 max-laptop:scale-75 max-laptop:mt-[-1rem]">
             <header className="flex justify-around">
                 <div
                     id="nav-bar"
@@ -34,12 +35,12 @@ export default function NavBar() {
                     </div>
                     <div
                         id="wheel-holder"
-                        className="relative mx-12 mb-[-1.3%] mt-[1%] w-[7%]"
+                        className="relative mx-12 mb-[-1.3%] mt-[1%] w-[7%] z-50"
                         onClick={() => setCurPageName('main')}
                     >
                         <Link to={'/'}>
                             <Lottie
-                                className={'min-w-24'}
+                                className={'min-w-24 '}
                                 path={
                                     'lotties/welcomePage/low-nonstop-wheel.json'
                                 }
@@ -62,7 +63,15 @@ export default function NavBar() {
                     </div>
                 </div>
             </header>
-            <img src="images/welcomePage/nav-bar-hr.png" width={'67%'} />
+            {/*<img src="images/navBar/nav-bar-hr.png" width={'67%'} />*/}
+            <Lottie
+                className={'min-w-24 z-0 w-[69.9%]'}
+                path={
+                    'lotties/navBar/nav-bar-hr.json'
+                }
+                loop={true}
+                autoplay={true}
+            />
         </div>
     )
 }

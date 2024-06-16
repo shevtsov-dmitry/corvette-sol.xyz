@@ -195,7 +195,7 @@ export function Kaz() {
             <div
                 id="congratulation-message-holder"
                 ref={congratsBlockRef}
-                className="z-50 mt-[-10%] flex h-fit w-[45%] flex-col justify-between gap-10 rounded-2xl bg-[#692931] pb-5 text-white"
+                className="z-50 mt-[-10%] flex h-fit w-[45%] flex-col justify-between gap-10 rounded-2xl bg-[#692931] pb-5 text-white max-laptop:scale-75 max-laptop:mt-25% max-laptop:mt-0"
                 style={{
                     // boxShadow:
                     //     'rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px',
@@ -206,7 +206,7 @@ export function Kaz() {
                 <div className="flex w-full justify-end">
                     <div
                         id="congrats-message-close-sign"
-                        className="absolute mr-3 select-none pb-3 font-mono text-6xl font-bold hover:cursor-pointer"
+                        className="absolute mr-3 select-none pb-3 font-mono text-6xl font-bold hover:cursor-pointer "
                         onClick={() => {
                             openWinMessageAgainRef.current.style.display =
                                 'block'
@@ -216,14 +216,14 @@ export function Kaz() {
                         x
                     </div>
                 </div>
-                <h2 className="text-center font-nav-bar text-6xl text-[#FFFF00]">
+                <h2 className="text-center font-nav-bar text-6xl text-[#FFFF00] max-laptop:text-5xl">
                     CONGRATULATIONS!
                 </h2>
                 <div className="mt-[-18px] flex w-full items-center justify-center">
                     <p
                         className={
                             // 'w-5/6 text-justify text-4xl font-bold'
-                            'w-5/6 text-center text-4xl font-bold'
+                            'w-5/6 text-center text-4xl font-bold max-laptop:text-3xl'
                         }
                     >
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -253,9 +253,7 @@ export function Kaz() {
                                 boxShadow:
                                     'rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px',
                             }}
-                            onClick={() => {
-                                /* show lottie*/
-                            }}
+                            onClick={() => {}}
                         >
                             <p
                                 className="pr-1 pt-2 font-nav-bar text-3xl font-bold text-[#FFFF00]"
@@ -288,7 +286,7 @@ export function Kaz() {
 
                 <div
                     id="slot-machine-holder"
-                    className="flex h-fit w-fit flex-col items-center"
+                    className="flex h-fit w-fit flex-col items-center max-laptop:scale-75"
                 >
                     <img
                         src="images/kaz/slot-full-beta.png"
@@ -342,7 +340,7 @@ export function Kaz() {
 
                 <div className="m-0 flex w-full items-center justify-center p-0">
                     <p
-                        className="absolute select-none text-white opacity-50 transition-all hover:cursor-pointer hover:opacity-100"
+                        className="absolute select-none text-white opacity-50 transition-all hover:cursor-pointer hover:opacity-100 z-[100] max-laptop:mt-[-2rem]"
                         style={{ display: 'none' }}
                         onClick={() => {
                             congratsBlockRef.current.style.display = 'flex'
