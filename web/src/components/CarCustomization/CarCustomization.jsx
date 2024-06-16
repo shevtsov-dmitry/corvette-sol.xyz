@@ -1,35 +1,37 @@
 import React, { useEffect, useRef, useState } from 'react'
 
 export default function CarCustomization() {
-    // TODO make env
-    const HOST = 'http://localhost:8080'
-
     const [midElIdx, setMidElIdx] = useState(0)
-    const [isScrollRight, setIsScrollRight] = useState(true)
     const [images, setImages] = useState([])
-    const [customizationItemIdx, setCustomizationItemIdx] = useState(0)
+    const [switchedCarsAmount, setSwitchedCarsAmount] = useState(0)
+    const [isForbidAnimation, setIsForbidAnimation] = useState(true)
     const [customizationProps, setCustomizationProps] = useState({
         show: 'model',
         model: 1,
         color: 'blue',
         rims: 1,
     })
+
+    const [isScrollRight, setIsScrollRight] = useState(true)
+
     const customizationSliderRef = useRef(null)
 
-    const customizationTabs = {
-        0: 'model',
-        1: 'color',
-        2: 'rims',
+    // TODO make env
+    const HOST = 'http://localhost:8080'
+    let scrollDistancePx = 384
+    if (customizationSliderRef.current) {
+        scrollDistancePx = customizationSliderRef.current.offsetWidth / 3 - 128
+    }
+    const customizationButtons = {
+        model: 'model',
+        color: 'color',
+        rims: 'rims',
+        save: 'save',
     }
 
-    async function fetchColorsForModels() {
-        const res = await fetch(HOST + '/cars/get/colors-for-models')
-        if (!res.ok) {
-            console.error("can't get colors for models hashmap from server")
-            return
-        }
-        const json = await res.json()
-    }
+    useEffect(() => {
+        setIsForbidAnimation(switchedCarsAmount === 0)
+    }, [switchedCarsAmount])
 
     async function fetchImages() {
         try {
@@ -67,17 +69,13 @@ export default function CarCustomization() {
 
     useEffect(() => {
         fetchImages()
-        fetchColorsForModels()
     }, [])
 
-    // TODO count distance with formula curScreenSize / 3
-    const scrollDistancePx = 384
-
     function switchToPrev() {
-        setCustomizationItemIdx(customizationItemIdx - 1)
         setMidElIdx((prevIndex) =>
             prevIndex === 0 ? images.length - 1 : prevIndex - 1
         )
+        setSwitchedCarsAmount(switchedCarsAmount + 1)
         setIsScrollRight(false)
         if (customizationSliderRef.current) {
             customizationSliderRef.current.scrollLeft -= scrollDistancePx
@@ -85,10 +83,10 @@ export default function CarCustomization() {
     }
 
     function switchToNext() {
-        setCustomizationItemIdx(customizationItemIdx + 1)
         setMidElIdx((prevIndex) =>
             prevIndex === images.length - 1 ? 0 : prevIndex + 1
         )
+        setSwitchedCarsAmount(switchedCarsAmount + 1)
         setIsScrollRight(true)
         if (customizationSliderRef.current) {
             customizationSliderRef.current.scrollLeft += scrollDistancePx
@@ -99,19 +97,28 @@ export default function CarCustomization() {
         const isLeft = index === midElIdx - 1
         const isMiddle = index === midElIdx
         const isRight = index === midElIdx + 1
+        const switchRightAnim =
+            isRight && !isScrollRight ? 'animate-scale-down-right' : ''
+        const switchLeftAnim =
+            isLeft && isScrollRight ? 'animate-scale-down-left' : ''
+        console.log(isForbidAnimation)
+        const scaleMidUp = isForbidAnimation ? 'w-full' : 'animate-scale-up '
 
         return isMiddle ? (
             <div
-                className={`flex h-[20em] w-1/2 flex-shrink-0 items-center justify-center`}
+                className={
+                    'flex h-[20em] w-1/2 flex-shrink-0 items-center justify-center'
+                }
             >
-                <div className={'animate-scale-up flex w-1/2 justify-center'}>
+                <div className={`${scaleMidUp} flex w-1/2 justify-center`}>
                     {image}
                 </div>
             </div>
         ) : (
             <div
-                className={`${isRight && !isScrollRight ? 'animate-scale-down-right' : ''} ${isLeft && isScrollRight ? 'animate-scale-down-left' : ''} flex h-[15rem] w-1/4 flex-shrink-0 cursor-pointer items-center justify-center`}
-                onClick={(event) => {
+                className={`${switchRightAnim} ${switchLeftAnim} flex h-[15rem] w-1/4 flex-shrink-0 cursor-pointer items-center justify-center`}
+                onClick={() => {
+                    setSwitchedCarsAmount(0)
                     if (isRight) {
                         switchToNext()
                     }
@@ -136,8 +143,10 @@ export default function CarCustomization() {
                         color: parseFilenameProps('color'),
                         rims: parseFilenameProps('rims'),
                     })
-                    fetchImages()
-                    setCustomizationItemIdx(0)
+                    setTimeout(() => {
+                        fetchImages()
+                    }, 150)
+                    setMidElIdx(0)
                 }}
             >
                 {title}
@@ -146,7 +155,7 @@ export default function CarCustomization() {
     }
 
     function parseFilenameProps(name) {
-        const filenameSplit = images[customizationItemIdx].key.split('-')
+        const filenameSplit = images[midElIdx].key.split('-')
         if (name === 'model') return filenameSplit[0]
         if (name === 'color') return filenameSplit[1]
         if (name === 'rims') return filenameSplit[2]
