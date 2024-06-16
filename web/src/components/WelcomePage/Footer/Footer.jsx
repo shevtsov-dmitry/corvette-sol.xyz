@@ -2,7 +2,7 @@ export function Footer() {
     return (
         <div
             className={
-                'fixed bottom-0 z-40 mb-[1%] flex h-[6.5%] w-full justify-center'
+                'fixed bottom-0 z-20 mb-[1%] flex h-[6.5%] w-full justify-center'
             }
         >
             <div id={'footer-panel'} className={'flex w-[67%] justify-between'}>

@@ -1,9 +1,13 @@
 import Lottie from 'lottie-react'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
 
 export default function NavBar() {
     const [curPageName, setCurPageName] = useState('main')
+
+    const navBarState = useSelector((state) => state.navBar)
+    const isNavBarDimmed = navBarState.isDimmed
 
     function NavBtn(name) {
         return (
@@ -14,8 +18,9 @@ export default function NavBar() {
     }
 
     return (
-        // <div className="fixed z-50 flex h-fit w-dvw flex-col items-center justify-center gap-4 max-[1700px]:bg-red-500">
-        <div className="fixed z-50 flex h-fit w-dvw flex-col items-center justify-center gap-4 max-laptop:scale-75 max-laptop:mt-[-1rem]">
+        <div
+            className={`${isNavBarDimmed ? 'z-0' : 'z-50'} max-laptop:scale-75 max-laptop:mt-[-1rem] fixed flex h-fit w-dvw flex-col items-center justify-center gap-4`}
+        >
             <header className="flex justify-around">
                 <div
                     id="nav-bar"
@@ -35,12 +40,12 @@ export default function NavBar() {
                     </div>
                     <div
                         id="wheel-holder"
-                        className="relative mx-12 mb-[-1.3%] mt-[1%] w-[7%] z-50"
+                        className="relative z-50 mx-12 mb-[-1.3%] mt-[1%] w-[7%]"
                         onClick={() => setCurPageName('main')}
                     >
                         <Link to={'/'}>
                             <Lottie
-                                className={'min-w-24 '}
+                                className={'min-w-24'}
                                 path={
                                     'lotties/welcomePage/low-nonstop-wheel.json'
                                 }
@@ -65,10 +70,8 @@ export default function NavBar() {
             </header>
             {/*<img src="images/navBar/nav-bar-hr.png" width={'67%'} />*/}
             <Lottie
-                className={'min-w-24 z-0 w-[69.9%]'}
-                path={
-                    'lotties/navBar/nav-bar-hr.json'
-                }
+                className={'z-0 w-[69.9%] min-w-24'}
+                path={'lotties/navBar/nav-bar-hr.json'}
                 loop={true}
                 autoplay={true}
             />

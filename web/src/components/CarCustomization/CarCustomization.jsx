@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { setIsNavBarDimmed } from '../../store/navBarSlice.js'
 
 export default function CarCustomization() {
     const [midElIdx, setMidElIdx] = useState(0)
@@ -18,6 +20,7 @@ export default function CarCustomization() {
     const [isSaveFormActive, setIsSaveFormActive] = useState(false)
 
     const customizationSliderRef = useRef(null)
+    const dispatch = useDispatch()
 
     // TODO make env
     const HOST = 'http://localhost:8080'
@@ -161,7 +164,10 @@ export default function CarCustomization() {
                             className={
                                 'absolute right-0 mr-[-25px] mt-[-33px] text-3xl font-bold text-white hover:cursor-pointer'
                             }
-                            onClick={() => setIsSaveFormActive(false)}
+                            onClick={() => {
+                                dispatch(setIsNavBarDimmed(false))
+                                setIsSaveFormActive(false)
+                            }}
                         >
                             X
                         </div>
@@ -245,12 +251,14 @@ export default function CarCustomization() {
         }
 
         function SaveBtn() {
+
             return (
                 <button
                     className={
                         'customization-menu-btn bg-green-900 hover:bg-green-700'
                     }
                     onClick={async () => {
+                        dispatch(setIsNavBarDimmed(true))
                         const m = {
                             model: parseFilenameProps('model'),
                             color: parseFilenameProps('color'),
