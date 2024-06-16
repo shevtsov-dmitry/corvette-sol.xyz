@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Lottie from 'lottie-react'
+import { useDispatch } from 'react-redux'
+import { setIsNavBarDimmed } from '../../store/navBarSlice.js'
 
 export function Kaz() {
     const [debugIdx, setDebugIdx] = useState(0)
@@ -31,9 +33,10 @@ export function Kaz() {
     const reels = [reel_1_ref.current, reel_2_ref.current, reel_3_ref.current]
 
     const spinBtnRef = useRef(null)
-    const congratsBlockRef = useRef(null)
     const loadingCircleRef = useRef(null)
     const openWinMessageAgainRef = useRef(null)
+
+    const dispatch = useDispatch()
 
     useEffect(() => {
         if (!reel_1_ref.current || !reel_2_ref.current || !reel_3_ref.current) {
@@ -44,6 +47,25 @@ export function Kaz() {
         reel_2_ref.current.style.backgroundPositionY = `${reel_positions[1]}px`
         reel_3_ref.current.style.backgroundPositionY = `${reel_positions[2]}px`
     }, [])
+
+
+    useEffect(() => {
+        if (!isWinConfettiEnabled) {
+            return
+        }
+        setTimeout(() => {
+            setIsWinConfettiEnabled(false)
+            setIsCongratulationVisible(true)
+        }, 1500)
+    }, [isWinConfettiEnabled])
+
+    useEffect(() => {
+        if(isWin && isCongratulationVisible){
+            dispatch(setIsNavBarDimmed(true))
+        } else {
+            dispatch(setIsNavBarDimmed(false))
+        }
+    }, [isWin, isCongratulationVisible])
 
     function createRandomReelPositionsArray() {
         function setSlotsImagePosition(image_idx) {
@@ -114,15 +136,6 @@ export function Kaz() {
         }, 3300)
     }
 
-    useEffect(() => {
-        if (!isWinConfettiEnabled) {
-            return
-        }
-        setTimeout(() => {
-            setIsWinConfettiEnabled(false)
-            setIsCongratulationVisible(true)
-        }, 1500)
-    }, [isWinConfettiEnabled])
 
     function spinAll() {
         if (!isAllowedToSpin || isWin) {
@@ -152,6 +165,7 @@ export function Kaz() {
             reels_references.forEach((reel, index) => spinOne(reel, index))
         }
     }
+
 
     function SaveWalletStatus(props) {
         const map = {
@@ -194,8 +208,7 @@ export function Kaz() {
         return (
             <div
                 id="congratulation-message-holder"
-                ref={congratsBlockRef}
-                className="z-50 mt-[-10%] flex h-fit w-[45%] flex-col justify-between gap-10 rounded-2xl bg-[#692931] pb-5 text-white max-laptop:scale-75 max-laptop:mt-25% max-laptop:mt-0"
+                className="max-laptop:scale-75 max-laptop:mt-25% max-laptop:mt-0 z-40 mt-[-10%] flex h-fit w-[45%] flex-col justify-between gap-10 rounded-2xl bg-[#692931] pb-5 text-white"
                 style={{
                     // boxShadow:
                     //     'rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px',
@@ -206,24 +219,25 @@ export function Kaz() {
                 <div className="flex w-full justify-end">
                     <div
                         id="congrats-message-close-sign"
-                        className="absolute mr-3 select-none pb-3 font-mono text-6xl font-bold hover:cursor-pointer "
+                        className="absolute mr-3 select-none pb-3 font-mono text-6xl font-bold hover:cursor-pointer"
                         onClick={() => {
+                            dispatch(setIsNavBarDimmed(true))
+                            setIsCongratulationVisible(false)
                             openWinMessageAgainRef.current.style.display =
                                 'block'
-                            congratsBlockRef.current.style.display = 'none'
                         }}
                     >
                         x
                     </div>
                 </div>
-                <h2 className="text-center font-nav-bar text-6xl text-[#FFFF00] max-laptop:text-5xl">
+                <h2 className="max-laptop:text-5xl text-center font-nav-bar text-6xl text-[#FFFF00]">
                     CONGRATULATIONS!
                 </h2>
                 <div className="mt-[-18px] flex w-full items-center justify-center">
                     <p
                         className={
                             // 'w-5/6 text-justify text-4xl font-bold'
-                            'w-5/6 text-center text-4xl font-bold max-laptop:text-3xl'
+                            'max-laptop:text-3xl w-5/6 text-center text-4xl font-bold'
                         }
                     >
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -274,6 +288,11 @@ export function Kaz() {
 
     return (
         <div className="max-w-dvw flex h-dvh items-center justify-center">
+            {isWin && isCongratulationVisible ?
+                <div id="black-dimmed-transparent-bg" className={"absolute z-40 t-0 l-0 bg-black opacity-70 w-screen h-screen"}/>
+                :
+                <div/>
+            }
             <div
                 id="centered-holder"
                 className="flex h-fit w-fit flex-col items-center"
@@ -286,7 +305,7 @@ export function Kaz() {
 
                 <div
                     id="slot-machine-holder"
-                    className="flex h-fit w-fit flex-col items-center max-laptop:scale-75"
+                    className="max-laptop:scale-75 flex h-fit w-fit flex-col items-center"
                 >
                     <img
                         src="images/kaz/slot-full-beta.png"
@@ -314,7 +333,7 @@ export function Kaz() {
                         className="absolute flex h-full w-full items-center justify-center"
                     >
                         <Lottie
-                            className={'z-50 mt-[-20em] scale-150'}
+                            className={'z-40 mt-[-20em] scale-150'}
                             path={'lotties/kaz/confetti.json'}
                             loop={false}
                             autoplay={true}
@@ -324,8 +343,10 @@ export function Kaz() {
                     <div />
                 )}
 
+
+
                 {isWin && isCongratulationVisible ? (
-                    <div className="absolute mt-[-2%] flex h-full w-full items-center justify-center">
+                    <div className="absolute mt-[-2%] flex h-full w-screen items-center justify-center">
                         <CongratsMessage />
                     </div>
                 ) : (
@@ -340,10 +361,10 @@ export function Kaz() {
 
                 <div className="m-0 flex w-full items-center justify-center p-0">
                     <p
-                        className="absolute select-none text-white opacity-50 transition-all hover:cursor-pointer hover:opacity-100 z-[100] max-laptop:mt-[-2rem]"
+                        className="max-laptop:mt-[-2rem] absolute z-30 select-none text-white opacity-50 transition-all hover:cursor-pointer hover:opacity-100"
                         style={{ display: 'none' }}
                         onClick={() => {
-                            congratsBlockRef.current.style.display = 'flex'
+                            setIsCongratulationVisible(true)
                             openWinMessageAgainRef.current.style.display =
                                 'none'
                         }}
