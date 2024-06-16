@@ -4,6 +4,7 @@ export default function CarCustomization() {
     const [midElIdx, setMidElIdx] = useState(0)
     const [images, setImages] = useState([])
     const [switchedCarsAmount, setSwitchedCarsAmount] = useState(0)
+    const [curCustomizationBtn, setCurCustomizationBtn] = useState('model')
     const [isForbidAnimation, setIsForbidAnimation] = useState(true)
     const [customizationProps, setCustomizationProps] = useState({
         show: 'model',
@@ -71,6 +72,10 @@ export default function CarCustomization() {
         fetchImages()
     }, [])
 
+    useEffect(() => {
+        fetchImages()
+    }, [curCustomizationBtn])
+
     function switchToPrev() {
         setMidElIdx((prevIndex) =>
             prevIndex === 0 ? images.length - 1 : prevIndex - 1
@@ -101,7 +106,6 @@ export default function CarCustomization() {
             isRight && !isScrollRight ? 'animate-scale-down-right' : ''
         const switchLeftAnim =
             isLeft && isScrollRight ? 'animate-scale-down-left' : ''
-        console.log(isForbidAnimation)
         const scaleMidUp = isForbidAnimation ? 'w-full' : 'animate-scale-up '
 
         return isMiddle ? (
@@ -143,9 +147,9 @@ export default function CarCustomization() {
                         color: parseFilenameProps('color'),
                         rims: parseFilenameProps('rims'),
                     })
-                    setTimeout(() => {
-                        fetchImages()
-                    }, 150)
+                    setCurCustomizationBtn(
+                        customizationButtons[title.toLowerCase()]
+                    )
                     setMidElIdx(0)
                 }}
             >
