@@ -7,15 +7,20 @@ export default function CarCustomization() {
     const [midElIdx, setMidElIdx] = useState(0)
     const [isScrollRight, setIsScrollRight] = useState(true)
     const [images, setImages] = useState([])
-    const [colorsForModels, setColorsForModels] = useState([])
+    const [customizationItemIdx, setCustomizationItemIdx] = useState(0)
     const [customizationProps, setCustomizationProps] = useState({
         show: 'model',
         model: 1,
         color: 'blue',
         rims: 1,
     })
-
     const customizationSliderRef = useRef(null)
+
+    const customizationTabs = {
+        0: 'model',
+        1: 'color',
+        2: 'rims',
+    }
 
     async function fetchColorsForModels() {
         const res = await fetch(HOST + '/cars/get/colors-for-models')
@@ -24,33 +29,44 @@ export default function CarCustomization() {
             return
         }
         const json = await res.json()
-        setColorsForModels(json)
     }
 
-    async function fetchServerImages() {
+    async function fetchImages() {
         try {
             const m = customizationProps
             const res = await fetch(
                 `${HOST}/cars/get/assets?show=${m['show']}&model=${m['model']}&color=${m['color']}&rims=${m['rims']}`
             )
-            const base64Images = await res.json()
+            if (res.status === 404) {
+                console.error(
+                    'no such type of car in database: ',
+                    customizationProps
+                )
+                return
+            }
+
+            const resData = await res.json()
+            const filenames = []
+            resData.forEach((item) => {
+                filenames.push(atob(item['filename']))
+            })
+            console.log(filenames)
+
             setImages(
-                base64Images.map((image) => (
-                    // <img key={json.index} src={json.image} className={''} />
+                resData.map((imageAndFileName) => (
                     <img
-                        key={Math.random()}
-                        src={`data:image/jpeg;base64,${image}`}
-                        className={''}
+                        key={atob(imageAndFileName['filename'])}
+                        src={`data:image/jpeg;base64,${imageAndFileName['image']}`}
                     />
                 ))
             )
         } catch (e) {
-            console.log("can't get car images from server", e)
+            console.error("can't get car images from server", e)
         }
     }
 
     useEffect(() => {
-        fetchServerImages()
+        fetchImages()
         fetchColorsForModels()
     }, [])
 
@@ -58,22 +74,22 @@ export default function CarCustomization() {
     const scrollDistancePx = 384
 
     function switchToPrev() {
+        setCustomizationItemIdx(customizationItemIdx - 1)
         setMidElIdx((prevIndex) =>
             prevIndex === 0 ? images.length - 1 : prevIndex - 1
         )
         setIsScrollRight(false)
-
         if (customizationSliderRef.current) {
             customizationSliderRef.current.scrollLeft -= scrollDistancePx
         }
     }
 
     function switchToNext() {
+        setCustomizationItemIdx(customizationItemIdx + 1)
         setMidElIdx((prevIndex) =>
             prevIndex === images.length - 1 ? 0 : prevIndex + 1
         )
         setIsScrollRight(true)
-
         if (customizationSliderRef.current) {
             customizationSliderRef.current.scrollLeft += scrollDistancePx
         }
@@ -115,15 +131,25 @@ export default function CarCustomization() {
                 className={'customization-menu-btn'}
                 onClick={() => {
                     setCustomizationProps({
-                        ...customizationProps,
                         show: title.toLowerCase(),
+                        model: parseFilenameProps('model'),
+                        color: parseFilenameProps('color'),
+                        rims: parseFilenameProps('rims'),
                     })
-                    fetchServerImages()
+                    fetchImages()
+                    setCustomizationItemIdx(0)
                 }}
             >
                 {title}
             </button>
         )
+    }
+
+    function parseFilenameProps(name) {
+        const filenameSplit = images[customizationItemIdx].key.split('-')
+        if (name === 'model') return filenameSplit[0]
+        if (name === 'color') return filenameSplit[1]
+        if (name === 'rims') return filenameSplit[2]
     }
 
     return (
@@ -140,7 +166,6 @@ export default function CarCustomization() {
             />
             <div
                 id="customization-menu-holder"
-                // className="flex h-fit w-fit flex-col items-start"
                 className="h-fit w-fit flex-col items-start"
             >
                 <div className="mx-[10%] flex w-[80%]">
@@ -156,7 +181,7 @@ export default function CarCustomization() {
                         />
                         {images.map((image, index) => (
                             <PreviewBlock
-                                key={index}
+                                key={image.key}
                                 index={index}
                                 image={image}
                             />

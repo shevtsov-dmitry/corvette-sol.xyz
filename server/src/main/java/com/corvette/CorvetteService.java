@@ -21,19 +21,20 @@ public class CorvetteService {
         this.resourceLoader = resourceLoader;
     }
 
-    public List<byte[]> retrieveAssets(String show, CarAssetMetadata metadata) {
-        List<byte[]> matchedImages = new ArrayList<>();
-        try {
-            Path dirPath = Paths.get(IMAGES_STORAGE_PATH);
-            try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(dirPath)) {
-                for (Path filePath : directoryStream) {
-                    String fileName = filePath.getFileName().toString();
-                    fileName = fileName.substring(0, fileName.lastIndexOf("."));
-                    if (isFilenameMatching(fileName, show, metadata)) {
-                        Resource resource = resourceLoader.getResource("file:" + filePath);
-                        matchedImages.add(resource.getContentAsByteArray());
-                    }
+    public List<Map<String, byte[]>> retrieveAssets(String show, CarAssetMetadata metadata) {
+        List<Map<String, byte[]>> matchedImages = new ArrayList<>();
+        Path dirPath = Paths.get(IMAGES_STORAGE_PATH);
+        try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(dirPath)) {
+            for (Path filePath : directoryStream) {
+                String fileName = filePath.getFileName().toString();
+                fileName = fileName.substring(0, fileName.lastIndexOf("."));
+                if (!isFilenameMatching(fileName, show, metadata)) {
+                    continue;
                 }
+                Resource resource = resourceLoader.getResource("file:" + filePath);
+                matchedImages.add(new HashMap<>(
+                        Map.of("filename", fileName.getBytes(), "image", resource.getContentAsByteArray())));
+
             }
             return matchedImages;
         } catch (Exception e) {
@@ -48,7 +49,9 @@ public class CorvetteService {
             }
             case "color" -> {
                 String[] splitted = fileName.split("-");
-                String[] requested = new String[]{metadata.modelIdx(),metadata.rimsIdx()};
+                splitted = new String[]{splitted[0], splitted[2]};
+                String[] requested = new String[]{metadata.modelIdx(), metadata.rimsIdx()};
+                System.out.println(Arrays.toString(requested) + "\t" + Arrays.toString(splitted));
                 return Arrays.equals(splitted, requested);
             }
             case "rims" -> {

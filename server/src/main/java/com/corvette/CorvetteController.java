@@ -21,7 +21,7 @@ public class CorvetteController {
     }
 
     @GetMapping("/get/assets")
-    public ResponseEntity<List<byte[]>> getCarAssets(@RequestParam String show, @RequestParam String model, @RequestParam String color, @RequestParam String rims) {
+    public ResponseEntity<List<Map<String, byte[]>>> getCarAssets(@RequestParam String show, @RequestParam String model, @RequestParam String color, @RequestParam String rims) {
         var matchedImages = service.retrieveAssets(show,new CarAssetMetadata(model, color, rims));
         if (matchedImages.isEmpty()) {
             return ResponseEntity.notFound().build();
