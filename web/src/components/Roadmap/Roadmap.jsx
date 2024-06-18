@@ -7,7 +7,7 @@ export default function Roadmap() {
             <Lottie
                 className={'l-0 absolute mt-[-2%] w-full'}
                 path={'lotties/roadmap/car-roadmap.json'}
-                loop={true}
+                loop={false}
                 autoplay={true}
             />
 

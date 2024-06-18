@@ -8,19 +8,22 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class WalletController {
 
-    private final  WalletService service;
+    private final WalletService service;
 
     public WalletController(WalletService service) {
         this.service = service;
     }
 
     @GetMapping("/check/{userWallet}")
-    public ResponseEntity checkWallet(@PathVariable String userWallet) {
-        return service.checkUserWallet(userWallet) ? ResponseEntity.ok().build() :  ResponseEntity.badRequest().build();
+    public ResponseEntity<String> checkWallet(@PathVariable String userWallet) {
+        if (!service.checkWalletRegex(userWallet) || userWallet.isBlank()) {
+            return ResponseEntity.badRequest().build();
+        }
+        return service.checkUserWallet(userWallet) ? ResponseEntity.status(409).build() : ResponseEntity.notFound().build();
     }
 
     @PostMapping("/save/{userWallet}")
     public ResponseEntity saveWallet(@PathVariable String userWallet) {
-        return service.saveUserWallet(userWallet) ? ResponseEntity.ok().build() :  ResponseEntity.badRequest().build();
+        return service.saveUserWallet(userWallet) ? ResponseEntity.ok().build() : ResponseEntity.internalServerError().body("can't save the wallet, something wrong with the server");
     }
 }

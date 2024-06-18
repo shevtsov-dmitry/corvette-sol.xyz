@@ -9,14 +9,11 @@ export function Kaz() {
 
     const [debugIdx, setDebugIdx] = useState(0)
     const [spinAmount, setSpinsAmount] = useState(0)
-    const [walletCheckStatus, setWalletCheckStatus] = useState('none')
-    const [userWallet, setUserWallet] = useState('')
 
     const [isAllowedToSpin, setIsAllowedToSpin] = useState(true)
     const [isWin, setIsWin] = useState(true) // false
     const [isWinConfettiEnabled, setIsWinConfettiEnabled] = useState(false)
     const [isCongratulationVisible, setIsCongratulationVisible] = useState(true) // false
-    const [isAllowedToSubmitWallet, setIsAllowedToSubmitWallet] = useState(true)
 
     const chance_to_win_in_percent = 100,
         icons_amount = 9,
@@ -39,7 +36,6 @@ export function Kaz() {
     const spinBtnRef = useRef(null)
     const loadingCircleRef = useRef(null)
     const openWinMessageAgainRef = useRef(null)
-    const walletInputRef = useRef()
 
     const dispatch = useDispatch()
 
@@ -169,52 +165,110 @@ export function Kaz() {
         }
     }
 
-    function SaveWalletStatus(props) {
-        const map = {
-            ok: <p className={'absolute ml-2 text-5xl text-green-500'}>✓</p>,
-            bad: (
-                <p className={'absolute ml-2 pt-[7px] text-2xl text-green-500'}>
-                    ❌
-                </p>
-            ),
-            loading: (
-                <Lottie
-                    className={'absolute z-50 w-12 p-0'}
-                    path={'lotties/kaz/loading-circle.json'}
-                    loop={true}
-                    autoplay={true}
-                />
-            ),
-            none: <div />,
-        }
-        return (
-            <div className={'absolute mb-[4.5rem] ml-[60px]'}>
-                {map[props.type]}
-            </div>
-        )
-    }
-
-    async function saveUserWallet() {
-        const res = await fetch(HOST + '/wallets/check/' + userWallet)
-        setWalletCheckStatus('loading')
-        showSaveWalletTransactionStatus(res.status === 200)
-
-        function showSaveWalletTransactionStatus(responseRes) {
-            setTimeout(() => {
-                if (responseRes) {
-                    setWalletCheckStatus('ok')
-                } else {
-                    setWalletCheckStatus('bad')
-                }
-            }, 1000)
-        }
-    }
-
     function CongratsMessage() {
+        const loadingTime = 1000
+        const [placeholderMessage, setPlaceholderMessage] = useState(
+            'enter you wallet here'
+        )
+        const [resp, setResp] = useState(null)
+        const [responseIconType, setResponseIconType] = useState('none')
+        const [isAbleToSubmitForm, setIsAbleToSubmitForm] =useState(true)
+
+        const walletInputRef = useRef()
+
+        function SaveWalletStatusIcon(props) {
+            const map = {
+                ok: (
+                    <p className={'absolute ml-2 text-5xl text-green-500'}>✓</p>
+                ),
+                bad: (
+                    <p
+                        className={
+                            'absolute ml-2 pt-[7px] text-2xl text-green-500'
+                        }
+                    >
+                        ❌
+                    </p>
+                ),
+                loading: (
+                    <Lottie
+                        className={'absolute z-50 w-12 p-0'}
+                        path={'lotties/kaz/loading-circle.json'}
+                        loop={true}
+                        autoplay={true}
+                    />
+                ),
+                none: <div />,
+            }
+            return (
+                <div className={'absolute mb-[4.5rem] ml-[60px]'}>
+                    {map[props.type]}
+                </div>
+            )
+        }
+
+        async function saveUserWallet() {
+            if (!isAbleToSubmitForm){
+                return
+            }
+            let userWalletValue = ""
+            if(walletInputRef.current) {
+               userWalletValue = walletInputRef.current.value
+                walletInputRef.current.value = ""
+            }
+            if (userWalletValue === ""){
+                return
+            }
+            setResponseIconType('loading')
+            const checkResp = await fetch(HOST + '/wallets/check/' + userWalletValue)
+            if (checkResp.status === 409){
+                showSaveWalletTransactionStatusIcon(checkResp.status)
+                setResp(checkResp)
+            } else if (checkResp.status === 404) {
+                const saveResp = await fetch(HOST + '/wallets/save/' + userWalletValue, {
+                    method: "POST"
+                })
+                setResp(saveResp)
+                showSaveWalletTransactionStatusIcon(saveResp.status)
+            } else if (checkResp.status === 400) {
+                showSaveWalletTransactionStatusIcon(checkResp.status)
+                setResp(checkResp)
+            } else {
+                showSaveWalletTransactionStatusIcon(checkResp.status)
+                setResp(checkResp)
+            }
+
+            function showSaveWalletTransactionStatusIcon(status) {
+                setTimeout(() => {
+                    if (status === 200) { // if wallet doesn't exist
+                        setResponseIconType('ok')
+                    } else {
+                        setResponseIconType('bad')
+                    }
+                }, loadingTime)
+            }
+        }
+
+        useEffect(() => {
+            if (responseIconType !== 'ok' && responseIconType !== 'bad') {
+                return
+            }
+            if (resp.status === 200) {
+                setPlaceholderMessage("the wallet was successfully saved")
+                setIsAbleToSubmitForm(false)
+            } else if (resp.status === 409) {
+                setPlaceholderMessage("the wallet was already saved")
+            } else if (resp.status === 400) {
+                setPlaceholderMessage("invalid wallet format")
+            } else {
+                setPlaceholderMessage("undefined problem happened in the server")
+            }
+        }, [responseIconType])
+
         return (
             <div
                 id="congratulation-message-holder"
-                className="max-laptop:scale-75 max-laptop:mt-25% max-laptop:mt-0 z-40 mt-[-10%] flex h-fit w-[45%] flex-col justify-between gap-10 rounded-2xl bg-[#692931] pb-5 text-white"
+                className="max-laptop:mt-25% z-40 mt-[-10%] flex h-fit w-[45%] flex-col justify-between gap-10 rounded-2xl bg-[#692931] pb-5 text-white max-laptop:mt-0 max-laptop:scale-75"
                 style={{
                     boxShadow:
                         'rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset',
@@ -234,14 +288,14 @@ export function Kaz() {
                         x
                     </div>
                 </div>
-                <h2 className="max-laptop:text-5xl text-center font-nav-bar text-6xl text-[#FFFF00]">
+                <h2 className="text-center font-nav-bar text-6xl text-[#FFFF00] max-laptop:text-5xl">
                     CONGRATULATIONS!
                 </h2>
                 <div className="mt-[-18px] flex w-full items-center justify-center">
                     <p
                         className={
                             // 'w-5/6 text-justify text-4xl font-bold'
-                            'max-laptop:text-3xl w-5/6 text-center text-4xl font-bold'
+                            'w-5/6 text-center text-4xl font-bold max-laptop:text-3xl'
                         }
                     >
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -256,15 +310,16 @@ export function Kaz() {
                     <div className="mr-[-1.5%] flex h-12 w-[90%] gap-2">
                         <input
                             ref={walletInputRef}
+                            type={'text'}
                             className="flex-grow-[12] rounded-md pl-3 text-[1.2em] text-black"
-                            placeholder="enter your wallet here"
+                            placeholder={placeholderMessage}
                         />
                         <div
                             className={
                                 'relative flex h-5 flex-grow-[0] items-end bg-blue-100'
                             }
                         >
-                            <SaveWalletStatus type={walletCheckStatus} />
+                            <SaveWalletStatusIcon type={responseIconType} />
                         </div>
                         <button
                             className="flex-grow rounded-md bg-[#5D161E] transition-colors hover:bg-red-500"
@@ -312,7 +367,7 @@ export function Kaz() {
 
                 <div
                     id="slot-machine-holder"
-                    className="max-laptop:scale-75 flex h-fit w-fit flex-col items-center"
+                    className="flex h-fit w-fit flex-col items-center max-laptop:scale-75"
                 >
                     <img
                         src="images/kaz/slot-full-beta.png"
@@ -366,7 +421,7 @@ export function Kaz() {
 
                 <div className="m-0 flex w-full items-center justify-center p-0">
                     <p
-                        className="max-laptop:mt-[-2rem] absolute z-30 select-none text-white opacity-50 transition-all hover:cursor-pointer hover:opacity-100"
+                        className="absolute z-30 select-none text-white opacity-50 transition-all hover:cursor-pointer hover:opacity-100 max-laptop:mt-[-2rem]"
                         style={{ display: 'none' }}
                         onClick={() => {
                             setIsCongratulationVisible(true)
