@@ -1,17 +1,20 @@
 import { Pie } from 'react-chartjs-2'
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js'
 import ChartDataLabels from 'chartjs-plugin-datalabels'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export default function Tokenomica() {
+    const [coinMarketCapString, setCoinMarketCapString] = useState('64,894')
+
     const [data, setData] = useState([
         { name: 'ETH', percentage: 15 },
         { name: 'BTC', percentage: 30 },
         { name: 'AVAX', percentage: 10 },
         { name: 'SOL', percentage: 20 },
-        { name:  "DOGE", percentage: 10 },
+        { name: 'DOGE', percentage: 10 },
         { name: 'CORVETTE', percentage: 15 },
     ])
+
 
     ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels)
 
@@ -75,28 +78,28 @@ export default function Tokenomica() {
     }
 
     function updateChart(type) {
-        if(type === "before") {
+        if (type === 'before') {
             setData([
                 { name: 'ETH', percentage: 15 },
                 { name: 'BTC', percentage: 30 },
                 { name: 'AVAX', percentage: 10 },
                 { name: 'SOL', percentage: 20 },
-                { name:  "DOGE", percentage: 10 },
+                { name: 'DOGE', percentage: 10 },
                 { name: 'CORVETTE', percentage: 15 },
             ])
         } else {
             setData([
-
                 { name: 'AVAX', percentage: 5 },
                 { name: 'BTC', percentage: 25 },
                 { name: 'ETH', percentage: 15 },
-                { name:  "DOGE", percentage: 10 },
+                { name: 'DOGE', percentage: 10 },
                 { name: 'SOL', percentage: 20 },
                 { name: 'CORVETTE', percentage: 25 },
             ])
         }
     }
 
+    const marketCapStringRef = useRef()
 
     return (
         <div className="flex h-dvh w-dvw items-end justify-end">

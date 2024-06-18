@@ -1,6 +1,7 @@
 package com.corvette.service;
 
 import com.corvette.model.CarAssetMetadata;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
@@ -14,8 +15,8 @@ import java.util.*;
 @Service
 public class CorvetteService {
     private final ResourceLoader resourceLoader;
-    // TODO make env
-    private final String IMAGES_STORAGE_PATH = "/home/shd/Pictures/corvette/";
+    @Value("${IMAGES_STORAGE_PATH}")
+    private String IMAGES_STORAGE_PATH;
     private final Path dirPath = Paths.get(IMAGES_STORAGE_PATH);
 
     public CorvetteService(ResourceLoader resourceLoader) {

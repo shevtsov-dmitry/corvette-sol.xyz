@@ -4,8 +4,7 @@ import { useDispatch } from 'react-redux'
 import { setIsNavBarDimmed } from '../../store/navBarSlice.js'
 
 export function Kaz() {
-    // TODO make env
-    const HOST = 'http://localhost:8080'
+    const SERVER_HOST = process.env.REACT_APP_API_URL
     const progressPercent = 64
 
     const [debugIdx, setDebugIdx] = useState(0)
@@ -222,12 +221,12 @@ export function Kaz() {
                 return
             }
             setResponseIconType('loading')
-            const checkResp = await fetch(HOST + '/wallets/check/' + userWalletValue)
+            const checkResp = await fetch(SERVER_HOST + '/wallets/check/' + userWalletValue)
             if (checkResp.status === 409){
                 showSaveWalletTransactionStatusIcon(checkResp.status)
                 setResp(checkResp)
             } else if (checkResp.status === 404) {
-                const saveResp = await fetch(HOST + '/wallets/save/' + userWalletValue, {
+                const saveResp = await fetch(SERVER_HOST + '/wallets/save/' + userWalletValue, {
                     method: "POST"
                 })
                 setResp(saveResp)

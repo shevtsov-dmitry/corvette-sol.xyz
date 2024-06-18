@@ -22,8 +22,7 @@ export default function CarCustomization() {
     const customizationSliderRef = useRef(null)
     const dispatch = useDispatch()
 
-    // TODO make env
-    const HOST = 'http://localhost:8080'
+    const SERVER_HOST = process.env.REACT_APP_SERVER_HOST
     let scrollDistancePx = 384
     if (customizationSliderRef.current) {
         console.log(customizationSliderRef.current.offsetWidth)
@@ -55,7 +54,7 @@ export default function CarCustomization() {
         try {
             const m = customizationProps
             const res = await fetch(
-                `${HOST}/cars/get/assets?show=${m['show']}&model=${m['model']}&color=${m['color']}&rims=${m['rims']}`
+                `${SERVER_HOST}/cars/get/assets?show=${m['show']}&model=${m['model']}&color=${m['color']}&rims=${m['rims']}`
             )
             if (res.status === 404) {
                 console.error(
@@ -266,7 +265,7 @@ export default function CarCustomization() {
                             rims: parseFilenameProps('rims'),
                         }
                         const res = await fetch(
-                            `${HOST}/cars/get/constructed-car?model=${m['model']}&color=${m['color']}&rims=${m['rims']}`
+                            `${SERVER_HOST}/cars/get/constructed-car?model=${m['model']}&color=${m['color']}&rims=${m['rims']}`
                         )
                         const imageBytes = await res.blob()
                         const imageUrl = URL.createObjectURL(imageBytes)
