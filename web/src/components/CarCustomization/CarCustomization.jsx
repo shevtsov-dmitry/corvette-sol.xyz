@@ -26,7 +26,9 @@ export default function CarCustomization() {
     const HOST = 'http://localhost:8080'
     let scrollDistancePx = 384
     if (customizationSliderRef.current) {
-        scrollDistancePx = customizationSliderRef.current.offsetWidth / 3 - 128
+        console.log(customizationSliderRef.current.offsetWidth)
+        // scrollDistancePx = customizationSliderRef.current.offsetWidth / 3 - 128
+        scrollDistancePx = customizationSliderRef.current.offsetWidth / 4
     }
     const customizationButtons = {
         model: 'model',

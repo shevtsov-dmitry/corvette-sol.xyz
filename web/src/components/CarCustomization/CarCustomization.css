@@ -21,8 +21,9 @@
 }
 
 .animate-scale-up {
-    animation: scaleUp 400ms forwards;
+    animation: scaleUp 300ms forwards;
 }
+
 
 @keyframes scaleDownLeft {
     0% {
