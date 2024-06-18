@@ -19,7 +19,7 @@ export default function NavBar() {
 
     return (
         <div
-            className={`${isNavBarDimmed ? 'z-0' : 'z-50'} max-laptop:scale-75 max-laptop:mt-[-1rem] fixed flex h-fit w-dvw flex-col items-center justify-center gap-4`}
+            className={`${isNavBarDimmed ? 'z-0' : 'z-50'} max-laptop:scale-75 max-laptop:mt-[-1rem] fixed flex h-fit w-dvw flex-col items-center justify-center gap-4 select-none`}
         >
             <header className="flex justify-around">
                 <div

@@ -6,6 +6,7 @@ import { setIsNavBarDimmed } from '../../store/navBarSlice.js'
 export function Kaz() {
     // TODO make env
     const HOST = 'http://localhost:8080'
+    const progressPercent = 64
 
     const [debugIdx, setDebugIdx] = useState(0)
     const [spinAmount, setSpinsAmount] = useState(0)
@@ -435,6 +436,12 @@ export function Kaz() {
                         Open win message again.
                     </p>
                 </div>
+            </div>
+
+            <div className="range absolute bottom-0 mb-8" style={{
+            "--progress" :`${progressPercent}`
+            }} >
+                <div className="range__label">Progress</div>
             </div>
 
             <audio

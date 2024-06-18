@@ -3,6 +3,7 @@
 @import 'components/Roadmap/Roadmap.css';
 @import 'components/Kaz/Kaz.css';
 @import "components/CarCustomization/CarCustomization.css";
+@import "components/Tokenomica/Tokenomica.css";
 
 @tailwind base;
 @tailwind components;

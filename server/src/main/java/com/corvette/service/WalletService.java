@@ -1,11 +1,9 @@
 package com.corvette.service;
 
-import org.apache.tomcat.util.buf.Ascii;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.nio.file.*;
-import java.util.regex.Pattern;
 
 @Service
 public class WalletService {
@@ -42,7 +40,6 @@ public class WalletService {
                 Files.createFile(path);
             }
             final String newWallet = userWallet + ",";
-            System.out.println(path);
             Files.writeString(path, newWallet, StandardOpenOption.APPEND);
         }
         catch (IOException e) {

@@ -3,7 +3,7 @@
 node_modules
 *.iml
 
-web/build
-web/target
+web/dist
+
 server/target
 server/build

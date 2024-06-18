@@ -209,7 +209,7 @@ export default function CarCustomization() {
         return (
             <div
                 id={'buttons-holder'}
-                className={'mt-[2%] flex w-screen items-center justify-center'}
+                className={'mt-[2%] flex w-screen items-center justify-center select-none'}
             >
                 <div className="flex w-fit justify-around gap-4">
                     <CustomizationMenuBtn title={'MODEL'} />
