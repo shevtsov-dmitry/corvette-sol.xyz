@@ -68,7 +68,6 @@ export default function CarCustomization() {
             resData.forEach((item) => {
                 filenames.push(atob(item['filename']))
             })
-
             setImages(
                 resData.map((imageAndFileName) => (
                     <img
@@ -305,7 +304,7 @@ export default function CarCustomization() {
                     <div
                         ref={customizationSliderRef}
                         className={
-                            'no-scrollbar flex h-fit w-fit select-none overflow-x-scroll scroll-smooth'
+                            'no-scrollbar flex h-fit w-screen select-none overflow-x-scroll scroll-smooth'
                         }
                     >
                         <div
