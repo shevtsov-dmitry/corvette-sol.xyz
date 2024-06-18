@@ -11,9 +11,10 @@ export function Kaz() {
     const [spinAmount, setSpinsAmount] = useState(0)
 
     const [isAllowedToSpin, setIsAllowedToSpin] = useState(true)
-    const [isWin, setIsWin] = useState(true) // false
+    const [isWin, setIsWin] = useState(false)
     const [isWinConfettiEnabled, setIsWinConfettiEnabled] = useState(false)
-    const [isCongratulationVisible, setIsCongratulationVisible] = useState(true) // false
+    const [isCongratulationVisible, setIsCongratulationVisible] = useState(false)
+    const [isUserSavedWallet, setIsUserSavedWallet] = useState(false)
 
     const chance_to_win_in_percent = 100,
         icons_amount = 9,
@@ -208,13 +209,13 @@ export function Kaz() {
         }
 
         async function saveUserWallet() {
-            if (!isAbleToSubmitForm){
+            if (!isAbleToSubmitForm || isUserSavedWallet){
                 return
             }
             let userWalletValue = ""
             if(walletInputRef.current) {
                userWalletValue = walletInputRef.current.value
-                walletInputRef.current.value = ""
+               walletInputRef.current.value = ""
             }
             if (userWalletValue === ""){
                 return
@@ -230,6 +231,7 @@ export function Kaz() {
                 })
                 setResp(saveResp)
                 showSaveWalletTransactionStatusIcon(saveResp.status)
+                setIsAbleToSubmitForm(false)
             } else if (checkResp.status === 400) {
                 showSaveWalletTransactionStatusIcon(checkResp.status)
                 setResp(checkResp)
@@ -240,7 +242,7 @@ export function Kaz() {
 
             function showSaveWalletTransactionStatusIcon(status) {
                 setTimeout(() => {
-                    if (status === 200) { // if wallet doesn't exist
+                    if (status === 200) {
                         setResponseIconType('ok')
                     } else {
                         setResponseIconType('bad')
@@ -255,7 +257,6 @@ export function Kaz() {
             }
             if (resp.status === 200) {
                 setPlaceholderMessage("the wallet was successfully saved")
-                setIsAbleToSubmitForm(false)
             } else if (resp.status === 409) {
                 setPlaceholderMessage("the wallet was already saved")
             } else if (resp.status === 400) {
@@ -280,6 +281,7 @@ export function Kaz() {
                         className="absolute mr-3 select-none pb-3 font-mono text-6xl font-bold hover:cursor-pointer"
                         onClick={() => {
                             dispatch(setIsNavBarDimmed(true))
+                            setIsUserSavedWallet(!isAbleToSubmitForm)
                             setIsCongratulationVisible(false)
                             openWinMessageAgainRef.current.style.display =
                                 'block'
