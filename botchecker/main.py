@@ -1,14 +1,19 @@
 import logging
 import os
-
 import requests
-from telegram import ReplyKeyboardMarkup, Update
+from telegram import (
+    Update,
+    InlineKeyboardButton,
+    InlineKeyboardMarkup
+)
 from telegram.ext import (
     filters,
     ApplicationBuilder,
     MessageHandler,
     CommandHandler,
     ContextTypes,
+    CallbackContext,
+    CallbackQueryHandler
 )
 
 # Enable logging
@@ -20,17 +25,26 @@ logger = logging.getLogger(__name__)
 
 bot_token = os.getenv('BOT_TOKEN')
 host_server = "http://localhost:8080"
+admins = [749179973, 5006572203, 5519831621]
 
 
-async def hello(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    await update.message.reply_text(f'Hello {update.effective_user.first_name}')
+async def start(update: Update, context: CallbackContext) -> None:
+    # Create a button to enter the admin panel
+    keyboard = [
+        [InlineKeyboardButton("Enter Admin Panel", callback_data='admin_panel')]
+    ]
 
-
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    await update.message.reply_text(
-        f"Hi, dear {update.effective_user.first_name}! I will check your wallet real quick.\n" +
-        "Send it to me to get verification ✅."
-    )
+    is_admin = update.effective_user.id in admins
+    if not is_admin:
+        await update.message.reply_text(
+            f"Hi, dear {update.effective_user.first_name}! I will check your wallet real quick.\n" +
+            "Send it to me to get verification ✅."
+        )
+    else:
+        await update.message.reply_text(
+            f"Hi, dear administrator {update.effective_user.first_name}! I will check your wallet real quick.\n" +
+            "Send it to me to get verification ✅.", reply_markup=InlineKeyboardMarkup(keyboard)
+        )
 
 
 async def verify(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -48,10 +62,43 @@ async def verify(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         await update.message.reply_text("An error occurred while verifying")
 
 
+async def admin_panel(update: Update, context: CallbackContext) -> None:
+    # Admin panel buttons
+    keyboard = [
+        [InlineKeyboardButton("Check Wallets", callback_data='check_wallets')],
+        [InlineKeyboardButton("Check URLs", callback_data='check_urls')],
+        [InlineKeyboardButton("Change URLs", callback_data='change_urls')],
+        [InlineKeyboardButton("Back", callback_data='start')]
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+
+    await update.callback_query.edit_message_text(text="Admin Panel", reply_markup=reply_markup)
+
+
+async def admin_options(update: Update, context: CallbackContext) -> None:
+    query = update.callback_query
+    await query.answer()
+    print(query)
+
+    if query.data == 'admin_panel':
+        await admin_panel(update, context)
+    elif query.data == 'check_wallets':
+        await query.edit_message_text(text="Checking Wallets...")
+        # Implement the logic for checking wallets
+    elif query.data == 'check_urls':
+        await query.edit_message_text(text="Checking URLs...")
+        # Implement the logic for checking URLs
+    elif query.data == 'change_urls':
+        await query.edit_message_text(text="Changing URLs...")
+        # Implement the logic for changing URLs
+    elif query.data == 'start':
+        await start(update, context)
+
+
 app = ApplicationBuilder().token(bot_token).build()
 
-app.add_handler(CommandHandler("hello", hello))
 app.add_handler(CommandHandler("start", start))
 app.add_handler(MessageHandler(filters.TEXT & (~filters.COMMAND), verify))
+app.add_handler(CallbackQueryHandler(admin_options))
 
 app.run_polling()
