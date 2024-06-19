@@ -1,5 +1,8 @@
+import json
 import logging
 import os
+from array import array
+
 import requests
 from telegram import (
     Update,
@@ -27,6 +30,13 @@ bot_token = os.getenv('BOT_TOKEN')
 host_server = "http://localhost:8080"
 admins = [749179973, 5006572203, 5519831621]
 
+keyboard_options = [
+    [InlineKeyboardButton("Check Wallets", callback_data='check_wallets')],
+    [InlineKeyboardButton("Check URLs", callback_data='check_urls')],
+    [InlineKeyboardButton("Change URLs", callback_data='change_urls')],
+    [InlineKeyboardButton("Back", callback_data='start')]
+]
+
 
 async def start(update: Update, context: CallbackContext) -> None:
     # Create a button to enter the admin panel
@@ -52,7 +62,6 @@ async def verify(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
     try:
         resp = requests.get(host_server + "/wallets/check/" + user_input)
-        print(resp.status_code)
         if resp.status_code == 409:
             await update.message.reply_text("Nice, Your wallet is verified. ✅")
         else:
@@ -63,14 +72,7 @@ async def verify(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 
 async def admin_panel(update: Update, context: CallbackContext) -> None:
-    # Admin panel buttons
-    keyboard = [
-        [InlineKeyboardButton("Check Wallets", callback_data='check_wallets')],
-        [InlineKeyboardButton("Check URLs", callback_data='check_urls')],
-        [InlineKeyboardButton("Change URLs", callback_data='change_urls')],
-        [InlineKeyboardButton("Back", callback_data='start')]
-    ]
-    reply_markup = InlineKeyboardMarkup(keyboard)
+    reply_markup = InlineKeyboardMarkup(keyboard_options)
 
     await update.callback_query.edit_message_text(text="Admin Panel", reply_markup=reply_markup)
 
@@ -78,7 +80,6 @@ async def admin_panel(update: Update, context: CallbackContext) -> None:
 async def admin_options(update: Update, context: CallbackContext) -> None:
     query = update.callback_query
     await query.answer()
-    print(query)
 
     if query.data == 'admin_panel':
         await admin_panel(update, context)
@@ -87,12 +88,26 @@ async def admin_options(update: Update, context: CallbackContext) -> None:
         # Implement the logic for checking wallets
     elif query.data == 'check_urls':
         await query.edit_message_text(text="Checking URLs...")
-        # Implement the logic for checking URLs
+        await options_list_urls(query)
+
     elif query.data == 'change_urls':
         await query.edit_message_text(text="Changing URLs...")
         # Implement the logic for changing URLs
     elif query.data == 'start':
         await start(update, context)
+
+
+async def options_list_urls(query) -> None:
+    try:
+        resp = requests.get(host_server + "/urls/list")
+        text = ""
+        m = resp.json()
+        for k, v in m.items():
+            text = f"{text} website: {k} | url: {v}\n"
+        await query.edit_message_text(text=text, parse_mode="HTML", reply_markup=InlineKeyboardMarkup(keyboard_options),
+                                      disable_web_page_preview=True)
+    except requests.RequestException as e:
+        await query.message.reply_text("An error occurred while trying to get URLs")
 
 
 app = ApplicationBuilder().token(bot_token).build()

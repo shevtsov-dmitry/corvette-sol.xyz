@@ -3,6 +3,9 @@ package com.corvette.controller;
 import com.corvette.service.UrlsService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/urls")
 public class UrlsController {
@@ -14,7 +17,7 @@ public class UrlsController {
     }
 
     @GetMapping("/list")
-    public String listUrls(){
+    public Map<String, String> listUrls(){
         return service.listUrls();
     }
 
