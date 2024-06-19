@@ -8,8 +8,7 @@ import java.nio.file.*;
 
 @Service
 public class WalletService {
-    @Value("${IMAGES_STORAGE_PATH}")
-    private String WALLETS_PATH;
+    private String WALLETS_PATH = "/home/shd/.local/state/wallets.txt";
 //    private final String WALLET_EXAMPLE = "0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826";
 
     public boolean checkWalletRegex(String userWallet) {
