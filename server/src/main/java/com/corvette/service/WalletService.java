@@ -3,7 +3,12 @@ package com.corvette.service;
 import com.corvette.model.Wallet;
 import com.corvette.repository.WalletRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class WalletService {
@@ -22,5 +27,11 @@ public class WalletService {
 
     public boolean saveUserWallet(String userWallet) {
         return repo.save(new Wallet(userWallet)).getId() != null;
+    }
+
+    public Map<Integer, String> listAllWallets() {
+        Map<Integer, String> map = new HashMap<>();
+        repo.findAll().forEach(wallet -> map.put(wallet.getId(), wallet.getWallet()));
+        return map;
     }
 }

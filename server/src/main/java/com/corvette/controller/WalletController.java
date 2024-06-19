@@ -4,6 +4,9 @@ import com.corvette.service.WalletService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Map;
+
 @RequestMapping("/wallets")
 @RestController
 public class WalletController {
@@ -20,6 +23,16 @@ public class WalletController {
             return ResponseEntity.badRequest().build();
         }
         return service.checkUserWallet(userWallet) ? ResponseEntity.status(409).build() : ResponseEntity.notFound().build();
+    }
+
+
+    @GetMapping("/list")
+    public ResponseEntity<Map<Integer, String>> listWallets() {
+        try {
+            return ResponseEntity.ok(service.listAllWallets());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(Map.of(0, "Error on a server: %s".formatted(e.getMessage())));
+        }
     }
 
     @PostMapping("/save/{userWallet}")
