@@ -24,6 +24,6 @@ public class WalletController {
 
     @PostMapping("/save/{userWallet}")
     public ResponseEntity saveWallet(@PathVariable String userWallet) {
-        return service.saveUserWallet(userWallet) ? ResponseEntity.ok().build() : ResponseEntity.internalServerError().body("can't save the wallet, something wrong with the server");
+        return service.saveUserWallet(userWallet) ? ResponseEntity.ok().build() : ResponseEntity.internalServerError().build();
     }
 }

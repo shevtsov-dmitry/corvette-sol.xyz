@@ -12,6 +12,13 @@ public class Wallet {
     private Integer id;
     private String wallet;
 
+    public Wallet() {
+    }
+
+    public Wallet(String wallet) {
+        this.wallet = wallet;
+    }
+
     public Integer getId() {
         return id;
     }

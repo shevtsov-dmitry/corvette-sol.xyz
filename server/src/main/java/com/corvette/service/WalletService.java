@@ -1,15 +1,15 @@
 package com.corvette.service;
 
-import org.springframework.beans.factory.annotation.Value;
+import com.corvette.model.Wallet;
+import com.corvette.repository.WalletRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.io.IOException;
-import java.nio.file.*;
 
 @Service
 public class WalletService {
-    private String WALLETS_PATH = "/home/shd/.local/state/wallets.txt";
-//    private final String WALLET_EXAMPLE = "0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826";
+    //    private final String WALLET_EXAMPLE = "0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826";
+    @Autowired
+    private WalletRepo repo;
 
     public boolean checkWalletRegex(String userWallet) {
         String asciiRegex = "^[\\x00-\\x7F]*$";
@@ -17,32 +17,10 @@ public class WalletService {
     }
 
     public boolean checkUserWallet(String userWallet) {
-        try {
-            final Path path = Paths.get(WALLETS_PATH);
-            final String[] allWallets = Files.readString(path).split(",");
-            for (String wallet : allWallets) {
-                if (wallet.equals(userWallet)) {
-                    return true;
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return false;
+        return repo.findAll().stream().map(Wallet::getWallet).anyMatch(userWallet::equals);
     }
 
     public boolean saveUserWallet(String userWallet) {
-        try {
-            final Path path = Paths.get(WALLETS_PATH);
-            if (!Files.exists(path)) {
-                Files.createFile(path);
-            }
-            final String newWallet = userWallet + ",";
-            Files.writeString(path, newWallet, StandardOpenOption.APPEND);
-        } catch (IOException e) {
-            return false;
-        }
-        return true;
+        return repo.save(new Wallet(userWallet)).getId() != null;
     }
 }

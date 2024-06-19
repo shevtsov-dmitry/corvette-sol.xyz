@@ -13,6 +13,9 @@ public class Url {
     private String website;
     private String url;
 
+    public Url() {
+    }
+
     public Integer getId() {
         return id;
     }
