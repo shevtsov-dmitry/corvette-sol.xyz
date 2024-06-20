@@ -45,15 +45,12 @@ async def start(update: Update, context: CallbackContext) -> None:
 
     is_admin = update.effective_user.id in admins
     if not is_admin:
-        await update.message.reply_text(
-            f"Hi, dear {update.effective_user.first_name}! I will check your wallet real quick.\n" +
-            "Send it to me to get verification ✅."
-        )
+        text = f"Hi, dear {update.effective_user.first_name}! I will check your wallet real quick.\nSend it to me to get verification ✅."
+        await update.message.reply_text(text)
     else:
-        await update.message.reply_text(
-            f"Hi, dear administrator {update.effective_user.first_name}! I will check your wallet real quick.\n" +
-            "Send it to me to get verification ✅.", reply_markup=InlineKeyboardMarkup(keyboard)
-        )
+
+        text = f"Hi, dear administrator {update.effective_user.first_name}! I will check your wallet real quick.\nSend it to me to get verification ✅."
+        await update.message.reply_text(text, reply_markup=InlineKeyboardMarkup(keyboard))
 
 
 async def handle_input(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
