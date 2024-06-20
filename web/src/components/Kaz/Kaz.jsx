@@ -361,10 +361,11 @@ export function Kaz() {
                 id="centered-holder"
                 className="flex h-fit w-fit flex-col items-center"
             >
-                <img
-                    src="images/kaz/get-3-wins-in-a-row.png"
-                    width="30%"
-                    className="absolute left-12"
+                <Lottie
+                    className={'absolute left-[8%] z-[100]'}
+                    path={'lotties/kaz/get-3-wins.json'}
+                    loop={false}
+                    autoplay={true}
                 />
 
                 <div
@@ -415,10 +416,12 @@ export function Kaz() {
                     <div />
                 )}
 
-                <img
-                    src="images/kaz/win-big.png"
-                    width="30%"
-                    className="absolute right-20 mt-[400px]"
+                {/*className="absolute right-20 mt-[400px]"*/}
+                <Lottie
+                    className={'absolute right-[-10%] bottom-[-2%] z-[100]'}
+                    path={'lotties/kaz/claim-your-airdrop.json'}
+                    loop={false}
+                    autoplay={true}
                 />
 
                 <div className="m-0 flex w-full items-center justify-center p-0">

@@ -44,13 +44,13 @@ export function Footer() {
                     <a href={twitterUrl}>
                         <img
                             className={'footer-icon'}
-                            src={'images/welcomePage/twitter.png'}
+                            src={'images/footer/twitter.png'}
                         />
                     </a>
                     <a href={telegramUrl}>
                         <img
                             className={'footer-icon'}
-                            src={'images/welcomePage/telegram.png'}
+                            src={'images/footer/telegram.png'}
                         />
                     </a>
                 </div>
@@ -58,13 +58,13 @@ export function Footer() {
                     <a href={pumpfunUrl}>
                         <img
                             className={'footer-icon'}
-                            src={'images/welcomePage/pill.png'}
+                            src={'images/footer/pill.png'}
                         />
                     </a>
                     <a href={tensorUrl}>
                         <img
                             className={'footer-icon'}
-                            src={'images/welcomePage/tensor.png'}
+                            src={'images/footer/tensor.png'}
                         />
                     </a>
                 </div>

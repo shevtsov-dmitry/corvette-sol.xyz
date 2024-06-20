@@ -12,19 +12,19 @@ export function WelcomePage() {
             />
             <div className={'flex h-full w-full'}>
                 <img
-                    className={'object-contain'}
+                    className={'object-contain mt-5'}
                     src={'images/welcomePage/trail.png'}
                 />
             </div>
             <img
                 className={
-                    'absolute bottom-0 mt-[-6em] h-full w-full scale-[40%] object-contain'
+                    'absolute bottom-0 h-full w-full scale-[47%] object-contain'
                 }
                 src={'images/welcomePage/vehicle.png'}
             />
             <Lottie
-                className={'absolute bottom-[0%] right-[3%] w-[50%]'}
-                path={'lotties/welcomePage/exclusevely-on-flash.json'}
+                className={'absolute bottom-[8%] right-[8%] w-[40%]'}
+                path={'lotties/welcomePage/exclusively-on-pumpfun.json'}
                 loop={false}
                 autoplay={true}
             />

@@ -3,16 +3,13 @@ package com.corvette.service;
 import com.corvette.model.Wallet;
 import com.corvette.repository.WalletRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Service
 public class WalletService {
-    //    private final String WALLET_EXAMPLE = "0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826";
     @Autowired
     private WalletRepo repo;
 

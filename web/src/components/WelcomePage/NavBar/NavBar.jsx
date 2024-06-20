@@ -47,7 +47,7 @@ export default function NavBar() {
                             <Lottie
                                 className={'min-w-24'}
                                 path={
-                                    'lotties/welcomePage/low-nonstop-wheel.json'
+                                    'lotties/navBar/low-nonstop-wheel.json'
                                 }
                                 loop={true}
                                 autoplay={true}
