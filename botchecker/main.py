@@ -32,7 +32,7 @@ keyboard_options = [
     [InlineKeyboardButton("Check Wallets", callback_data='check_wallets')],
     [InlineKeyboardButton("Check URLs", callback_data='check_urls')],
     [InlineKeyboardButton("Change URLs", callback_data='change_urls')],
-    [InlineKeyboardButton("Back", callback_data='start')]
+    [InlineKeyboardButton("← Back", callback_data='admin_panel')]
 ]
 
 QUERY = None
@@ -58,27 +58,41 @@ async def start(update: Update, context: CallbackContext) -> None:
 
 async def handle_input(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user_input = update.message.text
+    new_url = user_input
     match QUERY.data:
         case 'change_url_twitter':
-            await QUERY.edit_message_text("Twitter URL changed.", reply_markup=InlineKeyboardMarkup(keyboard_options))
-            resp = requests.get(host_server + "/wallets/check/" + user_input)
+            await change_url("twitter", new_url)
         case 'change_url_telegram':
-            await QUERY.edit_message_text("Telegram URL changed.", reply_markup=InlineKeyboardMarkup(keyboard_options))
+            await change_url("telegram", new_url)
         case 'change_url_tensor':
-            await QUERY.edit_message_text("Tensor URL changed.", reply_markup=InlineKeyboardMarkup(keyboard_options))
+            await change_url("tensor", new_url)
         case 'change_url_site':
-            await QUERY.edit_message_text("Website URL changed.", reply_markup=InlineKeyboardMarkup(keyboard_options))
-        case 'change_url_pumpfun_token':
-            await QUERY.edit_message_text("Pumpfun token URL changed.", reply_markup=InlineKeyboardMarkup(keyboard_options))
+            await change_url("site", new_url)
+        case 'change_url_pumpfun':
+            await change_url("pumpfun", new_url)
         case _:
-            try:
-                resp = requests.get(host_server + "/wallets/check/" + user_input)
-                if resp.status_code == 409:
-                    await update.message.reply_text("Nice, Your wallet is verified. ✅")
-                else:
-                    await update.message.reply_text("Sorry, I can't find your wallet ❌\nPlease try again.")
-            except requests.RequestException as e:
-                await update.message.reply_text("An error occurred while verifying")
+            await verify(update, user_input)
+
+
+async def change_url(to, user_input):
+    resp = requests.put(f"{host_server}/urls/change?to={to}&url={user_input}")
+    if resp.status_code == 200:
+        await QUERY.edit_message_text(f"{to} URL changed.",
+                                      reply_markup=InlineKeyboardMarkup(keyboard_options))
+    else:
+        await QUERY.edit_message_text(f"Error changing {to} URL.",
+                                      reply_markup=InlineKeyboardMarkup(keyboard_options))
+
+
+async def verify(update, user_input):
+    try:
+        resp = requests.get(host_server + "/wallets/check/" + user_input)
+        if resp.status_code == 409:
+            await update.message.reply_text("Nice, Your wallet is verified. ✅")
+        else:
+            await update.message.reply_text("Sorry, I can't find your wallet ❌\nPlease try again.")
+    except requests.RequestException as e:
+        await update.message.reply_text("An error occurred while verifying")
 
 
 async def admin_panel(update: Update, context: CallbackContext) -> None:
@@ -90,6 +104,7 @@ async def admin_options(update: Update, context: CallbackContext) -> None:
     global QUERY
     query = update.callback_query
     QUERY = query
+    reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("← Back", callback_data='admin_panel')]])
 
     match query.data:
         case "admin_panel":
@@ -104,15 +119,21 @@ async def admin_options(update: Update, context: CallbackContext) -> None:
             await query.edit_message_text(text="Changing URLs...")
             await options_change_urls(query)
         case 'change_url_twitter':
-            await query.edit_message_text("Please write new twitter url")
+            await query.edit_message_text("Please write new twitter url. Example: https://twitter.com/corvetteCar",
+                                          reply_markup=reply_markup)
         case 'change_url_telegram':
-            await query.edit_message_text("Please write new telegram url")
+            await query.edit_message_text("Please write new telegram url. Example: https://twitter.com/corvetteCar",
+                                          reply_markup=reply_markup)
         case 'change_url_tensor':
-            await query.edit_message_text("Please write new tensor url")
+            await query.edit_message_text("Please write new tensor url. Example: https://twitter.com/corvetteCar",
+                                          reply_markup=reply_markup)
         case 'change_url_site':
-            await query.edit_message_text("Please write new website url")
-        case 'change_url_pumpfun_token':
-            await query.edit_message_text("Please write new pumpfun token url")
+            await query.edit_message_text("Please write new website url. Example: https://twitter.com/corvetteCar",
+                                          reply_markup=reply_markup)
+        case 'change_url_pumpfun':
+            await query.edit_message_text(
+                "Please write new pumpfun token url. Example: https://twitter.com/corvetteCar",
+                reply_markup=reply_markup)
 
 
 async def options_check_wallets(query):
@@ -151,16 +172,13 @@ async def options_change_urls(query):
         for website_name, _ in m.items():
             callback_data = f"change_url_{website_name}"
             websites.append([InlineKeyboardButton(website_name, callback_data=callback_data)])
+
+        websites.append([InlineKeyboardButton("← Back", callback_data="admin_panel")])
         text = "Choose which website's URL you want to change"
         await query.edit_message_text(text=text, reply_markup=InlineKeyboardMarkup(websites))
     except requests.RequestException as e:
         await query.edit_message_text("An error occurred while trying to get URLs",
                                       reply_markup=InlineKeyboardMarkup(keyboard_options))
-
-
-async def change_url(update: Update, context: CallbackContext) -> None:
-    user_input = update.message.text
-    print("you are changing TWITTER", user_input)
 
 
 app = ApplicationBuilder().token(bot_token).build()
