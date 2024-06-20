@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { setIsNavBarDimmed } from '../../store/navBarSlice.js'
 
 export function Kaz() {
-    const SERVER_HOST = process.env.REACT_APP_API_URL
+    const SERVER_HOST = "http://localhost:8080" //env
     const progressPercent = 64
 
     const [debugIdx, setDebugIdx] = useState(0)

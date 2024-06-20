@@ -19,6 +19,10 @@ public class UrlsService {
         return map;
     }
 
+    public String getUrl(String website) {
+        return repo.getFirstByWebsite(website).getUrl();
+    }
+
     public String changeUrl(String to, String url) {
         try {
             repo.updateByWebsiteAndUrl(to, url);
@@ -28,4 +32,5 @@ public class UrlsService {
             return "Error updating data ☠. Happened because website name doesn't exist in database. Check for errors in the spelling of the website to which the link is indicated.";
         }
     }
+
 }

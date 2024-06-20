@@ -14,4 +14,6 @@ public interface UrlRepo extends JpaRepository<Url, Integer> {
      @Transactional
      @Query("UPDATE Url e SET e.url = :url WHERE e.website = :website")
      void updateByWebsiteAndUrl(String website, String url);
+
+     Url getFirstByWebsite(String website);
 }

@@ -21,6 +21,11 @@ public class UrlsController {
         return service.listUrls();
     }
 
+    @GetMapping("/get/{website}")
+    public String getUrl(@PathVariable String website) {
+        return service.getUrl(website);
+    }
+
     @PutMapping("/change")
     public String changeUrl(@RequestParam String to, @RequestParam String url) {
         return service.changeUrl(to, url);

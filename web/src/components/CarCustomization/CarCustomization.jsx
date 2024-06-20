@@ -22,11 +22,10 @@ export default function CarCustomization() {
     const customizationSliderRef = useRef(null)
     const dispatch = useDispatch()
 
-    const SERVER_HOST = process.env.REACT_APP_SERVER_HOST
+    const SERVER_HOST = "http://localhost:8080" //env
+
     let scrollDistancePx = 384
     if (customizationSliderRef.current) {
-        console.log(customizationSliderRef.current.offsetWidth)
-        // scrollDistancePx = customizationSliderRef.current.offsetWidth / 3 - 128
         scrollDistancePx = customizationSliderRef.current.offsetWidth / 4
     }
     const customizationButtons = {
@@ -43,12 +42,6 @@ export default function CarCustomization() {
     useEffect(() => {
         setIsForbidAnimation(switchedCarsAmount === 0)
     }, [switchedCarsAmount])
-
-    useEffect(() => {
-        fetchImages()
-        // setIsForbidAnimation(true)
-        // setTimeout(() => setIsForbidAnimation(false), 500)
-    }, [curCustomizationBtn])
 
     async function fetchImages() {
         try {
