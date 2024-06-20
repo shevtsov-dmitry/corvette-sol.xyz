@@ -74,10 +74,10 @@ async def handle_input(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
 async def change_url(to, user_input):
     resp = requests.put(f"{host_server}/urls/change?to={to}&url={user_input}")
     if resp.status_code == 200:
-        await QUERY.edit_message_text(f"{to} URL changed.",
+        await QUERY.edit_message_text(f"{to} URL changed. ✅",
                                       reply_markup=InlineKeyboardMarkup(keyboard_options))
     else:
-        await QUERY.edit_message_text(f"Error changing {to} URL.",
+        await QUERY.edit_message_text(f"Error changing {to} URL. ❌",
                                       reply_markup=InlineKeyboardMarkup(keyboard_options))
 
 
