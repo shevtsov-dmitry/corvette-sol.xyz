@@ -1,5 +1,7 @@
 .spin-btn {
-	@apply z-30 font-nav-bar bg-[#73242E] text-[#FFFF00] font-bold text-[4em] px-14 h-[100px] pt-2 mb-8 rounded-lg whitespace-nowrap transition-all hover:scale-105 hover:bg-red-500 max-laptop:scale-75 max-laptop:mt-[-5rem];
+	@apply z-30 font-nav-bar bg-[#73242E] text-[#FFFF00] font-bold text-[4em] px-14 h-[100px] pt-2 mb-8 rounded-lg
+	whitespace-nowrap transition-all hover:scale-105 hover:bg-red-500 max-laptop:scale-75 max-laptop:mt-[-5rem]
+	max-mobile:scale-100 max-mobile:mt-[-1.5em] max-mobile:text-[2em] max-mobile:h-fit max-mobile:w-fit;
 	box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
 
@@ -17,7 +19,7 @@
 }
 
 #slots-bg{
-	@apply absolute z-10 mt-[285px] h-[170px] w-[450px] bg-[#711517];
+	@apply absolute z-10 mt-[285px] h-[170px] w-[450px] bg-[#711517] max-mobile:scale-75 max-mobile:mt-[10em] max-mobile:z-0 max-mobile:hidden;
 	box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px inset;
 }
 

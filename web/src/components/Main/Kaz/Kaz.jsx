@@ -8,18 +8,19 @@ export default function Kaz() {
     const serverHostState = useSelector((state) => state.serverHost)
     const SERVER_HOST = serverHostState.serverHost
 
-    // const progressPercent = 64
-
     const [debugIdx, setDebugIdx] = useState(0)
     const [spinAmount, setSpinsAmount] = useState(0)
 
     const [isAllowedToSpin, setIsAllowedToSpin] = useState(true)
     const [isWin, setIsWin] = useState(false)
     const [isWinConfettiEnabled, setIsWinConfettiEnabled] = useState(false)
-    const [isCongratulationVisible, setIsCongratulationVisible] = useState(false)
+    const [isCongratulationVisible, setIsCongratulationVisible] =
+        useState(false)
     const [isUserSavedWallet, setIsUserSavedWallet] = useState(false)
+    const [isAllowedToChangeSpinBtnScale, setIsAllowedToChangeSpinBtnScale] =
+        useState(true)
 
-    const chance_to_win_in_percent = 100,
+    const chance_to_win_in_percent = Math.floor(1/10 * 100),
         icons_amount = 9,
         icon_width = 128,
         spin_speed_multiplier = 75,
@@ -37,6 +38,7 @@ export default function Kaz() {
     const reel_3_ref = useRef()
     const reels = [reel_1_ref.current, reel_2_ref.current, reel_3_ref.current]
 
+    const currentSectionWindowRef = useRef(null)
     const spinBtnRef = useRef(null)
     const loadingCircleRef = useRef(null)
     const openWinMessageAgainRef = useRef(null)
@@ -70,6 +72,14 @@ export default function Kaz() {
             dispatch(setIsNavBarDimmed(false))
         }
     }, [isWin, isCongratulationVisible])
+
+    useEffect(() => {
+        if (currentSectionWindowRef) {
+            setIsAllowedToChangeSpinBtnScale(
+                currentSectionWindowRef.current.offsetWidth > 1000
+            )
+        }
+    }, [])
 
     function createRandomReelPositionsArray() {
         function setSlotsImagePosition(image_idx) {
@@ -145,12 +155,16 @@ export default function Kaz() {
             return
         }
         setTimeout(() => {
-            spinBtnRef.current.style.scale = '100%'
+            if (isAllowedToChangeSpinBtnScale) {
+                spinBtnRef.current.style.scale = '100%'
+            }
             setIsAllowedToSpin(true)
         }, overall_one_spin_time)
         setIsAllowedToSpin(false)
 
-        spinBtnRef.current.style.scale = '75%'
+        if (isAllowedToChangeSpinBtnScale) {
+            spinBtnRef.current.style.scale = '75%'
+        }
 
         if (!reel_1_ref.current || !reel_2_ref.current || !reel_3_ref.current) {
             return
@@ -279,7 +293,10 @@ export default function Kaz() {
         return (
             <div
                 id="congratulation-message-holder"
-                className="max-laptop:mt-25% z-40 mt-[-10%] flex h-fit w-[45%] flex-col justify-between gap-10 rounded-2xl bg-[#692931] pb-5 text-white max-laptop:mt-0 max-laptop:scale-75"
+                className={
+                    'max-laptop:mt-25% z-40 mt-[-10%] flex h-fit w-[45%] flex-col justify-between gap-10 rounded-2xl ' +
+                    'bg-[#692931] pb-5 text-white max-laptop:mt-0 max-laptop:scale-75 max-mobile:w-[90%]'
+                }
                 style={{
                     boxShadow:
                         'rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset',
@@ -288,7 +305,7 @@ export default function Kaz() {
                 <div className="flex w-full justify-end">
                     <div
                         id="congrats-message-close-sign"
-                        className="absolute mr-3 select-none pb-3 font-mono text-6xl font-bold hover:cursor-pointer"
+                        className="absolute mr-3 select-none pb-3 font-mono text-6xl font-bold hover:cursor-pointer max-mobile:text-3xl"
                         onClick={() => {
                             dispatch(setIsNavBarDimmed(true))
                             setIsUserSavedWallet(!isAbleToSubmitForm)
@@ -300,29 +317,29 @@ export default function Kaz() {
                         x
                     </div>
                 </div>
-                <h2 className="text-center font-nav-bar text-6xl text-[#FFFF00] max-laptop:text-5xl">
+                <h2 className="text-center font-nav-bar text-6xl text-[#FFFF00] max-laptop:text-5xl max-mobile:text-[1.5rem]">
                     CONGRATULATIONS!
                 </h2>
                 <div className="mt-[-18px] flex w-full items-center justify-center">
                     <p
                         className={
-                            'w-5/6 text-center leading-[1.4em] text-4xl font-bold max-laptop:text-3xl'
+                            'w-5/6 text-center text-4xl font-bold leading-[1.4em] max-laptop:text-3xl max-mobile:text-[1rem] max-mobile:leading-normal'
                         }
                     >
                         You've won your share in our token airdrop. Enter your
-                        wallet so we could record it. <br/>
-                        To get more info about the
-                        airdrop conditions, check on our socials.<br/> Also look into
-                        'Tokenomics' section. It contains some important
-                        diagrams that shows the{' '}
+                        wallet so we could record it. <br />
+                        To get more info about the airdrop conditions, check on
+                        our socials.
+                        <br /> Also look into 'Tokenomics' section. It contains
+                        some important diagrams that shows the{' '}
                         <span className={'font-bold text-amber-500'}>
                             $CORVETTE
                         </span>{' '}
                         distribution.
                     </p>
                 </div>
-                <div className="flex h-fit w-full items-center justify-center">
-                    <div className="mr-[-1.5%] flex h-12 w-[90%] gap-2">
+                <div className="flex h-fit w-full items-center justify-center max-mobile:mt-[-2em]">
+                    <div className="mr-[-1.5%] flex h-12 w-[90%] gap-2 max-mobile:flex-col max-mobile:gap-[0]">
                         <input
                             ref={walletInputRef}
                             type={'text'}
@@ -337,14 +354,14 @@ export default function Kaz() {
                             <SaveWalletStatusIcon type={responseIconType} />
                         </div>
                         <button
-                            className="flex-grow rounded-md bg-[#5D161E] transition-colors hover:bg-red-500"
+                            className="flex-grow rounded-md bg-[#5D161E] transition-colors hover:bg-red-500 max-mobile:scale-75"
                             style={{
                                 boxShadow:
                                     'rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px',
                             }}
                             onClick={saveUserWallet}
                         >
-                            <p className="pr-1 pt-2 font-nav-bar text-3xl font-bold text-[#FFFF00]">
+                            <p className="pr-1 pt-2 font-nav-bar text-3xl font-bold text-[#FFFF00] ">
                                 SUBMIT
                             </p>
                         </button>
@@ -359,7 +376,10 @@ export default function Kaz() {
     }
 
     return (
-        <div className="max-w-dvw flex h-dvh items-center justify-center">
+        <div
+            className="max-w-dvw flex h-dvh items-center justify-center"
+            ref={currentSectionWindowRef}
+        >
             {isWin && isCongratulationVisible ? (
                 <div
                     id="black-dimmed-transparent-bg"
@@ -376,7 +396,8 @@ export default function Kaz() {
             >
                 <Lottie
                     className={
-                        'absolute left-[8%] top-[20%] scale-[200%] max-laptop:left-[4%] max-laptop:scale-[155%]'
+                        'absolute left-[8%] top-[20%] scale-[200%] max-laptop:left-[4%] max-laptop:scale-[155%] ' +
+                        'max-mobile:scale-100 max-mobile:top-2'
                     }
                     path={'lotties/kaz/get-3-wins.json'}
                     loop={false}
@@ -394,13 +415,13 @@ export default function Kaz() {
                     />
                     <div
                         id="reels-holder"
-                        className="absolute mt-[15em] flex w-[29.8rem] justify-around"
+                        className="max-mobile:w-fit max-mobile:scale-[60%] max-mobile:gap-11 max-mobile:mt-[115px] absolute mt-[15em] flex w-[29.8rem] justify-around"
                     >
                         <div className="reel" ref={reel_1_ref} />
                         <div className="reel" ref={reel_2_ref} />
                         <div className="reel" ref={reel_3_ref} />
                     </div>
-                    <div id="slots-bg"></div>
+                    <div id="slots-bg" />
                 </div>
 
                 <button className="spin-btn" onClick={spinAll} ref={spinBtnRef}>
@@ -431,10 +452,9 @@ export default function Kaz() {
                     <div />
                 )}
 
-                {/*className="absolute right-20 mt-[400px]"*/}
                 <Lottie
                     className={
-                        'absolute bottom-[-4%] right-[-11%] max-laptop:bottom-[-15%] max-laptop:right-[-19%] max-laptop:scale-75'
+                        'absolute bottom-[-4%] right-[-11%] max-laptop:bottom-[-15%] max-laptop:right-[-19%] max-laptop:scale-75 max-mobile:hidden'
                     }
                     path={'lotties/kaz/claim-your-airdrop.json'}
                     loop={false}
@@ -443,7 +463,7 @@ export default function Kaz() {
 
                 <div className="m-0 flex w-full items-center justify-center p-0">
                     <p
-                        className="absolute z-30 select-none text-white opacity-50 transition-all hover:cursor-pointer hover:opacity-100 max-laptop:mt-[-2rem]"
+                        className="absolute z-30 select-none text-white opacity-50 transition-all hover:cursor-pointer hover:opacity-100 max-laptop:mt-[-2rem] max-mobile:opacity-0"
                         style={{ display: 'none' }}
                         onClick={() => {
                             setIsCongratulationVisible(true)

@@ -3,7 +3,6 @@
 }
 
 .container {
-    /*margin: 100px auto;*/
     width: 600px;
     text-align: center;
 }
@@ -28,6 +27,7 @@
     }
 }
 .progress2 {
+    @apply max-mobile:w-[180px] ;
     padding: 6px;
     border-radius: 30px;
     background: rgba(0, 0, 0, 0.25);
@@ -58,23 +58,10 @@
 
 @keyframes colorAnimation {
     0% {
-        /*background-image: linear-gradient(to right, #355070, #6d597a, #b56576, #e56b6f, #eaac8b, #ff2d55);*/
         background-color: #4eb673;
     }
     100% {
         background-color: #86EFAB;
     }
-    /*20% {*/
-    /*    background-image: linear-gradient(to right, #6d597a, #b56576, #e56b6f, #eaac8b, #ff2d55, #355070);*/
-    /*}*/
-    /*40% {*/
-    /*    background-image: linear-gradient(to right, #b56576, #e56b6f, #eaac8b, #ff2d55, #355070, #6d597a);*/
-    /*}*/
-    /*60% {*/
-    /*    background-image: linear-gradient(to right, #e56b6f, #eaac8b, #ff2d55, #355070, #6d597a, #b56576);*/
-    /*}*/
-    /*100% {*/
-    /*    background-image: linear-gradient(to right, #eaac8b, #ff2d55, #355070, #6d597a, #b56576, #e56b6f);*/
-    /*}*/
 }
 
