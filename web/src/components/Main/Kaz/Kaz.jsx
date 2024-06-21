@@ -363,7 +363,7 @@ export default function Kaz() {
                 className="flex h-fit w-fit flex-col items-center"
             >
                 <Lottie
-                    className={'absolute left-[8%] scale-[200%]'}
+                    className={'absolute left-[8%] top-[20%] scale-[200%] max-laptop:scale-[155%] max-laptop:left-[4%]'}
                     path={'lotties/kaz/get-3-wins.json'}
                     loop={false}
                     autoplay={true}
@@ -371,7 +371,7 @@ export default function Kaz() {
 
                 <div
                     id="slot-machine-holder"
-                    className="flex h-fit w-fit flex-col items-center max-laptop:scale-75"
+                    className="flex h-fit w-fit flex-col items-center mt-[17%] max-laptop:scale-75"
                 >
                     <img
                         src="images/kaz/slot-full-beta.png"
@@ -419,7 +419,7 @@ export default function Kaz() {
 
                 {/*className="absolute right-20 mt-[400px]"*/}
                 <Lottie
-                    className={'absolute bottom-[-2%] right-[-10%] max-laptop:scale-75 max-laptop:right-[-15%] max-laptop:bottom-[-15%]'}
+                    className={'absolute bottom-[-4%] right-[-11%] max-laptop:scale-75 max-laptop:right-[-19%] max-laptop:bottom-[-15%]'}
                     path={'lotties/kaz/claim-your-airdrop.json'}
                     loop={false}
                     autoplay={true}

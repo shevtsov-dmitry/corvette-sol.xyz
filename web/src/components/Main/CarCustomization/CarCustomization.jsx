@@ -286,6 +286,7 @@ export default function CarCustomization() {
             }
         >
             <img
+                className={"mt-[8.5%]"}
                 src={
                     'images/carCustomization/construct-your-corvette-heading.png'
                 }

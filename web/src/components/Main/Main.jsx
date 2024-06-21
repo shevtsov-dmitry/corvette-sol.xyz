@@ -8,7 +8,6 @@ import { useDispatch } from 'react-redux'
 import { setIsHomeBtnVisible } from '../../store/homeBtnSlice.js'
 
 export default function Main() {
-
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -89,6 +88,25 @@ export default function Main() {
 
     return (
         <>
+            <div
+                className={
+                    'fixed top-0 z-50 mb-[-1rem] flex w-dvw scale-[50%] items-center justify-center'
+                }
+            >
+                {curSectionNum !== 0 ? (
+                    <img
+                        id={'up-arrow'}
+                        className={
+                            'absolute contrast-[.2] transition-all hover:cursor-pointer hover:contrast-125 max-laptop:w-24 ml-4 top-[17em]'
+                        }
+                        src={'images/main/up-arrow.png'}
+                        alt={'swipe down'}
+                        onClick={() => setCurSectionNum(curSectionNum - 1)}
+                    />
+                ) : (
+                    <div />
+                )}
+            </div>
             <SwitchTransition>
                 <CSSTransition
                     key={curSectionNum}
@@ -121,9 +139,9 @@ export default function Main() {
                     <img
                         id={'down-arrow'}
                         className={
-                            'contrast-50 transition-all hover:cursor-pointer hover:contrast-125 max-laptop:w-24'
+                            'contrast-[.2] transition-all hover:cursor-pointer hover:contrast-125 max-laptop:w-24'
                         }
-                        src={'images/welcomePage/down-arrow.png'}
+                        src={'images/main/down-arrow.png'}
                         alt={'swipe down'}
                         onClick={() => setCurSectionNum(curSectionNum + 1)}
                     />
