@@ -4,9 +4,8 @@
 
 .nav-btn {
 	@apply z-50 font-nav-bar bg-[#73242E] text-[#FFFF00] text-[2.2em] font-bold pt-2 px-0 rounded-lg whitespace-nowrap
-		transition-colors hover:scale-105 hover:bg-red-500 w-[270px] min-h-fit max-mobile:text-[1em] max-mobile:w-fit
-		max-mobile:px-3 max-mobile:rounded max-mobile:pb-1
-	;
+		transition-colors hover:scale-105 hover:bg-red-500 w-[270px] min-h-fit max-mobile:text-[0.9em]
+		max-mobile:px-3 max-mobile:rounded max-mobile:pb-1  max-mobile:w-[110px];
 	transition: transform 100ms ease-in-out;
 	box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
 

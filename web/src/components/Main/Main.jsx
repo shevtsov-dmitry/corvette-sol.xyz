@@ -90,14 +90,14 @@ export default function Main() {
         <>
             <div
                 className={
-                    'fixed top-0 z-50 mb-[-1rem] flex w-dvw scale-[50%] items-center justify-center'
+                    'fixed top-[15%] z-50 flex w-dvw scale-[50%] items-center justify-center max-mobile:scale-[35%] max-mobile:mt-[-10%]'
                 }
             >
                 {curSectionNum !== 0 ? (
                     <img
                         id={'up-arrow'}
                         className={
-                            'absolute contrast-[.2] transition-all hover:cursor-pointer hover:contrast-125 max-laptop:w-24 ml-4 top-[17em] max-mobile:hidden'
+                            'absolute contrast-[.2] transition-all hover:cursor-pointer hover:contrast-125 max-laptop:w-24 ml-4 max-mobile:ml-0'
                         }
                         src={'images/main/up-arrow.png'}
                         alt={'swipe down'}

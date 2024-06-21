@@ -40,12 +40,12 @@ export default function NavBar() {
                     </div>
                     <div
                         id="wheel-holder"
-                        className="relative z-50 mx-12 mb-[-1.3%] mt-[1%] w-[7%] max-mobile:mx-5 max-mobile:ml-2"
+                        className="relative z-50 mx-12 mb-[-1.3%] mt-[1%] w-[7%] max-mobile:mx-3"
                         onClick={() => setCurPageName('main')}
                     >
                         <Link to={'/'}>
                             <Lottie
-                                className={'w-[6.5em] max-mobile:w-[3em]'}
+                                className={'w-[6.5em] max-mobile:w-[3em] max-mobile:ml-[-5px]'}
                                 path={
                                     'lotties/navBar/low-nonstop-wheel.json'
                                 }

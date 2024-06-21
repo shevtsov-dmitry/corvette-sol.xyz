@@ -19,7 +19,7 @@ export default function Roadmap() {
             <img
                 id={"mobile-roadmap"}
                 src={'images/roadmap/roadmap-signs-and-text-mobile.png'}
-                className="scale-[45%]"
+                className="scale-[45%] min-[1000px]:hidden"
             />
 
 
