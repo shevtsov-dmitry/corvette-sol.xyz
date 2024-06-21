@@ -14,7 +14,8 @@
 
 .reel {
 	@apply relative mt-4 w-[8rem] h-[16rem] overflow-hidden bg-repeat-y bg-center scale-90 z-20;
-	background-image: url("images/kaz/reel.png");
+	/* TODO change to non global path or make env*/
+	background-image: url("../../../../public/images/kaz/reel.png");
 }
 
 #slots-bg{

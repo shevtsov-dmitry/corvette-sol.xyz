@@ -1,10 +1,10 @@
-@import 'components/NavBar/NavBar.css';
-@import 'components/Footer/Footer.css';
-@import 'components/ProgressBar/ProgressBar.css';
-@import 'components/Roadmap/Roadmap.css';
-@import 'components/Main/Kaz/Kaz.css';
-@import 'components/Main/CarCustomization/CarCustomization.css';
-@import 'components/Tokenomica/Tokenomica.css';
+@import 'src/components/NavBar/NavBar.css';
+@import 'src/components/Footer/Footer.css';
+@import 'src/components/ProgressBar/ProgressBar.css';
+@import 'src/components/Roadmap/Roadmap.css';
+@import 'src/components/Main/Kaz/Kaz.css';
+@import 'src/components/Main/CarCustomization/CarCustomization.css';
+@import 'src/components/Tokenomica/Tokenomica.css';
 
 @tailwind base;
 @tailwind components;
@@ -12,7 +12,7 @@
 
 @font-face {
     font-family: 'NavBarFont';
-    src: url('fonts/nav-bar-font.ttf') format('truetype');
+    src: url('public/fonts/nav-bar-font.ttf') format('truetype');
     font-weight: bold;
     font-style: normal;
 }
