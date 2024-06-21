@@ -19,7 +19,7 @@ export default function NavBar() {
 
     return (
         <div
-            className={`${isNavBarDimmed ? 'z-0' : 'z-50'} max-laptop:scale-75 max-laptop:mt-[-1rem] fixed flex h-fit w-dvw flex-col items-center justify-center gap-4 select-none`}
+            className={`${isNavBarDimmed ? 'z-0' : 'z-50'} max-laptop:scale-75 max-laptop:mt-[-1rem] fixed flex h-fit w-dvw flex-col items-center justify-center gap-4 select-none max-mobile:mt-0`}
         >
             <header className="flex justify-around">
                 <div
@@ -40,12 +40,12 @@ export default function NavBar() {
                     </div>
                     <div
                         id="wheel-holder"
-                        className="relative z-50 mx-12 mb-[-1.3%] mt-[1%] w-[7%]"
+                        className="relative z-50 mx-12 mb-[-1.3%] mt-[1%] w-[7%] max-mobile:mx-5 max-mobile:ml-2"
                         onClick={() => setCurPageName('main')}
                     >
                         <Link to={'/'}>
                             <Lottie
-                                className={'w-[6.5em]'}
+                                className={'w-[6.5em] max-mobile:w-[3em]'}
                                 path={
                                     'lotties/navBar/low-nonstop-wheel.json'
                                 }
@@ -68,9 +68,8 @@ export default function NavBar() {
                     </div>
                 </div>
             </header>
-            {/*<img src="images/navBar/nav-bar-hr.png" width={'67%'} />*/}
             <Lottie
-                className={'z-0 w-[69.9%] min-w-24'}
+                className={'z-0 w-[69.9%] min-w-24 max-mobile:w-full max-mobile:mt-0'}
                 path={'lotties/navBar/nav-bar-hr.json'}
                 loop={true}
                 autoplay={true}

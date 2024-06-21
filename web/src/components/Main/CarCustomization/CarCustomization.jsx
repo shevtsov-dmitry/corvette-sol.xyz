@@ -176,7 +176,7 @@ export default function CarCustomization() {
                     <img src={constructedCarImg} className={'p-2'} />
                     <p className={'text-center text-2xl'}>
                         Nice! You've just constructed your own lovely{' '}
-                        <span className={'text-amber-600'}>Corvette</span>.
+                        <span className={'text-amber-600 font-bold'}>Corvette</span>.
                     </p>
                     <p className={'text-center'}>
                         Now you can download a car image and imagine yourself

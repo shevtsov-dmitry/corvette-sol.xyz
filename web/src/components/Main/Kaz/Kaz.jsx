@@ -5,7 +5,7 @@ import { setIsNavBarDimmed } from '../../../store/navBarSlice.js'
 import ProgressBar from '../../ProgressBar/ProgressBar.jsx'
 
 export default function Kaz() {
-    const serverHostState = useSelector(state => state.serverHost)
+    const serverHostState = useSelector((state) => state.serverHost)
     const SERVER_HOST = serverHostState.serverHost
 
     // const progressPercent = 64
@@ -14,9 +14,9 @@ export default function Kaz() {
     const [spinAmount, setSpinsAmount] = useState(0)
 
     const [isAllowedToSpin, setIsAllowedToSpin] = useState(true)
-    const [isWin, setIsWin] = useState(false)
+    const [isWin, setIsWin] = useState(true)
     const [isWinConfettiEnabled, setIsWinConfettiEnabled] = useState(false)
-    const [isCongratulationVisible, setIsCongratulationVisible] = useState(false)
+    const [isCongratulationVisible, setIsCongratulationVisible] = useState(true)
     const [isUserSavedWallet, setIsUserSavedWallet] = useState(false)
 
     const chance_to_win_in_percent = 100,
@@ -176,7 +176,7 @@ export default function Kaz() {
         )
         const [resp, setResp] = useState(null)
         const [responseIconType, setResponseIconType] = useState('none')
-        const [isAbleToSubmitForm, setIsAbleToSubmitForm] =useState(true)
+        const [isAbleToSubmitForm, setIsAbleToSubmitForm] = useState(true)
 
         const walletInputRef = useRef()
 
@@ -212,26 +212,31 @@ export default function Kaz() {
         }
 
         async function saveUserWallet() {
-            if (!isAbleToSubmitForm || isUserSavedWallet){
+            if (!isAbleToSubmitForm || isUserSavedWallet) {
                 return
             }
-            let userWalletValue = ""
-            if(walletInputRef.current) {
-               userWalletValue = walletInputRef.current.value
-               walletInputRef.current.value = ""
+            let userWalletValue = ''
+            if (walletInputRef.current) {
+                userWalletValue = walletInputRef.current.value
+                walletInputRef.current.value = ''
             }
-            if (userWalletValue === ""){
+            if (userWalletValue === '') {
                 return
             }
             setResponseIconType('loading')
-            const checkResp = await fetch(SERVER_HOST + '/wallets/check/' + userWalletValue)
-            if (checkResp.status === 409){
+            const checkResp = await fetch(
+                SERVER_HOST + '/wallets/check/' + userWalletValue
+            )
+            if (checkResp.status === 409) {
                 showSaveWalletTransactionStatusIcon(checkResp.status)
                 setResp(checkResp)
             } else if (checkResp.status === 404) {
-                const saveResp = await fetch(SERVER_HOST + '/wallets/save/' + userWalletValue, {
-                    method: "POST"
-                })
+                const saveResp = await fetch(
+                    SERVER_HOST + '/wallets/save/' + userWalletValue,
+                    {
+                        method: 'POST',
+                    }
+                )
                 setResp(saveResp)
                 showSaveWalletTransactionStatusIcon(saveResp.status)
                 setIsAbleToSubmitForm(false)
@@ -259,13 +264,15 @@ export default function Kaz() {
                 return
             }
             if (resp.status === 200) {
-                setPlaceholderMessage("the wallet was successfully saved")
+                setPlaceholderMessage('the wallet was successfully saved')
             } else if (resp.status === 409) {
-                setPlaceholderMessage("the wallet was already saved")
+                setPlaceholderMessage('the wallet was already saved')
             } else if (resp.status === 400) {
-                setPlaceholderMessage("invalid wallet format")
+                setPlaceholderMessage('invalid wallet format')
             } else {
-                setPlaceholderMessage("undefined problem happened in the server")
+                setPlaceholderMessage(
+                    'undefined problem happened in the server'
+                )
             }
         }, [responseIconType])
 
@@ -299,16 +306,19 @@ export default function Kaz() {
                 <div className="mt-[-18px] flex w-full items-center justify-center">
                     <p
                         className={
-                            // 'w-5/6 text-justify text-4xl font-bold'
-                            'w-5/6 text-center text-4xl font-bold max-laptop:text-3xl'
+                            'w-5/6 text-center leading-[1.4em] text-4xl font-bold max-laptop:text-3xl'
                         }
                     >
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Aliquam sit amet pretium dolor. Nam cursus urna erat,
-                        vitae mollis nibh laoreet eu. Ut fermentum dolor sed
-                        scelerisque gravida. In leo ex, maximus placerat dictum
-                        sit amet, bibendum in mi. Duis mollis eu diam non
-                        fringilla.
+                        You've won your share in our token airdrop. Enter your
+                        wallet so we could record it. <br/>
+                        To get more info about the
+                        airdrop conditions, check on our socials.<br/> Also look into
+                        'Tokenomics' section. It contains some important
+                        diagrams that shows the{' '}
+                        <span className={'font-bold text-amber-500'}>
+                            $CORVETTE
+                        </span>{' '}
+                        distribution.
                     </p>
                 </div>
                 <div className="flex h-fit w-full items-center justify-center">
@@ -365,7 +375,9 @@ export default function Kaz() {
                 className="flex h-fit w-fit flex-col items-center"
             >
                 <Lottie
-                    className={'absolute left-[8%] top-[20%] scale-[200%] max-laptop:scale-[155%] max-laptop:left-[4%]'}
+                    className={
+                        'absolute left-[8%] top-[20%] scale-[200%] max-laptop:left-[4%] max-laptop:scale-[155%]'
+                    }
                     path={'lotties/kaz/get-3-wins.json'}
                     loop={false}
                     autoplay={true}
@@ -373,7 +385,7 @@ export default function Kaz() {
 
                 <div
                     id="slot-machine-holder"
-                    className="flex h-fit w-fit flex-col items-center mt-[17%] max-laptop:scale-75"
+                    className="mt-[17%] flex h-fit w-fit flex-col items-center max-laptop:scale-75"
                 >
                     <img
                         src="images/kaz/slot-full-beta.png"
@@ -421,7 +433,9 @@ export default function Kaz() {
 
                 {/*className="absolute right-20 mt-[400px]"*/}
                 <Lottie
-                    className={'absolute bottom-[-4%] right-[-11%] max-laptop:scale-75 max-laptop:right-[-19%] max-laptop:bottom-[-15%]'}
+                    className={
+                        'absolute bottom-[-4%] right-[-11%] max-laptop:bottom-[-15%] max-laptop:right-[-19%] max-laptop:scale-75'
+                    }
                     path={'lotties/kaz/claim-your-airdrop.json'}
                     loop={false}
                     autoplay={true}
@@ -443,7 +457,12 @@ export default function Kaz() {
                 </div>
             </div>
 
-            <div id={"progress-bar-holder"} className={'absolute flex w-screen items-center justify-center bottom-0 mb-[2.8%] z-0'}>
+            <div
+                id={'progress-bar-holder'}
+                className={
+                    'absolute bottom-0 z-0 mb-[2.8%] flex w-screen items-center justify-center'
+                }
+            >
                 <div className={'absolute w-[30%]'}>
                     <ProgressBar />
                 </div>
