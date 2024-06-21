@@ -2,6 +2,8 @@ import { Pie } from 'react-chartjs-2'
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js'
 import ChartDataLabels from 'chartjs-plugin-datalabels'
 import { useEffect, useRef, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { setIsHomeBtnVisible } from '../../store/homeBtnSlice.js'
 
 export default function Tokenomica() {
     const [coinMarketCapString, setCoinMarketCapString] = useState('64,894')
@@ -15,6 +17,11 @@ export default function Tokenomica() {
         { name: 'CORVETTE', percentage: 15 },
     ])
 
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(setIsHomeBtnVisible(true))
+    }, [])
 
     ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels)
 
@@ -104,9 +111,6 @@ export default function Tokenomica() {
     return (
         <div className="flex h-dvh w-dvw items-end justify-end">
             <div className="flex h-[90%] w-full flex-col items-center justify-center">
-                <h1 className="mb-8 font-nav-bar text-5xl font-bold text-white">
-                    CORVETTE POPULARITY
-                </h1>
                 <div className={'mb-2 flex rounded'}>
                     <button
                         className="before-after-btn"

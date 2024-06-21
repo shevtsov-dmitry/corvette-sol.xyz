@@ -1,5 +1,6 @@
-import { resolve } from 'chart.js/helpers'
 import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 export function Footer() {
     const SERVER_HOST = 'http://localhost:8080' //env
@@ -9,15 +10,17 @@ export function Footer() {
     const [pumpfunUrl, setPumpfunUrl] = useState('')
     const [tensorUrl, setTensorUrl] = useState('')
 
+    const homeBtnState = useSelector((state) => state.homeBtn)
+    const isHomeBtnVisible = homeBtnState.isHomeBtnVisible
+
     useEffect(() => {
-        ['twitter', 'telegram', 'pumpfun', 'tensor'].forEach(async (e) => {
+        ;['twitter', 'telegram', 'pumpfun', 'tensor'].forEach(async (e) => {
             await fetchUrlFromServer(e)
         })
     }, [])
 
     async function fetchUrlFromServer(name) {
         const resp = await fetch(SERVER_HOST + '/urls/get/' + name)
-        console.log(resp.status)
         const url = await resp.text()
         if (name === 'twitter') {
             setTwitterUrl(url)
@@ -39,7 +42,7 @@ export function Footer() {
                 'fixed bottom-0 z-20 mb-[1%] flex h-[6.5%] w-full justify-center max-laptop:mb-5'
             }
         >
-            <div id={'footer-panel'} className={'flex w-[67%] justify-between '}>
+            <div id={'footer-panel'} className={'flex w-[67%] justify-between'}>
                 <div id="left-icons" className={'flex gap-4'}>
                     <a href={twitterUrl}>
                         <img
@@ -54,6 +57,16 @@ export function Footer() {
                         />
                     </a>
                 </div>
+                {isHomeBtnVisible ? (
+                    <Link to={'/'} className={"flex items-center justify-center"}>
+                        <img
+                            className={'footer-icon w-[60%] mt-[1%] max-laptop:mb-[-1em]'}
+                            src={'images/footer/home.png'}
+                        />
+                    </Link>
+                ) : (
+                    <div />
+                )}
                 <div id="right-icons" className={'flex gap-3'}>
                     <a href={pumpfunUrl}>
                         <img

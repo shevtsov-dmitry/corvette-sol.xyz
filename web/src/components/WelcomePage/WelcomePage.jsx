@@ -1,7 +1,7 @@
 import { Footer } from './Footer/Footer.jsx'
 import Lottie from 'lottie-react'
 
-export function WelcomePage() {
+export default function WelcomePage() {
     return (
         <div className="max-w-dvw h-screen">
             <Lottie

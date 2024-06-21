@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { setIsNavBarDimmed } from '../../store/navBarSlice.js'
 import ProgressBar from '../ProgressBar/ProgressBar.jsx'
 
-export function Kaz() {
+export default function Kaz() {
     const SERVER_HOST = "http://localhost:8080" //env
     const progressPercent = 64
 

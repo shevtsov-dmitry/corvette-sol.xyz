@@ -1,12 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { WelcomePage } from '../WelcomePage/WelcomePage.jsx'
+import WelcomePage from '../WelcomePage/WelcomePage.jsx'
 import CarCustomization from '../CarCustomization/CarCustomization.jsx'
-import { Kaz } from '../Kaz/Kaz.jsx'
+import Kaz from '../Kaz/Kaz.jsx'
 import { throttle } from 'lodash/function.js'
 import { CSSTransition, SwitchTransition } from 'react-transition-group'
-import { Footer } from '../WelcomePage/Footer/Footer.jsx'
+import { useDispatch } from 'react-redux'
+import { setIsHomeBtnVisible } from '../../store/homeBtnSlice.js'
 
 export default function Main() {
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(setIsHomeBtnVisible(false))
+    }, [])
+
     const [curSectionNum, setCurSectionNum] = useState(0)
     const [isAllowedToScrollAgain, setIsAllowedToScrollAgain] = useState(true)
 

@@ -1,5 +1,15 @@
 import Lottie from 'lottie-react'
+import { useDispatch } from 'react-redux'
+import { useEffect } from 'react'
+import { setIsHomeBtnVisible } from '../../store/homeBtnSlice.js'
+
 export default function Roadmap() {
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(setIsHomeBtnVisible(true))
+    }, [])
+
     return (
         <div className="flex h-dvh w-dvw flex-col items-center justify-center">
             <img src={'images/roadmap/road.png'} className="z-0 mt-10 w-full" />
