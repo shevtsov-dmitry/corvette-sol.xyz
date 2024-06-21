@@ -189,15 +189,16 @@ export default function CarCustomization() {
                         <button
                             className={'save-car-form-btn'}
                             onClick={() => {
-                                if (!constructedCarImg) {
+                                if (!constructedCarImg || isDownloaded) {
                                     return
                                 }
                                 const link = document.createElement('a')
                                 link.href = constructedCarImg
-                                link.download = 'corvette.png'
+                                link.download = 'Corvette.png'
                                 document.body.appendChild(link)
                                 link.click()
                                 document.body.removeChild(link)
+                                setIsDownloaded(true)
                             }}
                         >
                             download
