@@ -40,11 +40,11 @@ export function Footer() {
     return (
         <div
             className={
-                'fixed bottom-0 z-20 mb-[1%] flex h-[6.5%] w-full justify-center max-laptop:mb-5'
+                'fixed bottom-0 z-20 mb-[1%] flex h-[6.5%] w-full justify-center max-laptop:mb-5 max-mobile:scale-75'
             }
         >
-            <div id={'footer-panel'} className={'flex w-[67%] justify-between'}>
-                <div id="left-icons" className={'flex gap-4'}>
+            <div id={'footer-panel'} className={'flex w-[67%] justify-between max-mobile:w-full'}>
+                <div id="left-icons" className={'flex gap-4 max-mobile:gap-1'}>
                     <a href={twitterUrl}>
                         <img
                             className={'footer-icon'}
@@ -68,7 +68,7 @@ export function Footer() {
                 ) : (
                     <div />
                 )}
-                <div id="right-icons" className={'flex gap-3'}>
+                <div id="right-icons" className={'flex gap-3 max-mobile:gap-1'}>
                     <a href={pumpfunUrl}>
                         <img
                             className={'footer-icon'}

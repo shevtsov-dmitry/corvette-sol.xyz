@@ -97,7 +97,7 @@ export default function Main() {
                     <img
                         id={'up-arrow'}
                         className={
-                            'absolute contrast-[.2] transition-all hover:cursor-pointer hover:contrast-125 max-laptop:w-24 ml-4 top-[17em]'
+                            'absolute contrast-[.2] transition-all hover:cursor-pointer hover:contrast-125 max-laptop:w-24 ml-4 top-[17em] max-mobile:hidden'
                         }
                         src={'images/main/up-arrow.png'}
                         alt={'swipe down'}
@@ -139,7 +139,7 @@ export default function Main() {
                     <img
                         id={'down-arrow'}
                         className={
-                            'contrast-[.2] transition-all hover:cursor-pointer hover:contrast-125 max-laptop:w-24'
+                            'contrast-[.2] transition-all hover:cursor-pointer hover:contrast-125 max-laptop:w-24 max-mobile:scale-75 max-mobile:mb-0'
                         }
                         src={'images/main/down-arrow.png'}
                         alt={'swipe down'}

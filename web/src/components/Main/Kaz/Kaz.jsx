@@ -14,9 +14,9 @@ export default function Kaz() {
     const [spinAmount, setSpinsAmount] = useState(0)
 
     const [isAllowedToSpin, setIsAllowedToSpin] = useState(true)
-    const [isWin, setIsWin] = useState(true)
+    const [isWin, setIsWin] = useState(false)
     const [isWinConfettiEnabled, setIsWinConfettiEnabled] = useState(false)
-    const [isCongratulationVisible, setIsCongratulationVisible] = useState(true)
+    const [isCongratulationVisible, setIsCongratulationVisible] = useState(false)
     const [isUserSavedWallet, setIsUserSavedWallet] = useState(false)
 
     const chance_to_win_in_percent = 100,
