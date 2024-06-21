@@ -69,7 +69,7 @@ export default function NavBar() {
                 </div>
             </header>
             <Lottie
-                className={'z-0 w-[69.9%] min-w-24 max-mobile:w-full max-mobile:mt-0'}
+                className={'z-0 w-[69.9%] min-w-24 max-mobile:hidden'}
                 path={'lotties/navBar/nav-bar-hr.json'}
                 loop={true}
                 autoplay={true}

@@ -111,7 +111,7 @@ export default function Tokenomica() {
     return (
         <div className="flex h-dvh w-dvw items-end justify-end">
             <div className="flex h-full w-full flex-col items-center justify-center mb-[-1%]">
-                <div className={'mb-2 flex rounded'}>
+                <div className={'mb-2 flex rounded max-mobile:flex-col'}>
                     <button
                         className="before-after-btn"
                         onClick={() => updateChart('before')}

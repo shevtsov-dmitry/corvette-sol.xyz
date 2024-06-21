@@ -215,7 +215,7 @@ export default function CarCustomization() {
             <div
                 id={'buttons-holder'}
                 className={
-                    'mt-[2%] flex w-screen select-none items-center justify-center'
+                    'mt-[2%] flex w-screen select-none items-center justify-center max-mobile:scale-50 max-mobile:mt-[-17%]'
                 }
             >
                 <div className="flex w-fit justify-around gap-4">
@@ -296,11 +296,11 @@ export default function CarCustomization() {
     return (
         <div
             className={
-                'flex h-dvh w-dvw flex-col items-center justify-center gap-12 max-laptop:scale-75'
+                'flex h-dvh w-dvw flex-col items-center justify-center gap-12 max-laptop:scale-75 max-mobile:scale-100'
             }
         >
             <img
-                className={'mt-[8.5%]'}
+                className={'mt-[8.5%] max-mobile:mb-[-20%]'}
                 src={
                     'images/carCustomization/construct-your-corvette-heading.png'
                 }
@@ -309,7 +309,7 @@ export default function CarCustomization() {
                 id="customization-menu-holder"
                 className="h-fit w-fit flex-col items-start"
             >
-                <div className="mx-[10%] flex w-[80%]">
+                <div className="mx-[10%] flex w-[80%] max-mobile:w-[90%]">
                     <div
                         ref={customizationSliderRef}
                         className={
