@@ -132,14 +132,14 @@ export default function Main() {
             </SwitchTransition>
             <div
                 className={
-                    'fixed bottom-0 z-50 mb-[-1rem] flex w-dvw scale-[50%] items-center justify-center'
+                    'fixed bottom-0 z-50 mb-[-1rem] flex w-dvw scale-[50%] items-center justify-center max-mobile:scale-[35%]'
                 }
             >
                 {curSectionNum !== sections.length - 1 ? (
                     <img
                         id={'down-arrow'}
                         className={
-                            'contrast-[.2] transition-all hover:cursor-pointer hover:contrast-125 max-laptop:w-24 max-mobile:scale-75 max-mobile:mb-0'
+                            'contrast-[.2] transition-all hover:cursor-pointer hover:contrast-125 max-laptop:w-24'
                         }
                         src={'images/main/down-arrow.png'}
                         alt={'swipe down'}

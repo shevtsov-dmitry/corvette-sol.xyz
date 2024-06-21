@@ -6,7 +6,9 @@ import { useDispatch } from 'react-redux'
 import { setIsHomeBtnVisible } from '../../store/homeBtnSlice.js'
 
 export default function Tokenomica() {
-    const [coinMarketCapString, setCoinMarketCapString] = useState('64,894')
+    const currentSectionRef = useRef()
+
+    const [chartFontSize, setChartFontSize] = useState(15)
 
     const [data, setData] = useState([
         { name: 'ETH', percentage: 15 },
@@ -21,6 +23,12 @@ export default function Tokenomica() {
 
     useEffect(() => {
         dispatch(setIsHomeBtnVisible(true))
+        if (!currentSectionRef.current) {
+            return
+        }
+        if (currentSectionRef.current.offsetWidth < 1000) {
+            setChartFontSize(12)
+        }
     }, [])
 
     ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels)
@@ -61,7 +69,7 @@ export default function Tokenomica() {
                         color: 'white', // Change the color here
                         font: {
                             family: 'sans-serif',
-                            size: 14, // Optional: change the font size
+                            size: chartFontSize - 1, // Optional: change the font size
                         },
                     },
                 },
@@ -73,7 +81,7 @@ export default function Tokenomica() {
                     },
                     color: 'white', // Label text color
                     font: {
-                        size: 15, // Optional: change the font size
+                        size: chartFontSize, // Optional: change the font size
                         family: 'sans',
                         weight: 'bold',
                     },
@@ -106,12 +114,10 @@ export default function Tokenomica() {
         }
     }
 
-    const marketCapStringRef = useRef()
-
     return (
-        <div className="flex h-dvh w-dvw items-end justify-end">
+        <div className="flex h-dvh w-dvw items-end justify-end" ref={currentSectionRef}>
             <div className="flex h-full w-full flex-col items-center justify-center mb-[-1%]">
-                <div className={'mb-2 flex rounded max-mobile:flex-col'}>
+                <div className={'mb-2 flex rounded'}>
                     <button
                         className="before-after-btn"
                         onClick={() => updateChart('before')}
@@ -127,7 +133,7 @@ export default function Tokenomica() {
                 </div>
                 <div
                     id="chart-holder"
-                    className="flex h-[60%] w-[60%] items-center justify-center"
+                    className="flex h-[60%] w-[60%] items-center justify-center max-mobile:w-full max-mobile:h-[60%]"
                 >
                     <Chart />
                 </div>

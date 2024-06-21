@@ -12,10 +12,19 @@ export default function Roadmap() {
 
     return (
         <div className="flex h-dvh w-dvw flex-col items-center justify-center">
-            <img src={'images/roadmap/road.png'} className="z-0 mt-10 w-full" />
+            <img
+                src={'images/roadmap/road.png'}
+                className="max-mobile:hidden z-0 mt-10 w-full"
+            />
+            <img
+                id={"mobile-roadmap"}
+                src={'images/roadmap/roadmap-signs-and-text-mobile.png'}
+                className="scale-[45%]"
+            />
+
 
             <Lottie
-                className={'l-0 absolute mt-[-2%] w-full'}
+                className={'l-0 max-mobile:hidden absolute mt-[-2%] w-full'}
                 path={'lotties/roadmap/car-roadmap.json'}
                 loop={false}
                 autoplay={true}
@@ -23,7 +32,7 @@ export default function Roadmap() {
 
             <div
                 id="road-signs-and-text-holder"
-                className="absolute z-20 flex w-full items-end justify-end"
+                className="max-mobile:hidden absolute z-20 flex w-full items-end justify-end"
             >
                 <img
                     src={'images/roadmap/roadmap-signs-and-text.png'}
