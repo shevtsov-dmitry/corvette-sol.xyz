@@ -36,10 +36,10 @@ export function Footer() {
     return (
         <div
             className={
-                'fixed bottom-0 z-20 mb-[1%] flex h-[6.5%] w-full justify-center'
+                'fixed bottom-0 z-20 mb-[1%] flex h-[6.5%] w-full justify-center max-laptop:mb-5'
             }
         >
-            <div id={'footer-panel'} className={'flex w-[67%] justify-between'}>
+            <div id={'footer-panel'} className={'flex w-[67%] justify-between '}>
                 <div id="left-icons" className={'flex gap-4'}>
                     <a href={twitterUrl}>
                         <img

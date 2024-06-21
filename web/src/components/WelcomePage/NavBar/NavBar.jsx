@@ -45,7 +45,7 @@ export default function NavBar() {
                     >
                         <Link to={'/'}>
                             <Lottie
-                                className={'min-w-24'}
+                                className={'w-[6.5em]'}
                                 path={
                                     'lotties/navBar/low-nonstop-wheel.json'
                                 }

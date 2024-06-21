@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import Lottie from 'lottie-react'
 import { useDispatch } from 'react-redux'
 import { setIsNavBarDimmed } from '../../store/navBarSlice.js'
+import ProgressBar from '../ProgressBar/ProgressBar.jsx'
 
 export function Kaz() {
     const SERVER_HOST = "http://localhost:8080" //env
@@ -362,7 +363,7 @@ export function Kaz() {
                 className="flex h-fit w-fit flex-col items-center"
             >
                 <Lottie
-                    className={'absolute left-[8%] z-[100]'}
+                    className={'absolute left-[8%] scale-[200%]'}
                     path={'lotties/kaz/get-3-wins.json'}
                     loop={false}
                     autoplay={true}
@@ -418,7 +419,7 @@ export function Kaz() {
 
                 {/*className="absolute right-20 mt-[400px]"*/}
                 <Lottie
-                    className={'absolute right-[-10%] bottom-[-2%] z-[100]'}
+                    className={'absolute bottom-[-2%] right-[-10%] max-laptop:scale-75 max-laptop:right-[-15%] max-laptop:bottom-[-15%]'}
                     path={'lotties/kaz/claim-your-airdrop.json'}
                     loop={false}
                     autoplay={true}
@@ -440,10 +441,10 @@ export function Kaz() {
                 </div>
             </div>
 
-            <div className="range absolute bottom-0 mb-8" style={{
-            "--progress" :`${progressPercent}`
-            }} >
-                <div className="range__label">Progress</div>
+            <div id={"progress-bar-holder"} className={'absolute flex w-screen items-center justify-center bottom-0 mb-[2.8%] z-0'}>
+                <div className={'absolute w-[30%]'}>
+                    <ProgressBar />
+                </div>
             </div>
 
             <audio
