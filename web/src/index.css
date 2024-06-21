@@ -1,5 +1,5 @@
-@import 'components/WelcomePage/NavBar/NavBar.css';
-@import 'components/WelcomePage/Footer/Footer.css';
+@import 'components/NavBar/NavBar.css';
+@import 'components/Footer/Footer.css';
 @import 'components/ProgressBar/ProgressBar.css';
 @import 'components/Roadmap/Roadmap.css';
 @import 'components/Kaz/Kaz.css';

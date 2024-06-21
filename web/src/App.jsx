@@ -1,4 +1,4 @@
-import NavBar from './components/WelcomePage/NavBar/NavBar.jsx'
+import NavBar from './components/NavBar/NavBar.jsx'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import Roadmap from './components/Roadmap/Roadmap.jsx'
 import Tokenomica from './components/Tokenomica/Tokenomica.jsx'
@@ -7,7 +7,7 @@ import Merch from './components/Merch/Merch.jsx'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import './index.css'
 import Main from './components/Main/Main.jsx'
-import { Footer } from './components/WelcomePage/Footer/Footer.jsx'
+import { Footer } from './components/Footer/Footer.jsx'
 import React from 'react'
 
 export default function App() {
