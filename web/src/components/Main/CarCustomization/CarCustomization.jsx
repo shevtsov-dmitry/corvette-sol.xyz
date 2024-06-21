@@ -23,7 +23,7 @@ export default function CarCustomization() {
     const customizationSliderRef = useRef(null)
     const dispatch = useDispatch()
 
-    const SERVER_HOST = 'http://localhost:8080' //env
+    const SERVER_HOST = 'https://95.163.230.155:8080' //env
 
     let scrollDistancePx = 384
     if (customizationSliderRef.current) {
