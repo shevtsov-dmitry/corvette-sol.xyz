@@ -12,18 +12,18 @@ export default function WelcomePage() {
             />
             <div className={'flex h-full w-full'}>
                 <img
-                    className={'object-contain mt-5'}
+                    className={'object-contain mt-[5%]'}
                     src={'images/welcomePage/trail.png'}
                 />
             </div>
             <img
                 className={
-                    'absolute bottom-0 h-full w-full scale-[47%] object-contain'
+                    'absolute bottom-0 h-full w-full scale-[47%] object-contain mb-[-2%]'
                 }
                 src={'images/welcomePage/vehicle.png'}
             />
             <Lottie
-                className={'absolute bottom-[8%] right-[8%] w-[40%]'}
+                className={'absolute bottom-[2%] right-[8%] w-[40%]'}
                 path={'lotties/welcomePage/exclusively-on-pumpfun.json'}
                 loop={false}
                 autoplay={true}

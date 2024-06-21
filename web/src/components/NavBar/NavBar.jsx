@@ -32,10 +32,10 @@ export default function NavBar() {
                         ) : (
                             <Link to="/roadmap">{NavBtn('roadmap')}</Link>
                         )}
-                        {curPageName === 'tokenomica' ? (
-                            NavBtn('tokenomica')
+                        {curPageName === 'tokenomics' ? (
+                            NavBtn('tokenomics')
                         ) : (
-                            <Link to="/tokenomica">{NavBtn('tokenomica')}</Link>
+                            <Link to="/tokenomics">{NavBtn('tokenomics')}</Link>
                         )}
                     </div>
                     <div
@@ -60,10 +60,10 @@ export default function NavBar() {
                         ) : (
                             <Link to="/garage">{NavBtn('garage')}</Link>
                         )}
-                        {curPageName === 'our merch' ? (
-                            NavBtn('our merch')
+                        {curPageName === 'jukebox' ? (
+                            NavBtn('jukebox')
                         ) : (
-                            <Link to="/merch">{NavBtn('our merch')}</Link>
+                            <Link to="/jukebox">{NavBtn('jukebox')}</Link>
                         )}
                     </div>
                 </div>

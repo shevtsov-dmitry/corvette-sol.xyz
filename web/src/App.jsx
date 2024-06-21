@@ -1,9 +1,9 @@
 import NavBar from './components/NavBar/NavBar.jsx'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import Roadmap from './components/Roadmap/Roadmap.jsx'
-import Tokenomica from './components/Tokenomica/Tokenomica.jsx'
+import Tokenomics from './components/Tokenomica/Tokenomica.jsx'
 import Garage from './components/Garage/Garage.jsx'
-import Merch from './components/Merch/Merch.jsx'
+import Jukebox from './components/Merch/Jukebox.jsx'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import './index.css'
 import Main from './components/Main/Main.jsx'
@@ -31,11 +31,11 @@ export default function App() {
                             <Route path="/" element={<Main />} />
                             <Route path="/roadmap" element={<Roadmap />} />
                             <Route
-                                path="/tokenomica"
-                                element={<Tokenomica />}
+                                path="/tokenomics"
+                                element={<Tokenomics />}
                             />
                             <Route path="/garage" element={<Garage />} />
-                            <Route path="/merch" element={<Merch />} />
+                            <Route path="/jukebox" element={<Jukebox />} />
                         </Routes>
                     </CSSTransition>
                 </TransitionGroup>

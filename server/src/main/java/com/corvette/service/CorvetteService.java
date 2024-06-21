@@ -15,7 +15,7 @@ import java.util.*;
 @Service
 public class CorvetteService {
     private final ResourceLoader resourceLoader;
-    private String IMAGES_STORAGE_PATH = "/home/shd/Pictures/corvette";
+    private final String IMAGES_STORAGE_PATH = "/home/shd/Pictures/corvette";
     private final Path dirPath = Paths.get(IMAGES_STORAGE_PATH);
 
     public CorvetteService(ResourceLoader resourceLoader) {
@@ -47,7 +47,6 @@ public class CorvetteService {
                 String[] splitted = fileName.split("-");
                 splitted = new String[]{splitted[0], splitted[2]};
                 String[] requested = new String[]{metadata.modelIdx(), metadata.rimsIdx()};
-                System.out.println(Arrays.toString(requested) + "\t" + Arrays.toString(splitted));
                 return Arrays.equals(splitted, requested);
             }
             case "rims" -> {

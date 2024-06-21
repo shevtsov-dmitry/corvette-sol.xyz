@@ -110,7 +110,7 @@ export default function Tokenomica() {
 
     return (
         <div className="flex h-dvh w-dvw items-end justify-end">
-            <div className="flex h-[90%] w-full flex-col items-center justify-center">
+            <div className="flex h-full w-full flex-col items-center justify-center mb-[-1%]">
                 <div className={'mb-2 flex rounded'}>
                     <button
                         className="before-after-btn"

@@ -7,7 +7,7 @@
 }
 
 .save-car-form-btn {
-    @apply bg-red-800 text-[#FFFF00] text-2xl pb-1 pt-2 rounded font-nav-bar font-bold w-[12rem];
+    @apply bg-red-800 text-white text-3xl pb-2 pt-1 px-4 rounded font-bold;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 

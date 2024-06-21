@@ -22,7 +22,7 @@ export default function CarCustomization() {
     const customizationSliderRef = useRef(null)
     const dispatch = useDispatch()
 
-    const SERVER_HOST = "http://localhost:8080" //env
+    const SERVER_HOST = 'http://localhost:8080' //env
 
     let scrollDistancePx = 384
     if (customizationSliderRef.current) {
@@ -38,6 +38,10 @@ export default function CarCustomization() {
     useEffect(() => {
         fetchImages()
     }, [])
+
+    useEffect(() => {
+        fetchImages()
+    }, [customizationProps])
 
     useEffect(() => {
         setIsForbidAnimation(switchedCarsAmount === 0)
@@ -144,11 +148,11 @@ export default function CarCustomization() {
             >
                 <div
                     id={'save-black-dim-bg'}
-                    className={'absolute h-full w-full bg-black opacity-70'}
+                    className={'absolute h-full w-full bg-black opacity-70 z-[60]'}
                 />
                 <div
                     className={
-                        'z-10 flex flex-col justify-center gap-2 rounded-2xl bg-[#682831] p-10 text-white'
+                        'z-[70] flex flex-col justify-center gap-2 rounded-2xl bg-neutral-800 p-10 text-white'
                     }
                 >
                     <div className={'relative w-full'}>
@@ -165,32 +169,22 @@ export default function CarCustomization() {
                             X
                         </div>
                     </div>
-                    <div
-                        className={'h-fit w-fit rounded-2xl bg-white'}
-                        style={{
-                            boxShadow:
-                                'rgba(0, 0, 0, 0.45) 1px 1px 40px 0px inset',
-                        }}
-                    >
-                        <img src={constructedCarImg} className={'p-2'} />
-                    </div>
+                    <img src={constructedCarImg} className={'p-2'} />
                     <p className={'text-center text-2xl'}>
                         Nice! You've just constructed your own lovely{' '}
                         <span className={'text-amber-600'}>$corvette</span> car.
                     </p>
                     <p className={'text-center'}>
-                        Now you can download this image or share it with your
-                        friends on social media.
+                        Now you can download a car image and imagine yourself cruising down a scenic highway!
                     </p>
                     <div
                         className={
-                            'mt-2 flex w-full items-center justify-center gap-8'
+                            'mt-2 flex w-full items-center justify-center'
                         }
                     >
                         <button className={'save-car-form-btn'}>
                             download
                         </button>
-                        <button className={'save-car-form-btn'}>share</button>
                     </div>
                 </div>
             </div>
@@ -201,7 +195,9 @@ export default function CarCustomization() {
         return (
             <div
                 id={'buttons-holder'}
-                className={'mt-[2%] flex w-screen items-center justify-center select-none'}
+                className={
+                    'mt-[2%] flex w-screen select-none items-center justify-center'
+                }
             >
                 <div className="flex w-fit justify-around gap-4">
                     <CustomizationMenuBtn title={'MODEL'} />
@@ -217,9 +213,9 @@ export default function CarCustomization() {
                 <button
                     className={'customization-menu-btn'}
                     onClick={() => {
-                        if (title === curCustomizationBtn) {
-                            return
-                        }
+                        // if (title === curCustomizationBtn) {
+                        //     return
+                        // }
                         setCustomizationProps({
                             show: title.toLowerCase(),
                             model: parseFilenameProps('model'),
@@ -244,7 +240,6 @@ export default function CarCustomization() {
         }
 
         function SaveBtn() {
-
             return (
                 <button
                     className={
@@ -286,7 +281,7 @@ export default function CarCustomization() {
             }
         >
             <img
-                className={"mt-[8.5%]"}
+                className={'mt-[8.5%]'}
                 src={
                     'images/carCustomization/construct-your-corvette-heading.png'
                 }
