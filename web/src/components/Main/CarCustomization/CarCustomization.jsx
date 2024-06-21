@@ -15,6 +15,7 @@ export default function CarCustomization() {
     })
     const [constructedCarImg, setConstructedCarImg] = useState('')
 
+    const [isDownloaded, setIsDownloaded] = useState(false)
     const [isScrollRight, setIsScrollRight] = useState(true)
     const [isForbidAnimation, setIsForbidAnimation] = useState(true)
     const [isSaveFormActive, setIsSaveFormActive] = useState(false)
@@ -148,7 +149,9 @@ export default function CarCustomization() {
             >
                 <div
                     id={'save-black-dim-bg'}
-                    className={'absolute h-full w-full bg-black opacity-70 z-[60]'}
+                    className={
+                        'absolute z-[60] h-full w-full bg-black opacity-70'
+                    }
                 />
                 <div
                     className={
@@ -172,17 +175,31 @@ export default function CarCustomization() {
                     <img src={constructedCarImg} className={'p-2'} />
                     <p className={'text-center text-2xl'}>
                         Nice! You've just constructed your own lovely{' '}
-                        <span className={'text-amber-600'}>$corvette</span> car.
+                        <span className={'text-amber-600'}>Corvette</span>.
                     </p>
                     <p className={'text-center'}>
-                        Now you can download a car image and imagine yourself cruising down a scenic highway!
+                        Now you can download a car image and imagine yourself
+                        cruising down a scenic highway!
                     </p>
                     <div
                         className={
                             'mt-2 flex w-full items-center justify-center'
                         }
                     >
-                        <button className={'save-car-form-btn'}>
+                        <button
+                            className={'save-car-form-btn'}
+                            onClick={() => {
+                                if (!constructedCarImg) {
+                                    return
+                                }
+                                const link = document.createElement('a')
+                                link.href = constructedCarImg
+                                link.download = 'corvette.png'
+                                document.body.appendChild(link)
+                                link.click()
+                                document.body.removeChild(link)
+                            }}
+                        >
                             download
                         </button>
                     </div>
