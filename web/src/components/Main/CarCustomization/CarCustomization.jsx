@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setIsNavBarDimmed } from '../../store/navBarSlice.js'
+import { setIsNavBarDimmed } from '../../../store/navBarSlice.js'
 
 export default function CarCustomization() {
     const [midElIdx, setMidElIdx] = useState(0)

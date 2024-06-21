@@ -1,4 +1,4 @@
-import { Footer } from '../Footer/Footer.jsx'
+import { Footer } from '../../Footer/Footer.jsx'
 import Lottie from 'lottie-react'
 
 export default function WelcomePage() {
