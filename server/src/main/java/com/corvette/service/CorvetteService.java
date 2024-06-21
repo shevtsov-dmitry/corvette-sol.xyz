@@ -15,7 +15,8 @@ import java.util.*;
 @Service
 public class CorvetteService {
     private final ResourceLoader resourceLoader;
-    private final String IMAGES_STORAGE_PATH = "/root/corvette/carmodels";
+//    private final String IMAGES_STORAGE_PATH = "/root/corvette/carmodels"; //env
+    private final String IMAGES_STORAGE_PATH = "/home/shd/Pictures/corvette"; //env
     private final Path dirPath = Paths.get(IMAGES_STORAGE_PATH);
 
     public CorvetteService(ResourceLoader resourceLoader) {

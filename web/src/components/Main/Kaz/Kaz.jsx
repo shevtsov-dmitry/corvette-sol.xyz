@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState } from 'react'
 import Lottie from 'lottie-react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setIsNavBarDimmed } from '../../../store/navBarSlice.js'
 import ProgressBar from '../../ProgressBar/ProgressBar.jsx'
 
 export default function Kaz() {
-    const SERVER_HOST = "https://corvette-sol.xyz:8080" //env
-    const progressPercent = 64
+    const serverHostState = useSelector(state => state.serverHost)
+    const SERVER_HOST = serverHostState.serverHost
+
+    // const progressPercent = 64
 
     const [debugIdx, setDebugIdx] = useState(0)
     const [spinAmount, setSpinsAmount] = useState(0)

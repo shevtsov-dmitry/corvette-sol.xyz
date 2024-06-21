@@ -23,7 +23,8 @@ export default function CarCustomization() {
     const customizationSliderRef = useRef(null)
     const dispatch = useDispatch()
 
-    const SERVER_HOST = 'https://corvette-sol.xyz:8080' //env
+    const serverHostState = useSelector(state => state.serverHost)
+    const SERVER_HOST = serverHostState.serverHost
 
     let scrollDistancePx = 384
     if (customizationSliderRef.current) {
@@ -231,9 +232,9 @@ export default function CarCustomization() {
                 <button
                     className={'customization-menu-btn'}
                     onClick={() => {
-                        // if (title === curCustomizationBtn) {
-                        //     return
-                        // }
+                        if (title === curCustomizationBtn) {
+                            return
+                        }
                         setCustomizationProps({
                             show: title.toLowerCase(),
                             model: parseFilenameProps('model'),

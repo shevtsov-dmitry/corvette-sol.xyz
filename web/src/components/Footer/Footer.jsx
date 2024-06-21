@@ -3,7 +3,8 @@ import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 export function Footer() {
-    const SERVER_HOST = 'https://corvette-sol.xyz:8080' //env
+    const serverHostState = useSelector(state => state.serverHost)
+    const SERVER_HOST = serverHostState.serverHost
 
     const [twitterUrl, setTwitterUrl] = useState('')
     const [telegramUrl, setTelegramUrl] = useState('')
