@@ -5,7 +5,7 @@ import { setIsNavBarDimmed } from '../../../store/navBarSlice.js'
 import ProgressBar from '../../ProgressBar/ProgressBar.jsx'
 
 export default function Kaz() {
-    const SERVER_HOST = "https://95.163.230.155:8080" //env
+    const SERVER_HOST = "https://corvette-sol.xyz:8080" //env
     const progressPercent = 64
 
     const [debugIdx, setDebugIdx] = useState(0)
