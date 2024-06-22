@@ -47,15 +47,8 @@ export default function NavBar() {
                         className="relative z-50 mx-12 mb-[-1.3%] mt-[1%] w-[7%] max-mobile:mx-3"
                         onClick={() => setCurPageName('main')}
                     >
-                        <Link to={'/'}>
-                            <Lottie
-                                className={
-                                    'w-[6.5em] max-mobile:ml-[-5px] max-mobile:w-[3em]'
-                                }
-                                path={'lotties/navBar/low-nonstop-wheel.json'}
-                                loop={true}
-                                autoplay={true}
-                            />
+                        <Link to={'/'} className={""}>
+                            <img className={"w-[6.5em] max-mobile:min-w-[3em] max-mobile:ml-[-5px]"} src={"images/navBar/logo.png"}/>
                         </Link>
                     </div>
                     <div className="nav-btn-holder">
