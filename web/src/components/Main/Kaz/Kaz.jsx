@@ -20,8 +20,7 @@ export default function Kaz() {
     const [isAllowedToChangeSpinBtnScale, setIsAllowedToChangeSpinBtnScale] =
         useState(true)
 
-    // const chance_to_win_in_percent = Math.floor(1/8 * 100),
-    const chance_to_win_in_percent = 100,
+    const chance_to_win_in_percent = Math.floor(1/13 * 100),
         icons_amount = 9,
         icon_width = 128,
         spin_speed_multiplier = 75,
@@ -172,7 +171,7 @@ export default function Kaz() {
             return
         }
         const win_condition =
-            Math.random() <= chance_to_win_in_percent / 100 && spinAmount >= 15
+            Math.random() <= chance_to_win_in_percent / 100 && spinAmount > 2
         if (win_condition) {
             reels.forEach((reel, index) => executeGuaranteedSpin(reel, index))
         } else {
