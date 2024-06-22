@@ -67,6 +67,8 @@ async def handle_input(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
             await change_url("site", new_url)
         case 'change_url_pumpfun':
             await change_url("pumpfun", new_url)
+        case 'change_url_pumpfun_bonding_curve':
+            await change_url("pumpfun_bonding_curve", new_url)
         case _:
             await verify(update, user_input)
 
@@ -95,7 +97,6 @@ async def verify(update, user_input):
 async def admin_panel(update: Update, context: CallbackContext) -> None:
     reply_markup = InlineKeyboardMarkup(keyboard_options)
     await update.callback_query.edit_message_text(text="Admin Panel", reply_markup=reply_markup)
-
 
 async def admin_options(update: Update, context: CallbackContext) -> None:
     global QUERY
@@ -129,7 +130,11 @@ async def admin_options(update: Update, context: CallbackContext) -> None:
                                           reply_markup=reply_markup)
         case 'change_url_pumpfun':
             await query.edit_message_text(
-                "Please write new pumpfun token url. Example: https://twitter.com/corvetteCar",
+                "Please write new pumpfun website url. Example: https://twitter.com/corvetteCar",
+                reply_markup=reply_markup)
+        case 'change_url_pumpfun_bonding_curve':
+            await query.edit_message_text(
+                "Please write new pumpfun bonding curve WITHOUT %. Example: 85",
                 reply_markup=reply_markup)
 
 
@@ -153,7 +158,7 @@ async def options_list_urls(query) -> None:
         text = ""
         m = resp.json()
         for k, v in m.items():
-            text = f"{text}{k} | url: {v}\n"
+            text = f"{text}{k} | {v}\n"
         await query.edit_message_text(text=text, reply_markup=InlineKeyboardMarkup(keyboard_options),
                                       disable_web_page_preview=True)
     except requests.RequestException as e:
