@@ -39,18 +39,20 @@ QUERY = None
 
 
 async def start(update: Update, context: CallbackContext) -> None:
-    keyboard = [
-        [InlineKeyboardButton("Enter Admin Panel", callback_data='admin_panel')]
-    ]
-
     is_admin = update.effective_user.id in admins
     if not is_admin:
-        text = f"Hi, dear {update.effective_user.first_name}! I will check your wallet real quick.\nSend it to me to get verification ✅."
-        await update.message.reply_text(text)
+        text = f"Hello there, {update.effective_user.first_name}. In this bot you can check whether your wallet is eligible for $CORVETTE airdrop."
+        await update.message.reply_text(text, reply_markup=InlineKeyboardMarkup([[
+            InlineKeyboardButton("Check my wallet", callback_data='verify')
+        ]]))
     else:
 
-        text = f"Hi, dear administrator {update.effective_user.first_name}! I will check your wallet real quick.\nSend it to me to get verification ✅."
-        await update.message.reply_text(text, reply_markup=InlineKeyboardMarkup(keyboard))
+        text = f"Hello there, {update.effective_user.first_name}. In this bot you can check whether your wallet is eligible for $CORVETTE airdrop."
+        await update.message.reply_text(text, reply_markup=InlineKeyboardMarkup(
+            [[InlineKeyboardButton("Enter Admin Panel", callback_data='admin_panel')],
+             [InlineKeyboardButton("Check my wallet", callback_data='verify')]],
+
+        ))
 
 
 async def handle_input(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -87,9 +89,9 @@ async def verify(update, user_input):
     try:
         resp = requests.get(host_server + "/wallets/check/" + user_input)
         if resp.status_code == 409:
-            await update.message.reply_text("Nice, Your wallet is verified. ✅")
+            await update.message.reply_text("Your wallet is eligible ✅")
         else:
-            await update.message.reply_text("Sorry, I can't find your wallet ❌\nPlease try again.")
+            await update.message.reply_text("Your wallet is not eligible ❌")
     except requests.RequestException as e:
         await update.message.reply_text("An error occurred while verifying")
 
@@ -98,6 +100,7 @@ async def admin_panel(update: Update, context: CallbackContext) -> None:
     reply_markup = InlineKeyboardMarkup(keyboard_options)
     await update.callback_query.edit_message_text(text="Admin Panel", reply_markup=reply_markup)
 
+
 async def admin_options(update: Update, context: CallbackContext) -> None:
     global QUERY
     query = update.callback_query
@@ -105,6 +108,8 @@ async def admin_options(update: Update, context: CallbackContext) -> None:
     reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("← Back", callback_data='admin_panel')]])
 
     match query.data:
+        case "verify":
+            await query.edit_message_text(text="Enter your SOL wallet below please.")
         case "admin_panel":
             await admin_panel(update, context)
         case 'check_wallets':

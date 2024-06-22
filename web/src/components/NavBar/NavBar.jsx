@@ -19,7 +19,11 @@ export default function NavBar() {
 
     return (
         <div
-            className={`${isNavBarDimmed ? 'z-0' : 'z-50'} max-laptop:scale-75 max-laptop:mt-[-1rem] fixed flex h-fit w-dvw flex-col items-center justify-center gap-4 select-none max-mobile:mt-0`}
+            className={
+                `${isNavBarDimmed ? 'z-0' : 'z-50'} max-laptop:scale-75 ` +
+                `fixed flex h-fit w-dvw flex-col items-center max-laptop:mt-[-1rem]` +
+                `select-none justify-center gap-4 max-mobile:mt-0`
+            }
         >
             <header className="flex justify-around">
                 <div
@@ -45,10 +49,10 @@ export default function NavBar() {
                     >
                         <Link to={'/'}>
                             <Lottie
-                                className={'w-[6.5em] max-mobile:w-[3em] max-mobile:ml-[-5px]'}
-                                path={
-                                    'lotties/navBar/low-nonstop-wheel.json'
+                                className={
+                                    'w-[6.5em] max-mobile:ml-[-5px] max-mobile:w-[3em]'
                                 }
+                                path={'lotties/navBar/low-nonstop-wheel.json'}
                                 loop={true}
                                 autoplay={true}
                             />
@@ -68,12 +72,7 @@ export default function NavBar() {
                     </div>
                 </div>
             </header>
-            <Lottie
-                className={'z-0 w-[69.9%] min-w-24 max-mobile:hidden'}
-                path={'lotties/navBar/nav-bar-hr.json'}
-                loop={true}
-                autoplay={true}
-            />
+            <img className={'w-[75%]'} src={'images/navBar/nav-bar-hr.png'} />
         </div>
     )
 }

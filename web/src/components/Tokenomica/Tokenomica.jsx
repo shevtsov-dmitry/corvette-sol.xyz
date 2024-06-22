@@ -8,15 +8,13 @@ import { setIsHomeBtnVisible } from '../../store/homeBtnSlice.js'
 export default function Tokenomica() {
     const currentSectionRef = useRef()
 
-    const [chartFontSize, setChartFontSize] = useState(15)
+    const [chartFontSize, setChartFontSize] = useState(18)
 
     const [data, setData] = useState([
-        { name: 'ETH', percentage: 15 },
-        { name: 'BTC', percentage: 30 },
-        { name: 'AVAX', percentage: 10 },
-        { name: 'SOL', percentage: 20 },
-        { name: 'DOGE', percentage: 10 },
-        { name: 'CORVETTE', percentage: 15 },
+        { name: 'AIRDROP', percentage: 3 },
+        { name: 'TEAM', percentage: 10 },
+        { name: 'MARKETING', percentage: 2 },
+        { name: 'PUBLIC', percentage: 85 },
     ])
 
     const dispatch = useDispatch()
@@ -27,7 +25,7 @@ export default function Tokenomica() {
             return
         }
         if (currentSectionRef.current.offsetWidth < 1000) {
-            setChartFontSize(12)
+            setChartFontSize(15)
         }
     }, [])
 
@@ -77,14 +75,15 @@ export default function Tokenomica() {
                     formatter: (value, context) => {
                         const label =
                             context.chart.data.labels[context.dataIndex]
-                        return `${label}: ${value}%`
+                        return `${value}%`
                     },
-                    color: 'white', // Label text color
+                    color: 'black', // Label text color
                     font: {
                         size: chartFontSize, // Optional: change the font size
-                        family: 'sans',
+                        family: 'Verdana, sans',
                         weight: 'bold',
                     },
+                    // display: "auto",
                 },
             },
         }
@@ -95,45 +94,43 @@ export default function Tokenomica() {
     function updateChart(type) {
         if (type === 'before') {
             setData([
-                { name: 'ETH', percentage: 15 },
-                { name: 'BTC', percentage: 30 },
-                { name: 'AVAX', percentage: 10 },
-                { name: 'SOL', percentage: 20 },
-                { name: 'DOGE', percentage: 10 },
-                { name: 'CORVETTE', percentage: 15 },
+                { name: 'AIRDROP', percentage: 3 },
+                { name: 'TEAM', percentage: 10 },
+                { name: 'MARKETING', percentage: 2 },
+                { name: 'PUBLIC', percentage: 85 },
             ])
         } else {
             setData([
-                { name: 'AVAX', percentage: 5 },
-                { name: 'BTC', percentage: 25 },
-                { name: 'ETH', percentage: 15 },
-                { name: 'DOGE', percentage: 10 },
-                { name: 'SOL', percentage: 20 },
-                { name: 'CORVETTE', percentage: 25 },
+                { name: 'TEAM', percentage: 7 },
+                { name: 'MARKETING', percentage: 1 },
+                { name: 'PUBLIC', percentage: 92 },
             ])
         }
     }
 
     return (
-        <div className="flex h-dvh w-dvw items-end justify-end" ref={currentSectionRef}>
-            <div className="flex h-full w-full flex-col items-center justify-center mb-[-1%]">
+        <div
+            className="flex h-dvh w-dvw items-end justify-end"
+            ref={currentSectionRef}
+        >
+            <div className="mb-[-1%] flex h-full w-full flex-col items-center justify-center">
                 <div className={'mb-2 flex rounded'}>
                     <button
                         className="before-after-btn"
                         onClick={() => updateChart('before')}
                     >
-                        BEFORE
+                        PUMPFUN
                     </button>
                     <button
                         className="before-after-btn"
                         onClick={() => updateChart('after')}
                     >
-                        AFTER
+                        RAYDIUM
                     </button>
                 </div>
                 <div
                     id="chart-holder"
-                    className="flex h-[60%] w-[60%] items-center justify-center max-mobile:w-full max-mobile:h-[60%]"
+                    className="flex h-[60%] w-[60%] items-center justify-center max-mobile:h-[60%] max-mobile:w-full"
                 >
                     <Chart />
                 </div>

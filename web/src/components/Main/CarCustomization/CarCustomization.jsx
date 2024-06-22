@@ -43,6 +43,7 @@ export default function CarCustomization() {
 
     useEffect(() => {
         fetchImages()
+        setIsForbidAnimation(true)
     }, [customizationProps])
 
     useEffect(() => {
