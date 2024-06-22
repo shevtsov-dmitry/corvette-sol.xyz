@@ -20,7 +20,8 @@ export default function Kaz() {
     const [isAllowedToChangeSpinBtnScale, setIsAllowedToChangeSpinBtnScale] =
         useState(true)
 
-    const chance_to_win_in_percent = Math.floor(1/10 * 100),
+    // const chance_to_win_in_percent = Math.floor(1/8 * 100),
+    const chance_to_win_in_percent = 100,
         icons_amount = 9,
         icon_width = 128,
         spin_speed_multiplier = 75,
@@ -134,14 +135,15 @@ export default function Kaz() {
 
         setTimeout(() => {
             reel.style.transition = spin_animation
-            let final_position_with_price
-            if (spinAmount < 7) {
-                final_position_with_price =
-                    image_init_step + full_round * 3 * spinAmount + full_round
-            } else {
-                final_position_with_price =
-                    image_init_step + full_round * 3 * spinAmount - full_round
-            }
+            let final_position_with_price =
+                image_init_step + full_round * 3 * spinAmount + full_round
+            // if (spinAmount < 8) {
+            //     final_position_with_price =
+            //         image_init_step + full_round * 3 * spinAmount + full_round
+            // } else {
+            //     final_position_with_price =
+            //         image_init_step + full_round * 3 * spinAmount - full_round
+            // }
             reel.style.backgroundPositionY = `${final_position_with_price}px`
         }, idx * time_difference_between_reel_stops)
 
@@ -170,7 +172,7 @@ export default function Kaz() {
             return
         }
         const win_condition =
-            Math.random() <= chance_to_win_in_percent / 100 && spinAmount >= 2
+            Math.random() <= chance_to_win_in_percent / 100 && spinAmount >= 15
         if (win_condition) {
             reels.forEach((reel, index) => executeGuaranteedSpin(reel, index))
         } else {
@@ -361,7 +363,7 @@ export default function Kaz() {
                             }}
                             onClick={saveUserWallet}
                         >
-                            <p className="pr-1 pt-2 font-nav-bar text-3xl font-bold text-[#FFFF00] ">
+                            <p className="pr-1 pt-2 font-nav-bar text-3xl font-bold text-[#FFFF00]">
                                 SUBMIT
                             </p>
                         </button>
@@ -397,7 +399,7 @@ export default function Kaz() {
                 <Lottie
                     className={
                         'absolute left-[8%] top-[20%] scale-[200%] max-laptop:left-[4%] max-laptop:scale-[155%] ' +
-                        'max-mobile:scale-100 max-mobile:top-2'
+                        'max-mobile:top-2 max-mobile:scale-100'
                     }
                     path={'lotties/kaz/get-3-wins.json'}
                     loop={false}
@@ -415,7 +417,7 @@ export default function Kaz() {
                     />
                     <div
                         id="reels-holder"
-                        className="max-mobile:w-fit max-mobile:scale-[60%] max-mobile:gap-11 max-mobile:mt-[115px] absolute mt-[15em] flex w-[29.8rem] justify-around"
+                        className="absolute mt-[15em] flex w-[29.8rem] justify-around max-mobile:mt-[33%] max-mobile:w-fit max-mobile:scale-[60%] max-mobile:gap-11"
                     >
                         <div className="reel" ref={reel_1_ref} />
                         <div className="reel" ref={reel_2_ref} />

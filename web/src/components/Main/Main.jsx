@@ -90,7 +90,7 @@ export default function Main() {
         <>
             <div
                 className={
-                    'fixed top-[15%] z-50 flex w-dvw scale-[50%] items-center justify-center max-mobile:scale-[35%] max-mobile:mt-[-10%]'
+                    'fixed top-[16%] z-0 flex w-dvw scale-[50%] items-center justify-center max-mobile:scale-[35%] max-mobile:mt-[-10%]'
                 }
             >
                 {curSectionNum !== 0 ? (
