@@ -20,7 +20,7 @@ export default function Kaz() {
     const [isAllowedToChangeSpinBtnScale, setIsAllowedToChangeSpinBtnScale] =
         useState(true)
 
-    const chance_to_win_in_percent = Math.floor(1/13 * 100),
+    const chance_to_win_in_percent = Math.floor(1/3 * 100),
         icons_amount = 9,
         icon_width = 128,
         spin_speed_multiplier = 75,
