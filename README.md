@@ -3,6 +3,6 @@
 
 ### Launch of $corvette token.
 
-![image](readme/customization.jpg)
 ![image](readme/mainpage.jpg)
+![image](readme/customization.jpg)
 ![image](readme/tokenomics.jpg)
