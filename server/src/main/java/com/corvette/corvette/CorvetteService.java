@@ -1,6 +1,6 @@
-package com.corvette.service;
+package com.corvette.corvette;
 
-import com.corvette.model.CarAssetMetadata;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
@@ -15,9 +15,15 @@ import java.util.*;
 @Service
 public class CorvetteService {
     private final ResourceLoader resourceLoader;
-//    private final String IMAGES_STORAGE_PATH = "/root/corvette/carmodels"; //env
-    private final String IMAGES_STORAGE_PATH = "/home/shd/Pictures/corvette"; //env
-    private final Path dirPath = Paths.get(IMAGES_STORAGE_PATH);
+
+    @Value("${custom.env.IMAGES_STORAGE_PATH}")
+    private String IMAGES_STORAGE_PATH;
+    private Path dirPath;
+
+    @PostConstruct
+    public void init() {
+        this.dirPath = Paths.get(IMAGES_STORAGE_PATH);
+    }
 
     public CorvetteService(ResourceLoader resourceLoader) {
         this.resourceLoader = resourceLoader;
@@ -63,7 +69,7 @@ public class CorvetteService {
         try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(dirPath)) {
             for (Path filePath : directoryStream) {
                 String curFilename = getCurFilename(filePath);
-                if (curFilename.equals(metadata.requestedFilename())){
+                if (curFilename.equals(metadata.requestedFilename())) {
                     Resource resource = resourceLoader.getResource("file:" + filePath);
                     return resource.getContentAsByteArray();
                 }

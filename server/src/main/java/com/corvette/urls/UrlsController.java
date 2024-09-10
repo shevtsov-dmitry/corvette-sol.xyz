@@ -1,9 +1,7 @@
-package com.corvette.controller;
+package com.corvette.urls;
 
-import com.corvette.service.UrlsService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 
 @RestController

@@ -1,10 +1,8 @@
-package com.corvette.controller;
+package com.corvette.wallet;
 
-import com.corvette.service.WalletService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 
 @RequestMapping("/wallets")

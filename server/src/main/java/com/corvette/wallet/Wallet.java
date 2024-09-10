@@ -1,4 +1,4 @@
-package com.corvette.model;
+package com.corvette.wallet;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

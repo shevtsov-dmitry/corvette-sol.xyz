@@ -1,7 +1,5 @@
-package com.corvette.service;
+package com.corvette.wallet;
 
-import com.corvette.model.Wallet;
-import com.corvette.repository.WalletRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

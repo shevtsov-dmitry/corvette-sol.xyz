@@ -1,6 +1,5 @@
-package com.corvette.service;
+package com.corvette.urls;
 
-import com.corvette.repository.UrlRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

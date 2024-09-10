@@ -1,7 +1,5 @@
-package com.corvette.controller;
+package com.corvette.corvette;
 
-import com.corvette.service.CorvetteService;
-import com.corvette.model.CarAssetMetadata;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,8 +17,9 @@ public class CorvetteController {
     }
 
     @GetMapping("/get/assets")
-    public ResponseEntity<List<Map<String, byte[]>>> getCarAssets(@RequestParam String show, @RequestParam String model, @RequestParam String color, @RequestParam String rims) {
-        var matchedImages = service.retrieveAssets(show,new CarAssetMetadata(model, color, rims));
+    public ResponseEntity<List<Map<String, byte[]>>> getCarAssets(
+            @RequestParam String show, @RequestParam String model, @RequestParam String color, @RequestParam String rims) {
+        var matchedImages = service.retrieveAssets(show, new CarAssetMetadata(model, color, rims));
         if (matchedImages.isEmpty()) {
             return ResponseEntity.notFound().build();
         }

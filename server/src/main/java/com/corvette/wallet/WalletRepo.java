@@ -1,6 +1,5 @@
-package com.corvette.repository;
+package com.corvette.wallet;
 
-import com.corvette.model.Wallet;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
