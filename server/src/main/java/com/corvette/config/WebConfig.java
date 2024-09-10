@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
 
-    @Value("${SERVER_IP}")
+    @Value("${SERVER_IP:http://localhost}")
     private String SERVER_IP;
 
     @Override
@@ -19,7 +19,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addMapping("/cars/**").allowedOrigins("*").allowedMethods("GET", "POST");
         registry.addMapping("/urls/**").allowedOrigins("*").allowedMethods("GET");
 
-        registry.addMapping("/urls/change").allowedOrigins("http://localhost", SERVER_IP).allowedMethods("PATCH");
+        registry.addMapping("/urls/change").allowedOrigins(SERVER_IP).allowedMethods("PATCH");
 
 
     }
