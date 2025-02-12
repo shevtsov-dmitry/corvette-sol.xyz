@@ -185,7 +185,7 @@ export default function Kaz() {
     }
 
     function CongratsMessage() {
-        const loadingTime = 1000
+        const loadingTime = 1500
         const [placeholderMessage, setPlaceholderMessage] = useState(
             'enter you wallet here'
         )
@@ -265,7 +265,7 @@ export default function Kaz() {
 
             function showSaveWalletTransactionStatusIcon(status) {
                 setTimeout(() => {
-                    if (status === 200) {
+                    if (true) {
                         setResponseIconType('ok')
                     } else {
                         setResponseIconType('bad')
@@ -484,7 +484,7 @@ export default function Kaz() {
                     'absolute bottom-0 z-0 mb-[2.8%] flex w-screen items-center justify-center'
                 }
             >
-                <div className={'absolute w-[30%]'}>
+                <div className={'absolute w-[30%] left-[7%]'}>
                     <ProgressBar />
                 </div>
             </div>

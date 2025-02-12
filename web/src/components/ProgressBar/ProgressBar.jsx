@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 
 export default function ProgressBar() {
 
-    const [progressInPercent, setProgressInPercent] = useState(0)
+    const [progressInPercent, setProgressInPercent] = useState(78)
 
     const serverHostState = useSelector((state) => state.serverHost)
     const SERVER_HOST = serverHostState.serverHost

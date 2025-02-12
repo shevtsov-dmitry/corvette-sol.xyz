@@ -1,9 +1,9 @@
-import { Pie } from 'react-chartjs-2'
-import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js'
+import {Pie} from 'react-chartjs-2'
+import {ArcElement, Chart as ChartJS, Legend, Tooltip} from 'chart.js'
 import ChartDataLabels from 'chartjs-plugin-datalabels'
-import { useEffect, useRef, useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { setIsHomeBtnVisible } from '../../store/homeBtnSlice.js'
+import {useEffect, useRef, useState} from 'react'
+import {useDispatch} from 'react-redux'
+import {setIsHomeBtnVisible} from '../../store/homeBtnSlice.js'
 
 export default function Tokenomica() {
     const currentSectionRef = useRef()
@@ -11,10 +11,10 @@ export default function Tokenomica() {
     const [chartFontSize, setChartFontSize] = useState(18)
 
     const [data, setData] = useState([
-        { name: 'AIRDROP', percentage: 3 },
-        { name: 'TEAM', percentage: 10 },
-        { name: 'MARKETING', percentage: 2 },
-        { name: 'PUBLIC', percentage: 85 },
+        {name: 'AIRDROP', percentage: 3},
+        {name: 'TEAM', percentage: 10},
+        {name: 'MARKETING', percentage: 2},
+        {name: 'PUBLIC', percentage: 85},
     ])
 
     const dispatch = useDispatch()
@@ -88,22 +88,22 @@ export default function Tokenomica() {
             },
         }
 
-        return <Pie data={chartData} options={options} />
+        return <Pie data={chartData} options={options}/>
     }
 
     function updateChart(type) {
         if (type === 'before') {
             setData([
-                { name: 'AIRDROP', percentage: 3 },
-                { name: 'TEAM', percentage: 10 },
-                { name: 'MARKETING', percentage: 2 },
-                { name: 'PUBLIC', percentage: 85 },
+                {name: 'AIRDROP', percentage: 3},
+                {name: 'TEAM', percentage: 10},
+                {name: 'MARKETING', percentage: 2},
+                {name: 'PUBLIC', percentage: 85},
             ])
         } else {
             setData([
-                { name: 'TEAM', percentage: 7 },
-                { name: 'MARKETING', percentage: 1 },
-                { name: 'PUBLIC', percentage: 92 },
+                {name: 'TEAM', percentage: 7},
+                {name: 'MARKETING', percentage: 1},
+                {name: 'PUBLIC', percentage: 92},
             ])
         }
     }
@@ -119,20 +119,20 @@ export default function Tokenomica() {
                         className="before-after-btn"
                         onClick={() => updateChart('before')}
                     >
-                        PUMPFUN
+                        MemePad
                     </button>
                     <button
                         className="before-after-btn"
                         onClick={() => updateChart('after')}
                     >
-                        RAYDIUM
+                        Stone.Fi
                     </button>
                 </div>
                 <div
                     id="chart-holder"
                     className="flex h-[60%] w-[60%] items-center justify-center max-mobile:h-[60%] max-mobile:w-full"
                 >
-                    <Chart />
+                    <Chart/>
                 </div>
             </div>
         </div>

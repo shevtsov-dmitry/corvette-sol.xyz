@@ -7,8 +7,8 @@ export function Footer() {
     const SERVER_HOST = serverHostState.serverHost
 
     const [twitterUrl, setTwitterUrl] = useState('')
-    const [telegramUrl, setTelegramUrl] = useState('')
-    const [pumpfunUrl, setPumpfunUrl] = useState('')
+    const [telegramUrl, setTelegramUrl] = useState('https://t.me/corvette_on_ton')
+    const [pumpfunUrl, setPumpfunUrl] = useState('https://memepad.co')
     const [tensorUrl, setTensorUrl] = useState('')
 
     const homeBtnState = useSelector((state) => state.homeBtn)
@@ -43,14 +43,14 @@ export function Footer() {
                 'fixed bottom-0 z-20 mb-[1%] flex h-[6.5%] w-full justify-center max-laptop:mb-5 max-mobile:scale-75'
             }
         >
-            <div id={'footer-panel'} className={'flex w-[67%] justify-between max-mobile:w-full'}>
+            <div id={'footer-panel'} className={'flex w-[15%] justify-between max-mobile:w-full'}>
                 <div id="left-icons" className={'flex gap-4 max-mobile:gap-1'}>
-                    <a href={twitterUrl}>
-                        <img
-                            className={'footer-icon'}
-                            src={'images/footer/twitter.png'}
-                        />
-                    </a>
+                    {/*<a href={twitterUrl}>*/}
+                    {/*    <img*/}
+                    {/*        className={'footer-icon'}*/}
+                    {/*        src={'images/footer/twitter.png'}*/}
+                    {/*    />*/}
+                    {/*</a>*/}
                     <a href={telegramUrl}>
                         <img
                             className={'footer-icon'}
@@ -72,15 +72,15 @@ export function Footer() {
                     <a href={pumpfunUrl}>
                         <img
                             className={'footer-icon'}
-                            src={'images/footer/pill.png'}
+                            src={'images/footer/blum.png'}
                         />
                     </a>
-                    <a href={tensorUrl}>
+                  {/*  <a href={tensorUrl}>
                         <img
                             className={'footer-icon'}
                             src={'images/footer/tensor.png'}
                         />
-                    </a>
+                    </a>*/}
                 </div>
             </div>
         </div>
