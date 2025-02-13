@@ -4,7 +4,7 @@ export const serverHostSlice = createSlice({
     name: 'serverHost',
     initialState: {
         serverHost: "http://localhost:8080", //env
-        // serverHost: "https://corvette-sol.xyz:8080",
+        // serverHost: "https://corvette-ton.fun:8080",
     },
 })
 

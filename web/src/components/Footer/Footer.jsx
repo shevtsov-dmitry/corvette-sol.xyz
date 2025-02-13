@@ -40,11 +40,11 @@ export function Footer() {
     return (
         <div
             className={
-                'fixed bottom-0 z-20 mb-[1%] flex h-[6.5%] w-full justify-center max-laptop:mb-5 max-mobile:scale-75'
+                'fixed bottom-0 mb-[1%] flex h-[6.5%] w-full justify-center max-laptop:mb-5 max-mobile:scale-75'
             }
         >
             <div id={'footer-panel'} className={'flex w-[15%] justify-between max-mobile:w-full'}>
-                <div id="left-icons" className={'flex gap-4 max-mobile:gap-1'}>
+                <div id="left-icons" className={'flex gap-4 max-mobile:gap-1 z-[1000]'}>
                     {/*<a href={twitterUrl}>*/}
                     {/*    <img*/}
                     {/*        className={'footer-icon'}*/}

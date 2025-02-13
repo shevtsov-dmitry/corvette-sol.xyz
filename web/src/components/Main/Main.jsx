@@ -132,7 +132,7 @@ export default function Main() {
             </SwitchTransition>
             <div
                 className={
-                    'fixed bottom-0 z-50 mb-[-1rem] flex w-dvw scale-[50%] items-center justify-center max-mobile:scale-[35%]'
+                    'fixed left-[47.5%] bottom-3 mb-[-1rem] flex w-24 scale-75 z-30 items-center justify-center max-mobile:scale-[35%]'
                 }
             >
                 {curSectionNum !== sections.length - 1 ? (
